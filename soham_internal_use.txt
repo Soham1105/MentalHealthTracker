@@ -1,0 +1,155 @@
+Last login: Mon Apr  6 17:25:43 on console
+sohamdudhat@192 ~ % cd "/Users/sohamdudhat/Documents/New project/mindful-track-dashboard"
+npm install
+npm run dev
+
+zsh: command not found: npm
+zsh: command not found: npm
+sohamdudhat@192 mindful-track-dashboard % node -v
+npm -v
+
+zsh: command not found: node
+zsh: command not found: npm
+sohamdudhat@192 mindful-track-dashboard % node -v
+npm -v
+
+v24.14.1
+11.11.0
+sohamdudhat@192 mindful-track-dashboard % cd "/Users/sohamdudhat/Documents/New project/mindful-track-dashboard"
+npm install
+npm run dev
+
+
+added 101 packages, and audited 102 packages in 32s
+
+7 packages are looking for funding
+  run `npm fund` for details
+
+2 moderate severity vulnerabilities
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+npm notice
+npm notice New minor version of npm available! 11.11.0 -> 11.12.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.12.1
+npm notice To update run: npm install -g npm@11.12.1
+npm notice
+
+> mindful-track-dashboard@1.0.0 dev
+> vite
+
+
+  VITE v5.4.21  ready in 335 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+  ➜  press h + enter to show help
+10:44:17 pm [vite] vite.config.js changed, restarting server...
+Re-optimizing dependencies because lockfile has changed
+10:44:17 pm [vite] server restarted.
+10:45:27 pm [vite] hmr update /src/App.jsx
+10:45:33 pm [vite] hmr update /src/styles/index.css
+10:45:50 pm [vite] page reload src/data/mockData.js
+10:47:47 pm [vite] http proxy error: /api/bootstrap
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1142:49)
+    at afterConnectMultiple (node:net:1723:7)
+10:47:47 pm [vite] http proxy error: /api/bootstrap
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1142:49)
+    at afterConnectMultiple (node:net:1723:7) (x2)
+10:47:48 pm [vite] http proxy error: /api/bootstrap
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1142:49)
+    at afterConnectMultiple (node:net:1723:7) (x3)
+10:47:48 pm [vite] http proxy error: /api/bootstrap
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1142:49)
+    at afterConnectMultiple (node:net:1723:7) (x4)
+10:49:43 pm [vite] http proxy error: /api/moods
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1142:49)
+    at afterConnectMultiple (node:net:1723:7)
+10:49:44 pm [vite] http proxy error: /api/moods
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1142:49)
+    at afterConnectMultiple (node:net:1723:7) (x2)
+10:49:45 pm [vite] http proxy error: /api/moods
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1142:49)
+    at afterConnectMultiple (node:net:1723:7) (x3)
+10:49:45 pm [vite] http proxy error: /api/moods
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1142:49)
+    at afterConnectMultiple (node:net:1723:7) (x4)
+10:51:23 pm [vite] vite.config.js changed, restarting server...
+Re-optimizing dependencies because lockfile has changed
+10:51:23 pm [vite] server restarted.
+11:09:49 pm [vite] .env changed, restarting server...
+11:09:49 pm [vite] server restarted.
+cd "/Users/sohamdudhat/Documents/New project/mindful-track-dashboard"
+npm run dev
+
+^[^[
+
+^C
+sohamdudhat@192 mindful-track-dashboard % cd "/Users/sohamdudhat/Documents/New project/mindful-track-dashboard"
+npm run dev
+
+
+> mindful-track-dashboard@1.0.0 dev
+> vite
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
