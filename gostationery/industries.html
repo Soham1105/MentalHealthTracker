@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Industries | GoStationery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    body { padding-top: var(--nav-h); }
+
+    .page-hero { padding: calc(var(--nav-h) + 3rem) 2rem 4rem; background:linear-gradient(160deg,#e8f4fd,#f0faff 40%,#f8fafc); position:relative;overflow:hidden; }
+    .page-hero::after { content:'';position:absolute;top:-200px;right:-200px;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(0,180,216,.1),transparent 70%);pointer-events:none; }
+    .page-hero-inner { max-width:1200px;margin:0 auto;text-align:center;position:relative;z-index:1; }
+
+    /* Industry section */
+    .ind-section { padding: 6rem 2rem; }
+    .ind-section:nth-child(even) { background: #f8fafc; }
+    .ind-section:nth-child(odd) { background: #fff; }
+    .ind-inner { max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center; }
+    .ind-inner.rev { direction:rtl; }
+    .ind-inner.rev > * { direction:ltr; }
+
+    .ind-visual {
+      border-radius:24px;min-height:340px;
+      display:flex;align-items:center;justify-content:center;
+      position:relative;overflow:hidden;font-size:6rem;
+      box-shadow:0 12px 40px rgba(0,0,0,.08);
+    }
+    .iv-health  { background:linear-gradient(145deg,#dcfce7,#bbf7d0); }
+    .iv-bank    { background:linear-gradient(145deg,#dbeafe,#bfdbfe); }
+    .iv-retail  { background:linear-gradient(145deg,#fef9c3,#fde68a); }
+    .iv-govt    { background:linear-gradient(145deg,#f3e8ff,#ddd6fe); }
+    .iv-corp    { background:linear-gradient(145deg,#ffedd5,#fed7aa); }
+    .iv-edu     { background:linear-gradient(145deg,#ecfdf5,#a7f3d0); }
+
+    .ind-visual-label {
+      position:absolute;bottom:16px;left:50%;transform:translateX(-50%);
+      background:rgba(255,255,255,.9);border-radius:8px;padding:5px 14px;
+      font-size:.72rem;font-weight:700;color:var(--primary);white-space:nowrap;
+      backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.5);
+    }
+
+    .ind-content .section-tag { display:block;margin-bottom:.6rem; }
+    .ind-content h2 { font-size:clamp(1.6rem,3.5vw,2.2rem);margin-bottom:1rem; }
+    .ind-content p { color:var(--muted);font-size:.95rem;line-height:1.75;margin-bottom:1.5rem; }
+    .pain-list { list-style:none;display:flex;flex-direction:column;gap:.6rem;margin-bottom:1.75rem; }
+    .pain-list li { display:flex;align-items:flex-start;gap:.65rem;font-size:.9rem; }
+    .pain-icon { font-size:1.1rem;flex-shrink:0;margin-top:1px; }
+
+    .ind-products { display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:2rem; }
+    .ind-prod-tag { display:inline-flex;align-items:center;gap:6px;background:var(--bg);border:1px solid var(--border);border-radius:99px;padding:.3rem .85rem;font-size:.75rem;font-weight:600;color:var(--text); }
+
+    @media(max-width:900px){
+      .ind-inner { grid-template-columns:1fr;gap:2rem; }
+      .ind-inner.rev { direction:ltr; }
+      .ind-visual { min-height:220px;font-size:4rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo"><div class="logo-icon">G</div><span class="logo-text">Go<span>Stationery</span></span></a>
+    <ul class="nav-menu">
+      <li class="nav-item">
+        <button class="nav-link">Solutions <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></button>
+        <div class="dropdown">
+          <a href="kiosk.html"><div class="dropdown-icon di-blue">🖥️</div><div><span>Kiosk</span><span class="dropdown-desc">Queue management system</span></div></a>
+          <a href="vending.html"><div class="dropdown-icon di-orange">🖨️</div><div><span>Print & Dispense Station</span><span class="dropdown-desc">Smart stationery vending</span></div></a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link">Industries <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></button>
+        <div class="dropdown" style="min-width:260px;">
+          <a href="#healthcare"><div class="dropdown-icon di-green">🏥</div><div><span>Healthcare</span></div></a>
+          <a href="#banking"><div class="dropdown-icon di-blue">🏦</div><div><span>Banking & Finance</span></div></a>
+          <a href="#retail"><div class="dropdown-icon di-yellow">🛒</div><div><span>Retail</span></div></a>
+          <a href="#govt"><div class="dropdown-icon di-purple">🏛️</div><div><span>Government</span></div></a>
+          <a href="#corporate"><div class="dropdown-icon di-red">🏢</div><div><span>Corporate</span></div></a>
+          <a href="#education"><div class="dropdown-icon di-green">🎓</div><div><span>Education</span></div></a>
+        </div>
+      </li>
+      <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+      <li class="nav-item"><a href="index.html#contact" class="nav-link">Contact</a></li>
+    </ul>
+    <div class="nav-actions"><button class="nav-cta" onclick="openModal()">Request Demo</button></div>
+    <button class="hamburger"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="page-hero-inner fade-up">
+    <span class="section-tag">Industries We Serve</span>
+    <h1>GoStationery for <span class="text-gradient">every sector</span></h1>
+    <p style="color:var(--muted);font-size:1.05rem;max-width:560px;margin:.9rem auto 0;line-height:1.75">Our solutions adapt to the unique flow, compliance needs, and customer experience standards of every industry across India.</p>
+    <div style="display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;margin-top:2rem;">
+      <a href="#healthcare" style="display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--border);border-radius:99px;padding:.4rem 1rem;font-size:.82rem;font-weight:600;text-decoration:none;color:var(--text);transition:.2s" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">🏥 Healthcare</a>
+      <a href="#banking" style="display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--border);border-radius:99px;padding:.4rem 1rem;font-size:.82rem;font-weight:600;text-decoration:none;color:var(--text);transition:.2s" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">🏦 Banking</a>
+      <a href="#retail" style="display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--border);border-radius:99px;padding:.4rem 1rem;font-size:.82rem;font-weight:600;text-decoration:none;color:var(--text);transition:.2s" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">🛒 Retail</a>
+      <a href="#govt" style="display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--border);border-radius:99px;padding:.4rem 1rem;font-size:.82rem;font-weight:600;text-decoration:none;color:var(--text);transition:.2s" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">🏛️ Government</a>
+      <a href="#corporate" style="display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--border);border-radius:99px;padding:.4rem 1rem;font-size:.82rem;font-weight:600;text-decoration:none;color:var(--text);transition:.2s" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">🏢 Corporate</a>
+      <a href="#education" style="display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--border);border-radius:99px;padding:.4rem 1rem;font-size:.82rem;font-weight:600;text-decoration:none;color:var(--text);transition:.2s" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">🎓 Education</a>
+    </div>
+  </div>
+</section>
+
+<!-- HEALTHCARE -->
+<section class="ind-section" id="healthcare">
+  <div class="ind-inner">
+    <div class="ind-visual iv-health fade-up">🏥<div class="ind-visual-label">OPD Queue — Live</div></div>
+    <div class="ind-content fade-up d2">
+      <span class="section-tag">Healthcare</span>
+      <h2>Patients deserve care, <br/>not <span class="text-gradient">long waits.</span></h2>
+      <p>In hospitals and clinics, long OPD queues create anxiety, crowd corridors, and overload reception staff. GoStationery's Kiosk transforms the patient journey — from chaotic waiting rooms to calm, organised service.</p>
+      <ul class="pain-list">
+        <li><span class="pain-icon">✅</span><span>Reduce OPD corridor crowding with digital tokens and SMS alerts</span></li>
+        <li><span class="pain-icon">✅</span><span>Separate queues per department: General, Specialist, Lab, Pharmacy</span></li>
+        <li><span class="pain-icon">✅</span><span>Integrate with HIS / appointment booking systems via API</span></li>
+        <li><span class="pain-icon">✅</span><span>Print prescription slips and lab forms from the Print Station</span></li>
+        <li><span class="pain-icon">✅</span><span>Real-time occupancy alerts for administration</span></li>
+      </ul>
+      <div class="ind-products">
+        <span class="ind-prod-tag">🖥️ Kiosk</span>
+        <span class="ind-prod-tag">🖨️ Print Station</span>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="openModal()">Get Healthcare Demo</button>
+    </div>
+  </div>
+</section>
+
+<!-- BANKING -->
+<section class="ind-section" id="banking">
+  <div class="ind-inner rev">
+    <div class="ind-visual iv-bank fade-up">🏦<div class="ind-visual-label">Branch Queue — Live</div></div>
+    <div class="ind-content fade-up d2">
+      <span class="section-tag">Banking & Finance</span>
+      <h2>Fair, fast service for <span class="text-gradient">every customer.</span></h2>
+      <p>Bank branches, NBFCs, and insurance offices handle high footfall daily. A chaotic branch hurts NPS scores and branch reputation. Kiosk delivers fair, transparent queuing that customers trust.</p>
+      <ul class="pain-list">
+        <li><span class="pain-icon">✅</span><span>Separate queues for tellers, loans, KYC, lockers, and priority customers</span></li>
+        <li><span class="pain-icon">✅</span><span>SMS alerts so customers wait outside — not standing in line</span></li>
+        <li><span class="pain-icon">✅</span><span>Branch manager dashboard with real-time wait-time and staff metrics</span></li>
+        <li><span class="pain-icon">✅</span><span>Customer satisfaction ratings after every interaction</span></li>
+        <li><span class="pain-icon">✅</span><span>Print forms, account statements, and receipts from the Print Station</span></li>
+      </ul>
+      <div class="ind-products">
+        <span class="ind-prod-tag">🖥️ Kiosk</span>
+        <span class="ind-prod-tag">🖨️ Print Station</span>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="openModal()">Get Banking Demo</button>
+    </div>
+  </div>
+</section>
+
+<!-- RETAIL -->
+<section class="ind-section" id="retail">
+  <div class="ind-inner">
+    <div class="ind-visual iv-retail fade-up">🛒<div class="ind-visual-label">Counter Queue — Live</div></div>
+    <div class="ind-content fade-up d2">
+      <span class="section-tag">Retail</span>
+      <h2>Let shoppers browse, <br/>not <span class="text-gradient">wait in line.</span></h2>
+      <p>Retail counters — billing, customer service, returns, tailoring — often become bottlenecks that frustrate shoppers and reduce dwell time. Virtual queuing keeps customers in the store and in a good mood.</p>
+      <ul class="pain-list">
+        <li><span class="pain-icon">✅</span><span>Virtual tokens let customers shop while waiting for their turn</span></li>
+        <li><span class="pain-icon">✅</span><span>Display boards at counters show live queue status</span></li>
+        <li><span class="pain-icon">✅</span><span>Peak-hour analytics to plan staffing in advance</span></li>
+        <li><span class="pain-icon">✅</span><span>Print Station for price tags, invoices, and gift wrapping forms</span></li>
+        <li><span class="pain-icon">✅</span><span>Customer satisfaction scores per counter</span></li>
+      </ul>
+      <div class="ind-products">
+        <span class="ind-prod-tag">🖥️ Kiosk</span>
+        <span class="ind-prod-tag">🖨️ Print Station</span>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="openModal()">Get Retail Demo</button>
+    </div>
+  </div>
+</section>
+
+<!-- GOVERNMENT -->
+<section class="ind-section" id="govt">
+  <div class="ind-inner rev">
+    <div class="ind-visual iv-govt fade-up">🏛️<div class="ind-visual-label">Citizens Served — Live</div></div>
+    <div class="ind-content fade-up d2">
+      <span class="section-tag">Government</span>
+      <h2>Transparent, fair service <br/>for every <span class="text-gradient">citizen.</span></h2>
+      <p>Government offices — RTOs, municipal offices, taluka offices, ration centres — see hundreds of citizens daily. Fair queuing reduces complaints, eliminates queue-jumping, and demonstrates accountability.</p>
+      <ul class="pain-list">
+        <li><span class="pain-icon">✅</span><span>Fair, transparent FIFO queuing visible to all citizens</span></li>
+        <li><span class="pain-icon">✅</span><span>Separate service counters for different document types</span></li>
+        <li><span class="pain-icon">✅</span><span>Works on 2G/3G with offline fallback mode</span></li>
+        <li><span class="pain-icon">✅</span><span>Print Station for forms, receipts, and document copies on-site</span></li>
+        <li><span class="pain-icon">✅</span><span>Supervisory dashboard for department head oversight</span></li>
+      </ul>
+      <div class="ind-products">
+        <span class="ind-prod-tag">🖥️ Kiosk</span>
+        <span class="ind-prod-tag">🖨️ Print Station</span>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="openModal()">Get Government Demo</button>
+    </div>
+  </div>
+</section>
+
+<!-- CORPORATE -->
+<section class="ind-section" id="corporate">
+  <div class="ind-inner">
+    <div class="ind-visual iv-corp fade-up">🏢<div class="ind-visual-label">Office Services — Live</div></div>
+    <div class="ind-content fade-up d2">
+      <span class="section-tag">Corporate</span>
+      <h2>Modern offices deserve <span class="text-gradient">modern service.</span></h2>
+      <p>Corporate campuses and large offices have shared service desks — HR, IT helpdesk, visitor reception, cafeteria. GoStationery replaces paper chits and shouted names with a sleek digital system.</p>
+      <ul class="pain-list">
+        <li><span class="pain-icon">✅</span><span>Digital visitor reception with ID badge printing</span></li>
+        <li><span class="pain-icon">✅</span><span>HR service desk queue management for payslips, reimbursements</span></li>
+        <li><span class="pain-icon">✅</span><span>Print Station for employee stationery — restricted by ID card</span></li>
+        <li><span class="pain-icon">✅</span><span>IT helpdesk token system with priority routing</span></li>
+        <li><span class="pain-icon">✅</span><span>Usage reporting for cost allocation by department</span></li>
+      </ul>
+      <div class="ind-products">
+        <span class="ind-prod-tag">🖥️ Kiosk</span>
+        <span class="ind-prod-tag">🖨️ Print Station</span>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="openModal()">Get Corporate Demo</button>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section class="ind-section" id="education">
+  <div class="ind-inner rev">
+    <div class="ind-visual iv-edu fade-up">🎓<div class="ind-visual-label">Student Services — Live</div></div>
+    <div class="ind-content fade-up d2">
+      <span class="section-tag">Education</span>
+      <h2>Campus services that <span class="text-gradient">actually work.</span></h2>
+      <p>Colleges and universities have admin offices flooded with students at semester start — fee payment, document collection, library services, exam forms. Kiosk and the Print Station bring order to the chaos.</p>
+      <ul class="pain-list">
+        <li><span class="pain-icon">✅</span><span>Token system for registrar, accounts, library, and exam cells</span></li>
+        <li><span class="pain-icon">✅</span><span>Print Station for forms, admit cards, transcripts on-demand</span></li>
+        <li><span class="pain-icon">✅</span><span>Student ID-based access control for stationery dispensing</span></li>
+        <li><span class="pain-icon">✅</span><span>Peak-period analytics for campus administration planning</span></li>
+        <li><span class="pain-icon">✅</span><span>Multi-location support across departments and hostels</span></li>
+      </ul>
+      <div class="ind-products">
+        <span class="ind-prod-tag">🖥️ Kiosk</span>
+        <span class="ind-prod-tag">🖨️ Print Station</span>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="openModal()">Get Education Demo</button>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section style="background:linear-gradient(135deg,var(--primary),#1565a0,var(--accent));padding:5rem 2rem;text-align:center;position:relative;overflow:hidden;">
+  <h2 style="color:#fff;margin-bottom:.85rem;position:relative;z-index:1;" class="fade-up">Don't see your industry?</h2>
+  <p style="color:rgba(255,255,255,.8);font-size:1rem;max-width:480px;margin:0 auto 2.25rem;line-height:1.7;position:relative;z-index:1;" class="fade-up d1">GoStationery solutions are highly configurable. Talk to us — we'll find the right fit for your specific use case.</p>
+  <button class="btn" style="background:rgba(255,255,255,.15);color:#fff;border:2px solid rgba(255,255,255,.35);backdrop-filter:blur(8px);display:inline-flex;margin:0 auto;position:relative;z-index:1;" onclick="openModal()" class="fade-up d2">Talk to an Expert</button>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="index.html" class="logo"><div class="logo-icon">G</div><span class="logo-text">Go<span>Stationery</span></span></a>
+        <p>Software-powered queue management and smart printing solutions for modern Indian businesses.</p>
+        <div class="footer-social"><a href="#" class="social-btn">in</a><a href="#" class="social-btn">𝕏</a><a href="#" class="social-btn">▶</a></div>
+      </div>
+      <div class="footer-col"><h5>Solutions</h5><ul><li><a href="kiosk.html">Kiosk</a></li><li><a href="vending.html">Print & Dispense</a></li></ul></div>
+      <div class="footer-col"><h5>Industries</h5><ul><li><a href="#healthcare">Healthcare</a></li><li><a href="#banking">Banking</a></li><li><a href="#retail">Retail</a></li><li><a href="#govt">Government</a></li><li><a href="#corporate">Corporate</a></li><li><a href="#education">Education</a></li></ul></div>
+      <div class="footer-col"><h5>Company</h5><ul><li><a href="about.html">About</a></li><li><a href="index.html#contact">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 GoStationery. All rights reserved.</span><span>Made with <span class="heart">♥</span> in India</span></div>
+  </div>
+</footer>
+
+<div class="modal-overlay" id="demoModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div><div class="modal-title">Request a Free Demo</div><div class="modal-sub">Our team will reach out within 24 hours.</div></div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <form id="demoForm" novalidate>
+        <div class="form-row">
+          <div class="form-group"><label>Your Name *</label><input id="demoName" type="text" placeholder="Rahul Sharma" required/></div>
+          <div class="form-group"><label>Phone *</label><input id="demoPhone" type="tel" placeholder="+91 98765 43210" required/></div>
+        </div>
+        <div class="form-group"><label>Email *</label><input id="demoEmail" type="email" placeholder="you@company.com" required/></div>
+        <div class="form-group"><label>Interested In *</label>
+          <select id="demoProduct" required>
+            <option value="" disabled selected>Select a product</option>
+            <option>Kiosk — Queue Management</option>
+            <option>Print & Dispense Station</option>
+            <option>Both Products</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Message</label><textarea id="demoMsg" placeholder="Industry, location, specific needs…"></textarea></div>
+        <button type="submit" class="modal-submit" id="demoSubmitBtn">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+          Send Demo Request
+        </button>
+      </form>
+      <div class="modal-success" id="modalSuccess">
+        <div class="success-icon">✅</div>
+        <h3>Request Sent!</h3>
+        <p>We'll contact you within 24 hours.</p>
+        <button class="btn btn-primary btn-sm" style="margin:1.5rem auto 0;display:inline-flex" onclick="closeModal()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="common.js"></script>
+</body>
+</html>
