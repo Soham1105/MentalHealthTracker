@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>About Us | GoStationery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    body { padding-top: var(--nav-h); }
+
+    .about-hero {
+      background: linear-gradient(145deg,#e8f4fd,#f0faff 40%,#f8fafc);
+      padding: calc(var(--nav-h) + 4rem) 2rem 5rem;
+      position:relative; overflow:hidden;
+    }
+    .about-hero::after { content:'';position:absolute;top:-200px;right:-200px;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(0,180,216,.1),transparent 70%);pointer-events:none; }
+    .about-hero-inner { max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1.2fr 1fr;gap:4rem;align-items:center;position:relative;z-index:1; }
+
+    /* Values */
+    .values-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem; }
+    .value-card { background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:2rem;text-align:center;transition:transform .3s cubic-bezier(.34,1.56,.64,1),box-shadow .3s; }
+    .value-card:hover { transform:translateY(-6px);box-shadow:0 20px 50px rgba(0,0,0,.1); }
+    .value-icon { font-size:2.5rem;margin-bottom:1rem;display:block; }
+    .value-card h3 { margin-bottom:.5rem; }
+    .value-card p { font-size:.855rem;color:var(--muted);line-height:1.65; }
+
+    /* Team */
+    .team-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.5rem; }
+    .team-card { background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:2rem;text-align:center;transition:transform .3s,box-shadow .3s; }
+    .team-card:hover { transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.1); }
+    .team-avatar { width:72px;height:72px;border-radius:50%;margin:0 auto 1rem;display:flex;align-items:center;justify-content:center;font-size:1.8rem;font-weight:900;color:#fff; }
+    .team-card h3 { font-size:1rem;margin-bottom:.3rem; }
+    .team-role { font-size:.8rem;color:var(--accent);font-weight:600;margin-bottom:.5rem; }
+    .team-bio { font-size:.8rem;color:var(--muted);line-height:1.55; }
+
+    /* Timeline */
+    .timeline { max-width:700px;margin:0 auto; }
+    .tl-item { display:grid;grid-template-columns:80px 1fr;gap:1.5rem;margin-bottom:2.5rem;align-items:start; }
+    .tl-year { font-size:1.1rem;font-weight:900;color:var(--primary);text-align:right;padding-top:.25rem; }
+    .tl-content { border-left:3px solid var(--accent);padding-left:1.5rem;position:relative; }
+    .tl-content::before { content:'';position:absolute;left:-8px;top:6px;width:14px;height:14px;border-radius:50%;background:var(--accent);border:3px solid #fff;box-shadow:0 0 0 3px rgba(0,180,216,.2); }
+    .tl-content h3 { font-size:1rem;margin-bottom:.4rem; }
+    .tl-content p { font-size:.875rem;color:var(--muted);line-height:1.65; }
+
+    /* Mission visual */
+    .mission-visual {
+      background:linear-gradient(145deg,var(--primary),var(--accent));
+      border-radius:24px;padding:3rem;color:#fff;position:relative;overflow:hidden;
+    }
+    .mission-visual::before { content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,.08); }
+    .mission-visual::after  { content:'';position:absolute;bottom:-40px;left:-40px;width:150px;height:150px;border-radius:50%;background:rgba(255,255,255,.06); }
+    .mission-visual h2 { color:#fff;font-size:1.6rem;margin-bottom:1rem;position:relative;z-index:1; }
+    .mission-visual p  { color:rgba(255,255,255,.85);font-size:.95rem;line-height:1.75;position:relative;z-index:1; }
+    .mission-quote { font-size:1.3rem;font-weight:800;color:#fff;font-style:italic;border-left:4px solid rgba(255,255,255,.4);padding-left:1.25rem;margin:1.5rem 0;position:relative;z-index:1; }
+
+    @media(max-width:900px){
+      .about-hero-inner { grid-template-columns:1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo"><div class="logo-icon">G</div><span class="logo-text">Go<span>Stationery</span></span></a>
+    <ul class="nav-menu">
+      <li class="nav-item">
+        <button class="nav-link">Solutions <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></button>
+        <div class="dropdown">
+          <a href="kiosk.html"><div class="dropdown-icon di-blue">🖥️</div><div><span>Kiosk</span><span class="dropdown-desc">Queue management</span></div></a>
+          <a href="vending.html"><div class="dropdown-icon di-orange">🖨️</div><div><span>Print & Dispense Station</span><span class="dropdown-desc">Smart stationery vending</span></div></a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link">Industries <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></button>
+        <div class="dropdown" style="min-width:240px;">
+          <a href="industries.html#healthcare"><div class="dropdown-icon di-green">🏥</div><div><span>Healthcare</span></div></a>
+          <a href="industries.html#banking"><div class="dropdown-icon di-blue">🏦</div><div><span>Banking & Finance</span></div></a>
+          <a href="industries.html#retail"><div class="dropdown-icon di-yellow">🛒</div><div><span>Retail</span></div></a>
+          <a href="industries.html#govt"><div class="dropdown-icon di-purple">🏛️</div><div><span>Government</span></div></a>
+          <a href="industries.html#corporate"><div class="dropdown-icon di-red">🏢</div><div><span>Corporate</span></div></a>
+          <a href="industries.html#education"><div class="dropdown-icon di-green">🎓</div><div><span>Education</span></div></a>
+        </div>
+      </li>
+      <li class="nav-item"><a href="about.html" class="nav-link" style="color:var(--primary)">About</a></li>
+      <li class="nav-item"><a href="index.html#contact" class="nav-link">Contact</a></li>
+    </ul>
+    <div class="nav-actions"><button class="nav-cta" onclick="openModal()">Request Demo</button></div>
+    <button class="hamburger"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="about-hero">
+  <div class="about-hero-inner">
+    <div class="fade-up">
+      <span class="section-tag">About GoStationery</span>
+      <h1>We believe your <span class="text-gradient">time is priceless.</span></h1>
+      <p style="color:var(--muted);font-size:1.05rem;line-height:1.8;margin:1rem 0 2rem;max-width:480px">GoStationery was founded on a simple idea — that waiting in line is a solvable problem. We build intelligent software-powered products that transform how businesses manage queues and stationery, freeing both staff and customers from unnecessary friction.</p>
+      <div style="display:flex;gap:.9rem;flex-wrap:wrap;">
+        <button class="btn btn-primary" onclick="openModal()">Book a Demo</button>
+        <a href="#mission" class="btn btn-secondary">Our Mission</a>
+      </div>
+    </div>
+    <div class="fade-up d2">
+      <div class="mission-visual">
+        <h2>Our Mission</h2>
+        <div class="mission-quote">"Make waiting a thing of the past."</div>
+        <p>We combine thoughtful hardware with powerful cloud software to give every business — from a small clinic to a government department — the tools to serve their customers faster, fairer, and with dignity.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stats-grid">
+    <div class="stat-item fade-up"><span class="stat-num"><span data-count="500" style="color:#fff">0</span><span class="stat-unit">+</span></span><div class="stat-label">Clients Served</div></div>
+    <div class="stat-item fade-up d1"><span class="stat-num"><span data-count="1200" style="color:#fff">0</span><span class="stat-unit">+</span></span><div class="stat-label">Locations Deployed</div></div>
+    <div class="stat-item fade-up d2"><span class="stat-num"><span data-count="6" style="color:#fff">0</span><span class="stat-unit"></span></span><div class="stat-label">Industries Served</div></div>
+    <div class="stat-item fade-up d3"><span class="stat-num" style="color:#fff">99.9<span class="stat-unit">%</span></span><div class="stat-label">Uptime SLA</div></div>
+  </div>
+</div>
+
+<!-- OUR STORY / TIMELINE -->
+<section class="section" id="mission" style="background:#fff;">
+  <div class="section-inner">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;">
+      <div class="fade-up">
+        <span class="section-tag">Our Story</span>
+        <h2 class="section-title">From a frustrating wait to a <span class="text-gradient">nationwide solution</span></h2>
+        <p style="color:var(--muted);font-size:.95rem;line-height:1.75;margin-bottom:1.5rem">GoStationery was born in a hospital waiting room. Our founder spent three hours waiting for an OPD token — watching nurses manually manage a crowd of frustrated patients with no system, no structure, and no visibility.</p>
+        <p style="color:var(--muted);font-size:.95rem;line-height:1.75">That frustration became a mission. We built GoStationery to bring world-class queue management and smart stationery dispensing to every business in India — not just large enterprises, but clinics, banks, colleges, and government offices too.</p>
+      </div>
+      <div class="fade-up d2">
+        <div class="timeline">
+          <div class="tl-item">
+            <div class="tl-year">2021</div>
+            <div class="tl-content"><h3>Company Founded</h3><p>GoStationery incorporated in Ahmedabad with a seed team of 4 engineers and 1 business co-founder.</p></div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-year">2022</div>
+            <div class="tl-content"><h3>Kiosk v1 Launched</h3><p>First queue management kiosk deployed at a multispeciality hospital in Gujarat. Wait times dropped 40% in month one.</p></div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-year">2023</div>
+            <div class="tl-content"><h3>Print Station Launched</h3><p>Introduced the Print & Dispense Station after corporate clients requested a self-service stationery solution.</p></div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-year">2024</div>
+            <div class="tl-content"><h3>100+ Clients, 6 Industries</h3><p>Expanded to banking, retail, government, and education verticals. Crossed 100 client milestone and 500+ locations.</p></div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-year">2025</div>
+            <div class="tl-content"><h3>AI & Cloud Platform</h3><p>Launched AI-powered wait prediction and unified cloud dashboard. Pan-India service coverage established.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section class="section" style="background:linear-gradient(160deg,#f1f5f9,#e8f4fd)">
+  <div class="section-inner">
+    <div class="section-header center fade-up">
+      <span class="section-tag">Our Values</span>
+      <h2 class="section-title">What drives us every day</h2>
+      <p class="section-sub" style="margin:0 auto">These aren't words on a wall — they're the principles behind every product decision, every support call, and every client relationship.</p>
+    </div>
+    <div class="values-grid" style="margin-top:2.5rem;">
+      <div class="value-card fade-up d1"><span class="value-icon">⏱️</span><h3>Time is Precious</h3><p>We design every feature with one goal: saving time for both your team and your customers.</p></div>
+      <div class="value-card fade-up d2"><span class="value-icon">🧠</span><h3>Software First</h3><p>Hardware is just the vessel. Our software is where the real intelligence lives — and it only gets smarter over time.</p></div>
+      <div class="value-card fade-up d3"><span class="value-icon">🤝</span><h3>Customer Obsession</h3><p>We measure our success by how much better our clients' customers feel after every interaction with our products.</p></div>
+      <div class="value-card fade-up d4"><span class="value-icon">🇮🇳</span><h3>Built for India</h3><p>Low connectivity fallbacks, regional language support, UPI-first payments, India-hosted data. Made here, for here.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="section" style="background:#fff;">
+  <div class="section-inner">
+    <div class="section-header center fade-up">
+      <span class="section-tag">The Team</span>
+      <h2 class="section-title">People behind the product</h2>
+      <p class="section-sub" style="margin:0 auto">A passionate team of engineers, designers, and operators who've experienced the problem first-hand.</p>
+    </div>
+    <div class="team-grid" style="margin-top:2.5rem;">
+      <div class="team-card fade-up d1">
+        <div class="team-avatar" style="background:linear-gradient(135deg,var(--primary),var(--accent))">S</div>
+        <h3>Soham Dudhat</h3>
+        <div class="team-role">Founder & CEO</div>
+        <p class="team-bio">Product visionary with a background in embedded systems and SaaS. Built GoStationery after one too many frustrating waiting rooms.</p>
+      </div>
+      <div class="team-card fade-up d2">
+        <div class="team-avatar" style="background:linear-gradient(135deg,#7c3aed,#a78bfa)">R</div>
+        <h3>Rahul Shah</h3>
+        <div class="team-role">CTO</div>
+        <p class="team-bio">Full-stack engineer with 10 years in IoT and cloud platforms. Leads the engineering team and platform architecture.</p>
+      </div>
+      <div class="team-card fade-up d3">
+        <div class="team-avatar" style="background:linear-gradient(135deg,#059669,#34d399)">P</div>
+        <h3>Priya Mehta</h3>
+        <div class="team-role">Head of Design</div>
+        <p class="team-bio">UX designer with healthcare and fintech experience. Champions the visitor experience in every product decision.</p>
+      </div>
+      <div class="team-card fade-up d4">
+        <div class="team-avatar" style="background:linear-gradient(135deg,#b45309,#f97316)">A</div>
+        <h3>Arjun Verma</h3>
+        <div class="team-role">VP Sales</div>
+        <p class="team-bio">10 years of enterprise sales in Gujarat and Maharashtra. Has personally helped 100+ businesses deploy GoStationery.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CAREERS -->
+<section class="section" id="careers" style="background:linear-gradient(160deg,#f1f5f9,#e8f4fd)">
+  <div class="section-inner">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;">
+      <div class="fade-up">
+        <span class="section-tag">Careers</span>
+        <h2 class="section-title">Come build with us</h2>
+        <p style="color:var(--muted);font-size:.95rem;line-height:1.75;margin-bottom:2rem">We're a small, fast-moving team working on a real problem that touches millions of Indians every day. If you want your work to matter, come talk to us.</p>
+        <div style="display:flex;flex-direction:column;gap:1rem;">
+          <div class="card" style="padding:1.25rem 1.5rem;display:flex;justify-content:space-between;align-items:center;">
+            <div><div style="font-weight:700;margin-bottom:3px">Backend Engineer (Node.js / Go)</div><div style="font-size:.8rem;color:var(--muted)">Full-time · Ahmedabad / Remote</div></div>
+            <button class="btn btn-primary btn-sm" onclick="openModal()">Apply</button>
+          </div>
+          <div class="card" style="padding:1.25rem 1.5rem;display:flex;justify-content:space-between;align-items:center;">
+            <div><div style="font-weight:700;margin-bottom:3px">Field Sales Executive</div><div style="font-size:.8rem;color:var(--muted)">Full-time · Gujarat & Maharashtra</div></div>
+            <button class="btn btn-primary btn-sm" onclick="openModal()">Apply</button>
+          </div>
+          <div class="card" style="padding:1.25rem 1.5rem;display:flex;justify-content:space-between;align-items:center;">
+            <div><div style="font-weight:700;margin-bottom:3px">Hardware Support Technician</div><div style="font-size:.8rem;color:var(--muted)">Full-time · Pan-India travel</div></div>
+            <button class="btn btn-primary btn-sm" onclick="openModal()">Apply</button>
+          </div>
+        </div>
+      </div>
+      <div class="fade-up d2">
+        <div style="background:linear-gradient(145deg,var(--primary),var(--accent));border-radius:24px;padding:2.5rem;color:#fff;">
+          <h3 style="color:#fff;font-size:1.3rem;margin-bottom:1rem">Why join GoStationery?</h3>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:.85rem;">
+            <li style="display:flex;gap:.75rem;font-size:.9rem;color:rgba(255,255,255,.85)"><span>🚀</span>Work on a product that solves a real, everyday problem for millions</li>
+            <li style="display:flex;gap:.75rem;font-size:.9rem;color:rgba(255,255,255,.85)"><span>💡</span>Small team — your ideas ship in days, not quarters</li>
+            <li style="display:flex;gap:.75rem;font-size:.9rem;color:rgba(255,255,255,.85)"><span>🌍</span>Remote-friendly with an Ahmedabad HQ</li>
+            <li style="display:flex;gap:.75rem;font-size:.9rem;color:rgba(255,255,255,.85)"><span>📈</span>ESOPs and competitive salary — you grow as we grow</li>
+            <li style="display:flex;gap:.75rem;font-size:.9rem;color:rgba(255,255,255,.85)"><span>🤝</span>Transparent, founder-led culture</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section style="background:var(--bg);padding:5rem 2rem;text-align:center;">
+  <div style="max-width:560px;margin:0 auto;" class="fade-up">
+    <span class="section-tag">Get In Touch</span>
+    <h2 class="section-title">Let's talk about your needs</h2>
+    <p style="color:var(--muted);margin-bottom:2rem;font-size:1rem;line-height:1.7">Whether you're a customer, investor, partner, or potential team member — we'd love to hear from you.</p>
+    <button class="btn btn-primary" onclick="openModal()" style="margin:0 auto;display:inline-flex;">Request a Free Demo</button>
+    <div style="display:flex;justify-content:center;gap:2rem;margin-top:2rem;flex-wrap:wrap;">
+      <span style="font-size:.875rem;color:var(--muted)">📧 hello@gostationery.in</span>
+      <span style="font-size:.875rem;color:var(--muted)">📞 +91 98765 43210</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="index.html" class="logo"><div class="logo-icon">G</div><span class="logo-text">Go<span>Stationery</span></span></a>
+        <p>Software-powered queue management and smart printing solutions for modern Indian businesses.</p>
+        <div class="footer-social"><a href="#" class="social-btn">in</a><a href="#" class="social-btn">𝕏</a><a href="#" class="social-btn">▶</a></div>
+      </div>
+      <div class="footer-col"><h5>Solutions</h5><ul><li><a href="kiosk.html">Kiosk</a></li><li><a href="vending.html">Print & Dispense</a></li></ul></div>
+      <div class="footer-col"><h5>Industries</h5><ul><li><a href="industries.html#healthcare">Healthcare</a></li><li><a href="industries.html#banking">Banking</a></li><li><a href="industries.html#retail">Retail</a></li><li><a href="industries.html#govt">Government</a></li></ul></div>
+      <div class="footer-col"><h5>Company</h5><ul><li><a href="about.html">About Us</a></li><li><a href="#careers">Careers</a></li><li><a href="index.html#contact">Contact</a></li><li><a href="#">Privacy Policy</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 GoStationery. All rights reserved.</span><span>Made with <span class="heart">♥</span> in India</span></div>
+  </div>
+</footer>
+
+<div class="modal-overlay" id="demoModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div><div class="modal-title">Get In Touch</div><div class="modal-sub">Demo request, partnership, or career inquiry.</div></div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <form id="demoForm" novalidate>
+        <div class="form-row">
+          <div class="form-group"><label>Your Name *</label><input id="demoName" type="text" placeholder="Rahul Sharma" required/></div>
+          <div class="form-group"><label>Phone *</label><input id="demoPhone" type="tel" placeholder="+91 98765 43210" required/></div>
+        </div>
+        <div class="form-group"><label>Email *</label><input id="demoEmail" type="email" placeholder="you@company.com" required/></div>
+        <div class="form-group"><label>I'm interested in *</label>
+          <select id="demoProduct" required>
+            <option value="" disabled selected>Select an option</option>
+            <option>Kiosk — Queue Management</option>
+            <option>Print & Dispense Station</option>
+            <option>Both Products</option>
+            <option>Partnership</option>
+            <option>Career Opportunity</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Message</label><textarea id="demoMsg" placeholder="Tell us more about what you're looking for…"></textarea></div>
+        <button type="submit" class="modal-submit" id="demoSubmitBtn">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+          Send Message
+        </button>
+      </form>
+      <div class="modal-success" id="modalSuccess">
+        <div class="success-icon">✅</div>
+        <h3>Message Sent!</h3>
+        <p>We'll get back to you within 24 hours.</p>
+        <button class="btn btn-primary btn-sm" style="margin:1.5rem auto 0;display:inline-flex" onclick="closeModal()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="common.js"></script>
+</body>
+</html>

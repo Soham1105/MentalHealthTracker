@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Kiosk — Queue Management | GoStationery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    body { padding-top: var(--nav-h); }
+
+    /* HERO */
+    .prod-hero {
+      background: linear-gradient(145deg,#e0f2fe 0%,#bae6fd 40%,#e8f4fd 100%);
+      padding: calc(var(--nav-h) + 3rem) 2rem 5rem;
+      position: relative; overflow: hidden;
+    }
+    .prod-hero::before {
+      content:''; position:absolute; top:-150px; right:-150px;
+      width:500px; height:500px; border-radius:50%;
+      background:radial-gradient(circle,rgba(15,76,129,.12),transparent 70%);
+      pointer-events:none;
+    }
+    .prod-hero-inner { max-width:1200px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:center; position:relative; z-index:1; }
+    .prod-hero-text .badge-pill {
+      display:inline-block; background:#dbeafe; color:#1d4ed8;
+      font-size:.7rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+      padding:.35rem .85rem; border-radius:99px; margin-bottom:1rem;
+    }
+    .prod-hero-text h1 { font-size:clamp(2.2rem,5vw,3.4rem); margin-bottom:1rem; }
+    .prod-hero-text p { font-size:1.05rem; color:var(--muted); line-height:1.8; margin-bottom:2rem; max-width:460px; }
+
+    /* Big kiosk mockup */
+    .kiosk-big {
+      width:100%; max-width:320px; margin:0 auto;
+      border-radius:28px; background:#fff; overflow:hidden;
+      box-shadow:0 30px 80px rgba(0,0,0,.18);
+      border:1px solid rgba(226,232,240,.5);
+      transform: perspective(900px) rotateY(-8deg) rotateX(3deg);
+      transition: transform .4s ease;
+    }
+    .kiosk-big:hover { transform: perspective(900px) rotateY(0) rotateX(0); }
+    .kb-header {
+      background:linear-gradient(135deg,var(--primary),var(--accent));
+      padding:1.25rem 1.25rem 1rem;
+    }
+    .kb-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+    .kb-title { font-size:.65rem; font-weight:800; color:rgba(255,255,255,.9); letter-spacing:.08em; text-transform:uppercase; }
+    .kb-live  { display:flex; align-items:center; gap:5px; font-size:.58rem; color:rgba(255,255,255,.8); font-weight:600; }
+    .kb-live-dot { width:7px;height:7px;border-radius:50%;background:#4ade80;animation:blink 1.2s infinite; }
+    @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+    .kb-serving { background:rgba(255,255,255,.18); border-radius:12px; padding:.8rem 1rem; display:flex; align-items:center; justify-content:space-between; }
+    .kb-sl { font-size:.6rem; color:rgba(255,255,255,.75); font-weight:500; }
+    .kb-sn { font-size:1.6rem; font-weight:900; color:#fff; }
+    .kb-body { padding:.9rem; background:#f8fafc; display:flex; flex-direction:column; gap:.5rem; }
+    .kb-row { background:#fff; border:1px solid #f1f5f9; border-radius:12px; padding:.6rem .8rem; display:flex; align-items:center; gap:.6rem; }
+    .kb-row.active { background:#eff6ff; border-color:#bfdbfe; }
+    .kb-dot  { width:9px;height:9px;border-radius:50%;flex-shrink:0; }
+    .kb-tok  { font-size:.7rem;font-weight:700;flex:1; }
+    .kb-wait { font-size:.65rem;font-weight:700; }
+    .kb-tabs { display:flex; gap:.4rem; padding:.75rem .9rem; background:#fff; border-top:1px solid #f1f5f9; }
+    .kb-tab  { flex:1; text-align:center; padding:.4rem; border-radius:8px; font-size:.6rem; font-weight:700; cursor:pointer; }
+    .kb-tab.active { background:var(--primary); color:#fff; }
+    .kb-tab:not(.active) { background:#f1f5f9; color:var(--muted); }
+    .kb-footer { padding:.65rem .9rem; background:#fff; display:flex; justify-content:space-between; }
+    .kb-footer span { font-size:.62rem; color:var(--muted); font-weight:500; }
+    .kb-footer strong { font-size:.62rem; color:var(--primary); font-weight:800; }
+
+    /* floating chips */
+    .float-chip {
+      position:absolute; background:#fff; border-radius:12px;
+      padding:.6rem .9rem; box-shadow:0 8px 28px rgba(0,0,0,.12);
+      border:1px solid var(--border); font-size:.72rem; font-weight:700;
+      display:flex; align-items:center; gap:.5rem;
+      animation:fChip 3.5s ease-in-out infinite;
+    }
+    @keyframes fChip{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+    .fc-1 { top:10%; right:-30px; animation-delay:0s; }
+    .fc-2 { bottom:15%; left:-30px; animation-delay:-1.8s; }
+
+    /* FEATURES */
+    .features-section { background:var(--bg); }
+    .feat-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.5rem; }
+    .feat-card {
+      background:var(--surface); border:1px solid var(--border); border-radius:20px; padding:2rem;
+      transition:transform .3s cubic-bezier(.34,1.56,.64,1),box-shadow .3s,border-color .3s;
+    }
+    .feat-card:hover { transform:translateY(-6px) scale(1.02); box-shadow:0 20px 50px rgba(0,0,0,.1); border-color:var(--accent); }
+    .feat-icon-wrap { width:52px;height:52px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:1.1rem; }
+    .feat-card h3 { font-size:1rem; margin-bottom:.5rem; }
+    .feat-card p { font-size:.85rem; color:var(--muted); line-height:1.65; }
+
+    /* TECH SPECS TABLE */
+    .specs-table { width:100%; border-collapse:collapse; }
+    .specs-table th { text-align:left; font-size:.78rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); padding:.75rem 1rem; background:#f1f5f9; }
+    .specs-table td { font-size:.9rem; padding:.85rem 1rem; border-bottom:1px solid var(--border); }
+    .specs-table tr:last-child td { border-bottom:none; }
+    .specs-table tr:hover td { background:#f8fafc; }
+
+    @media(max-width:900px){
+      .prod-hero-inner { grid-template-columns:1fr; }
+      .kiosk-big { transform:none; max-width:280px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <div class="logo-icon">G</div>
+      <span class="logo-text">Go<span>Stationery</span></span>
+    </a>
+    <ul class="nav-menu">
+      <li class="nav-item">
+        <button class="nav-link">Solutions <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></button>
+        <div class="dropdown">
+          <a href="kiosk.html"><div class="dropdown-icon di-blue">🖥️</div><div><span>Kiosk</span><span class="dropdown-desc">Queue management system</span></div></a>
+          <a href="vending.html"><div class="dropdown-icon di-orange">🖨️</div><div><span>Print & Dispense Station</span><span class="dropdown-desc">Smart stationery vending</span></div></a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link">Industries <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></button>
+        <div class="dropdown" style="min-width:260px;">
+          <a href="industries.html#healthcare"><div class="dropdown-icon di-green">🏥</div><div><span>Healthcare</span><span class="dropdown-desc">Clinics, hospitals, labs</span></div></a>
+          <a href="industries.html#banking"><div class="dropdown-icon di-blue">🏦</div><div><span>Banking & Finance</span></div></a>
+          <a href="industries.html#retail"><div class="dropdown-icon di-yellow">🛒</div><div><span>Retail</span></div></a>
+          <a href="industries.html#govt"><div class="dropdown-icon di-purple">🏛️</div><div><span>Government</span></div></a>
+          <a href="industries.html#corporate"><div class="dropdown-icon di-red">🏢</div><div><span>Corporate</span></div></a>
+          <a href="industries.html#education"><div class="dropdown-icon di-green">🎓</div><div><span>Education</span></div></a>
+        </div>
+      </li>
+      <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+      <li class="nav-item"><a href="index.html#contact" class="nav-link">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="nav-cta" onclick="openModal()">Request Demo</button>
+    </div>
+    <button class="hamburger"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="prod-hero">
+  <div class="prod-hero-inner">
+    <div class="prod-hero-text fade-up">
+      <span class="badge-pill">Queue Management</span>
+      <h1>Say goodbye to <span class="text-gradient">waiting in line.</span></h1>
+      <p>Kiosk is a fully software-powered queue management system that gives every visitor a fair, frictionless experience — with digital tokens, live displays, and AI-driven wait estimates.</p>
+      <div style="display:flex;gap:.9rem;flex-wrap:wrap;">
+        <button class="btn btn-primary" onclick="openModal('Kiosk — Queue Management')">Request a Demo</button>
+        <a href="#features" class="btn btn-secondary">See Features</a>
+      </div>
+      <div style="display:flex;gap:2rem;margin-top:2.5rem;flex-wrap:wrap;">
+        <div><div style="font-size:1.6rem;font-weight:900;color:var(--primary)">40%</div><div style="font-size:.75rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.05em">Avg wait reduction</div></div>
+        <div><div style="font-size:1.6rem;font-weight:900;color:var(--primary)">Real-time</div><div style="font-size:.75rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.05em">Cloud dashboard</div></div>
+        <div><div style="font-size:1.6rem;font-weight:900;color:var(--primary)">24/7</div><div style="font-size:.75rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.05em">Remote support</div></div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:center;position:relative;" class="fade-up d2">
+      <div class="fc-1 float-chip">🟢 Token A-041 — Counter 3</div>
+      <div class="kiosk-big">
+        <div class="kb-header">
+          <div class="kb-top">
+            <span class="kb-title">⚡ Kiosk Live Queue</span>
+            <span class="kb-live"><span class="kb-live-dot"></span>LIVE</span>
+          </div>
+          <div class="kb-serving">
+            <span class="kb-sl">NOW SERVING</span>
+            <span class="kb-sn" id="kServing">A-041</span>
+          </div>
+        </div>
+        <div class="kb-body">
+          <div class="kb-row active">
+            <div class="kb-dot" style="background:#22c55e"></div>
+            <span class="kb-tok" id="kT1">Token #A-042</span>
+            <span class="kb-wait" style="color:var(--primary)">~2 min</span>
+          </div>
+          <div class="kb-row">
+            <div class="kb-dot" style="background:#f97316"></div>
+            <span class="kb-tok" id="kT2">Token #A-043</span>
+            <span class="kb-wait" style="color:var(--muted)">~6 min</span>
+          </div>
+          <div class="kb-row">
+            <div class="kb-dot" style="background:#94a3b8"></div>
+            <span class="kb-tok" id="kT3">Token #A-044</span>
+            <span class="kb-wait" style="color:#94a3b8">~11 min</span>
+          </div>
+          <div class="kb-row">
+            <div class="kb-dot" style="background:#94a3b8"></div>
+            <span class="kb-tok" id="kT4">Token #A-045</span>
+            <span class="kb-wait" style="color:#94a3b8">~16 min</span>
+          </div>
+        </div>
+        <div class="kb-tabs">
+          <div class="kb-tab active">Queue</div>
+          <div class="kb-tab">Analytics</div>
+          <div class="kb-tab">Alerts</div>
+        </div>
+        <div class="kb-footer">
+          <span id="kCount">4 waiting · 2 counters open</span>
+          <strong>Avg: 8 min</strong>
+        </div>
+      </div>
+      <div class="fc-2 float-chip">📊 Peak hour alert sent</div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="section features-section" id="features">
+  <div class="section-inner">
+    <div class="section-header center fade-up">
+      <span class="section-tag">Features</span>
+      <h2 class="section-title">Everything you need to manage queues perfectly</h2>
+      <p class="section-sub" style="margin:0 auto;">From token generation to analytics, Kiosk covers the entire visitor journey — all in one intelligent platform.</p>
+    </div>
+    <div class="feat-grid" style="margin-top:2.5rem;">
+      <div class="feat-card fade-up d1">
+        <div class="feat-icon-wrap" style="background:#dbeafe">🎫</div>
+        <h3>Digital Token Issuance</h3>
+        <p>Visitors get tokens via the kiosk touchscreen, QR code scan, SMS link, or WhatsApp — no physical tickets, no crowding.</p>
+      </div>
+      <div class="feat-card fade-up d2">
+        <div class="feat-icon-wrap" style="background:#dcfce7">📺</div>
+        <h3>Live Display Boards</h3>
+        <p>Wall-mounted or TV displays show current serving numbers, estimated wait times, and counter assignments — updated in real time.</p>
+      </div>
+      <div class="feat-card fade-up d3">
+        <div class="feat-icon-wrap" style="background:#fef9c3">🧠</div>
+        <h3>AI Wait-Time Prediction</h3>
+        <p>Machine learning analyses historical patterns to predict wait times with high accuracy — giving visitors reliable estimates at token generation.</p>
+      </div>
+      <div class="feat-card fade-up d4">
+        <div class="feat-icon-wrap" style="background:#ede9fe">🏢</div>
+        <h3>Multi-Counter & Multi-Branch</h3>
+        <p>Manage multiple service counters, departments, and even multiple locations from a single cloud dashboard with unified reporting.</p>
+      </div>
+      <div class="feat-card fade-up d5">
+        <div class="feat-icon-wrap" style="background:#ffedd5">📲</div>
+        <h3>SMS & WhatsApp Alerts</h3>
+        <p>Visitors receive automated notifications when their turn is near — so they can wait anywhere, not just in the queue.</p>
+      </div>
+      <div class="feat-card fade-up d6">
+        <div class="feat-icon-wrap" style="background:#fee2e2">⭐</div>
+        <h3>Customer Feedback</h3>
+        <p>Collect satisfaction ratings after every service interaction via the kiosk or SMS survey — understand staff performance and service quality.</p>
+      </div>
+      <div class="feat-card fade-up d1">
+        <div class="feat-icon-wrap" style="background:#dbeafe">📊</div>
+        <h3>Advanced Analytics</h3>
+        <p>Peak hour heatmaps, average service time, counter utilisation, abandonment rate, and staff KPIs — all exportable to Excel or PDF.</p>
+      </div>
+      <div class="feat-card fade-up d2">
+        <div class="feat-icon-wrap" style="background:#dcfce7">🔗</div>
+        <h3>API Integration</h3>
+        <p>REST APIs connect Kiosk with your HIS, CRM, ERP, or appointment system — creating a fully unified patient or customer journey.</p>
+      </div>
+      <div class="feat-card fade-up d3">
+        <div class="feat-icon-wrap" style="background:#fef9c3">☁️</div>
+        <h3>Remote Management</h3>
+        <p>Open counters, reroute queues, push announcements, and update branding from anywhere — your phone, laptop, or tablet.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS for this product -->
+<section class="section" style="background:linear-gradient(160deg,#f1f5f9,#e8f4fd)">
+  <div class="section-inner">
+    <div class="section-header center fade-up">
+      <span class="section-tag">Visitor Journey</span>
+      <h2 class="section-title">How Kiosk Works</h2>
+      <p class="section-sub" style="margin:0 auto;">A simple, three-step experience that delights every visitor.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:2rem;margin-top:2.5rem;">
+      <div class="card fade-up d1" style="text-align:center;">
+        <div style="font-size:3rem;margin-bottom:1rem;">🎫</div>
+        <h3>1. Get Token</h3>
+        <p style="font-size:.875rem;color:var(--muted);line-height:1.65;margin-top:.5rem">Walk up to the kiosk, scan a QR code, or use WhatsApp to get a digital token with your estimated wait time.</p>
+      </div>
+      <div class="card fade-up d2" style="text-align:center;">
+        <div style="font-size:3rem;margin-bottom:1rem;">📱</div>
+        <h3>2. Wait Freely</h3>
+        <p style="font-size:.875rem;color:var(--muted);line-height:1.65;margin-top:.5rem">Shop, work, or relax. You get an SMS alert when your turn is just a few ahead — so your time is never wasted.</p>
+      </div>
+      <div class="card fade-up d3" style="text-align:center;">
+        <div style="font-size:3rem;margin-bottom:1rem;">✅</div>
+        <h3>3. Get Served</h3>
+        <p style="font-size:.875rem;color:var(--muted);line-height:1.65;margin-top:.5rem">Your token number appears on the display board with counter assignment. Walk in, get served, leave a quick rating.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TECH SPECS -->
+<section class="section" style="background:#fff">
+  <div class="section-inner">
+    <div class="section-header fade-up">
+      <span class="section-tag">Technical Specs</span>
+      <h2 class="section-title">Built for Reliability</h2>
+      <p class="section-sub">Enterprise-grade hardware paired with intelligent cloud software.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;" class="fade-up d1">
+      <div class="card" style="padding:0;overflow:hidden;">
+        <table class="specs-table">
+          <thead><tr><th colspan="2">Software</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Platform</strong></td><td>Cloud SaaS + On-Prem option</td></tr>
+            <tr><td><strong>Uptime SLA</strong></td><td>99.9% guaranteed</td></tr>
+            <tr><td><strong>Updates</strong></td><td>OTA, zero-downtime</td></tr>
+            <tr><td><strong>Dashboard</strong></td><td>Web + Mobile (iOS & Android)</td></tr>
+            <tr><td><strong>API</strong></td><td>REST API, Webhooks</td></tr>
+            <tr><td><strong>Data storage</strong></td><td>India-based servers</td></tr>
+            <tr><td><strong>Compliance</strong></td><td>DPDP Act, IT Act</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card" style="padding:0;overflow:hidden;">
+        <table class="specs-table">
+          <thead><tr><th colspan="2">Hardware (Kiosk Unit)</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Display</strong></td><td>15.6" or 21.5" touchscreen</td></tr>
+            <tr><td><strong>Printer</strong></td><td>Thermal token printer (optional)</td></tr>
+            <tr><td><strong>Connectivity</strong></td><td>Ethernet + WiFi + 4G backup</td></tr>
+            <tr><td><strong>QR Scanner</strong></td><td>Built-in 2D scanner</td></tr>
+            <tr><td><strong>OS</strong></td><td>Android 11+ / Linux</td></tr>
+            <tr><td><strong>Enclosure</strong></td><td>Custom branded, IP-rated</td></tr>
+            <tr><td><strong>Warranty</strong></td><td>1 year hardware + software</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<section class="section" style="background:linear-gradient(135deg,#071528,#0f2a4a)">
+  <div class="section-inner" style="max-width:800px;text-align:center;">
+    <p style="font-size:1.35rem;color:rgba(255,255,255,.85);line-height:1.8;font-style:italic;margin-bottom:2rem;" class="fade-up">
+      "Patient wait times dropped by 40% in our OPD within the first month of using Kiosk. Staff now focus on care, not crowd management. The cloud dashboard is something we check every morning."
+    </p>
+    <div style="display:flex;align-items:center;justify-content:center;gap:1rem;" class="fade-up d1">
+      <div style="width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--accent));display:flex;align-items:center;justify-content:center;font-size:1.25rem;font-weight:900;color:#fff">R</div>
+      <div style="text-align:left;"><div style="color:#fff;font-weight:700;">Dr. Ravi Mehta</div><div style="color:rgba(255,255,255,.55);font-size:.85rem">Apollo Multispeciality, Ahmedabad</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section style="background:var(--bg);padding:5rem 2rem;text-align:center;">
+  <div style="max-width:600px;margin:0 auto;" class="fade-up">
+    <span class="section-tag">Get Started</span>
+    <h2 class="section-title">Ready to eliminate queues?</h2>
+    <p style="color:var(--muted);margin-bottom:2rem;font-size:1rem;line-height:1.7">Book a free live demo and see Kiosk in action — configured for your specific industry and space.</p>
+    <button class="btn btn-primary" onclick="openModal('Kiosk — Queue Management')" style="margin:0 auto;display:inline-flex;">Request Free Demo</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="index.html" class="logo"><div class="logo-icon">G</div><span class="logo-text">Go<span>Stationery</span></span></a>
+        <p>Software-powered queue management and smart printing solutions for modern Indian businesses.</p>
+        <div class="footer-social">
+          <a href="#" class="social-btn">in</a><a href="#" class="social-btn">𝕏</a><a href="#" class="social-btn">▶</a>
+        </div>
+      </div>
+      <div class="footer-col"><h5>Solutions</h5><ul><li><a href="kiosk.html">Kiosk</a></li><li><a href="vending.html">Print & Dispense Station</a></li></ul></div>
+      <div class="footer-col"><h5>Industries</h5><ul><li><a href="industries.html#healthcare">Healthcare</a></li><li><a href="industries.html#banking">Banking</a></li><li><a href="industries.html#retail">Retail</a></li><li><a href="industries.html#govt">Government</a></li></ul></div>
+      <div class="footer-col"><h5>Company</h5><ul><li><a href="about.html">About</a></li><li><a href="index.html#contact">Contact</a></li><li><a href="#">Privacy Policy</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 GoStationery. All rights reserved.</span><span>Made with <span class="heart">♥</span> in India</span></div>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="demoModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div><div class="modal-title">Request a Free Demo</div><div class="modal-sub">Our team will reach out within 24 hours.</div></div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <form id="demoForm" novalidate>
+        <div class="form-row">
+          <div class="form-group"><label>Your Name *</label><input id="demoName" type="text" placeholder="Rahul Sharma" required/></div>
+          <div class="form-group"><label>Phone Number *</label><input id="demoPhone" type="tel" placeholder="+91 98765 43210" required/></div>
+        </div>
+        <div class="form-group"><label>Email *</label><input id="demoEmail" type="email" placeholder="you@company.com" required/></div>
+        <div class="form-group"><label>Interested In *</label>
+          <select id="demoProduct" required>
+            <option value="" disabled selected>Select a product</option>
+            <option>Kiosk — Queue Management</option>
+            <option>Print & Dispense Station</option>
+            <option>Both Products</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Message</label><textarea id="demoMsg" placeholder="Your use case, location, or questions…"></textarea></div>
+        <button type="submit" class="modal-submit" id="demoSubmitBtn">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+          Send Demo Request
+        </button>
+      </form>
+      <div class="modal-success" id="modalSuccess">
+        <div class="success-icon">✅</div>
+        <h3>Request Sent!</h3>
+        <p>We'll contact you within 24 hours to schedule your personalised demo.</p>
+        <button class="btn btn-primary btn-sm" style="margin:1.5rem auto 0;display:inline-flex" onclick="closeModal()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="common.js"></script>
+<script>
+  let base = 41;
+  setInterval(() => {
+    base++;
+    const s = document.getElementById('kServing'); if (!s) return;
+    s.textContent = 'A-0'+base;
+    document.getElementById('kT1').textContent = 'Token #A-0'+(base+1);
+    document.getElementById('kT2').textContent = 'Token #A-0'+(base+2);
+    document.getElementById('kT3').textContent = 'Token #A-0'+(base+3);
+    document.getElementById('kT4').textContent = 'Token #A-0'+(base+4);
+    s.style.transform = 'scale(1.12)';
+    setTimeout(() => s.style.transform = '', 300);
+  }, 3500);
+</script>
+</body>
+</html>
