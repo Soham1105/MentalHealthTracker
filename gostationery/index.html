@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
   <title>GoStationery — Smart Queue & Printing Solutions</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -11,48 +12,56 @@
     /* ── HOME-SPECIFIC ── */
     body { padding-top: var(--nav-h); }
 
-    /* HERO */
+    /* ── HERO — Dark cinematic (Apple-inspired) ── */
     .hero {
       min-height: calc(100vh - var(--nav-h));
-      display: flex; align-items: center;
-      background: linear-gradient(160deg,#e4f0fb 0%,#edf8fc 35%,#f8fafc 65%,#fff8f2 100%);
-      padding: 5rem 2rem 4rem; position: relative; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+      background: radial-gradient(ellipse 110% 70% at 50% -5%, #0d2a4a 0%, #050d1a 55%);
+      padding: 4.5rem 2rem 5rem; position: relative; overflow: hidden;
+      text-align: center;
     }
-    .blob { position:absolute; border-radius:50%; filter:blur(90px); opacity:.3; pointer-events:none; animation:floatB 9s ease-in-out infinite; }
-    .blob-1 { width:520px;height:520px;background:var(--accent);top:-160px;right:-160px;animation-delay:0s; }
-    .blob-2 { width:420px;height:420px;background:var(--primary);bottom:-120px;left:-100px;animation-delay:-4s; }
-    .blob-3 { width:280px;height:280px;background:var(--accent2);top:40%;left:8%;animation-delay:-7s;opacity:.14; }
-    @keyframes floatB { 0%,100%{transform:translate(0,0) scale(1)} 33%{transform:translate(20px,-30px) scale(1.05)} 66%{transform:translate(-15px,20px) scale(0.95)} }
+    .hero-glow { position: absolute; border-radius: 50%; pointer-events: none; }
+    .hero-glow-1 { width:800px;height:800px;background:radial-gradient(circle,rgba(0,180,216,.11) 0%,transparent 65%);top:-300px;right:-200px; }
+    .hero-glow-2 { width:700px;height:700px;background:radial-gradient(circle,rgba(15,76,129,.15) 0%,transparent 65%);bottom:-250px;left:-150px; }
+    .hero-glow-3 { width:400px;height:400px;background:radial-gradient(circle,rgba(0,180,216,.08) 0%,transparent 65%);top:40%;left:50%;transform:translate(-50%,-50%); }
 
-    .hero-inner { max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;position:relative;z-index:1; }
+    .hero-inner {
+      max-width: 980px; margin: 0 auto; position: relative; z-index: 1;
+      display: flex; flex-direction: column; align-items: center; gap: 3.5rem;
+    }
     .hero-badge {
-      display:inline-flex;align-items:center;gap:8px;
-      background:rgba(255,255,255,.85);border:1px solid rgba(0,180,216,.3);
-      color:var(--primary);border-radius:99px;padding:.4rem 1.1rem;
-      font-size:.75rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
-      margin-bottom:1.5rem;backdrop-filter:blur(8px);
-      box-shadow:0 2px 12px rgba(0,180,216,.12);
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(0,180,216,.1); border: 1px solid rgba(0,180,216,.25);
+      color: #7dd3fc; border-radius: 99px; padding: .45rem 1.1rem;
+      font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+      backdrop-filter: blur(8px); margin-bottom: 1.5rem;
     }
-    .badge-dot { width:7px;height:7px;border-radius:50%;background:#4ade80;animation:blink 1.4s infinite; }
-    @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
-    .hero-text h1 { font-size:clamp(2.4rem,5vw,3.6rem);margin-bottom:1.25rem;line-height:1.08; }
-    .hero-text p  { font-size:1.08rem;color:var(--muted);line-height:1.8;margin-bottom:2.25rem;max-width:480px; }
-    .hero-btns { display:flex;gap:.9rem;flex-wrap:wrap;align-items:center; }
+    .badge-dot { width:6px;height:6px;border-radius:50%;background:#4ade80;animation:blink 1.4s infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
 
-    /* hero kiosk mockup */
-    .hero-visual { display:flex;align-items:center;justify-content:center;position:relative; }
+    .hero-text h1 {
+      font-size: clamp(3.5rem,9vw,6.8rem); font-weight: 900;
+      color: #f5f5f7; line-height: 1.03; letter-spacing: -0.04em; margin-bottom: 1.5rem;
+    }
+    .hero-text p {
+      font-size: clamp(1rem,2vw,1.2rem); color: rgba(245,245,247,.52);
+      line-height: 1.9; margin-bottom: 2.5rem;
+      max-width: 560px; margin-left: auto; margin-right: auto;
+    }
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; justify-content: center; }
+    .hero .btn-primary { background: linear-gradient(135deg,#00b4d8,#0f4c81); box-shadow: 0 8px 30px rgba(0,180,216,.35); }
+    .hero .btn-primary:hover { box-shadow: 0 14px 40px rgba(0,180,216,.5); }
+    .hero .btn-secondary { background: rgba(255,255,255,.08); color: #f5f5f7; border: 1.5px solid rgba(255,255,255,.18); backdrop-filter: blur(8px); }
+    .hero .btn-secondary:hover { background: rgba(255,255,255,.14); border-color: rgba(255,255,255,.35); }
+
+    /* Hero kiosk mockup */
+    .hero-visual { display:flex;align-items:flex-start;justify-content:center;gap:1.5rem;position:relative; }
     .hero-mockup-wrap {
-      position:relative;
-      filter:drop-shadow(0 30px 60px rgba(0,0,0,.18));
+      position: relative;
+      filter: drop-shadow(0 40px 80px rgba(0,180,216,.22)) drop-shadow(0 0 1px rgba(255,255,255,.1));
     }
-    .kiosk-screen {
-      width:260px;border-radius:24px;background:#fff;overflow:hidden;
-      border:1px solid rgba(226,232,240,.6);
-    }
-    .ks-header {
-      background:linear-gradient(135deg,var(--primary),var(--accent));
-      padding:1rem 1.1rem .8rem;
-    }
+    .kiosk-screen { width:280px;border-radius:22px;background:#fff;overflow:hidden;border:1px solid rgba(255,255,255,.12); }
+    .ks-header { background:linear-gradient(135deg,var(--primary),var(--accent));padding:1rem 1.1rem .8rem; }
     .ks-hrow { display:flex;align-items:center;justify-content:space-between;margin-bottom:8px; }
     .ks-label { font-size:.6rem;font-weight:800;color:rgba(255,255,255,.85);letter-spacing:.08em;text-transform:uppercase; }
     .ks-live { display:flex;align-items:center;gap:4px;font-size:.55rem;color:rgba(255,255,255,.8);font-weight:600; }
@@ -65,41 +74,39 @@
     .ks-row.active { background:#eff6ff;border-color:#bfdbfe; }
     .ks-dot { width:8px;height:8px;border-radius:50%;flex-shrink:0; }
     .ks-tok { font-size:.64rem;font-weight:700;flex:1; }
-    .ks-wt  { font-size:.6rem;font-weight:700; }
+    .ks-wt { font-size:.6rem;font-weight:700; }
     .ks-foot { background:#fff;padding:.55rem .7rem;border-top:1px solid #f1f5f9;display:flex;justify-content:space-between;align-items:center; }
     .ks-foot span { font-size:.58rem;color:var(--muted);font-weight:500; }
     .ks-foot strong { font-size:.58rem;color:var(--primary);font-weight:800; }
 
-    /* floating badge beside mockup */
+    /* Floating badges — dark glass */
     .hero-float {
-      position:absolute;background:#fff;border-radius:14px;
-      padding:.75rem 1rem;box-shadow:0 8px 30px rgba(0,0,0,.12);
-      border:1px solid var(--border);font-size:.75rem;font-weight:700;
-      display:flex;align-items:center;gap:.5rem;
-      animation:floatBadge 3s ease-in-out infinite;
+      position:absolute;background:rgba(5,13,26,.85);border-radius:14px;
+      padding:.75rem 1rem;
+      box-shadow:0 8px 30px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.1);font-size:.75rem;font-weight:700;
+      display:flex;align-items:center;gap:.5rem;color:#f0f0f5;
+      animation:floatBadge 3s ease-in-out infinite;white-space:nowrap;
     }
-    @keyframes floatBadge{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-    .hf-1 { top:20px;right:-50px;animation-delay:0s; }
-    .hf-2 { bottom:30px;left:-40px;animation-delay:-1.5s; }
+    @keyframes floatBadge { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+    .hf-1 { top:-24px;right:-65px;animation-delay:0s; }
+    .hf-2 { bottom:-5px;left:-55px;animation-delay:-1.5s; }
 
     /* SOLUTION CARDS */
-    .sol-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem; }
+    .sol-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:2rem; }
     .sol-card {
-      border-radius:22px;overflow:hidden;text-decoration:none;color:var(--text);
+      border-radius:24px;overflow:hidden;text-decoration:none;color:var(--text);
       border:1px solid var(--border);background:var(--surface);
       transition:transform .35s cubic-bezier(.34,1.56,.64,1),box-shadow .35s;
       display:flex;flex-direction:column;
     }
-    .sol-card:hover { transform:translateY(-8px) scale(1.02);box-shadow:0 24px 60px rgba(0,0,0,.12); }
-    .sol-card-img {
-      height:180px;display:flex;align-items:center;justify-content:center;
-      position:relative;overflow:hidden;font-size:4rem;
-    }
+    .sol-card:hover { transform:translateY(-10px) scale(1.015);box-shadow:0 30px 70px rgba(0,0,0,.13); }
+    .sol-card-img { height:200px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;font-size:4.5rem; }
     .sol-img-kiosk { background:linear-gradient(145deg,#dbeafe,#93c5fd); }
-    .sol-img-vend  { background:linear-gradient(145deg,#fef3c7,#fdba74); }
-    .sol-card-body { padding:1.75rem;flex:1;display:flex;flex-direction:column; }
-    .sol-card-body h3 { font-size:1.2rem;margin-bottom:.55rem; }
-    .sol-card-body p  { font-size:.875rem;color:var(--muted);line-height:1.65;flex:1;margin-bottom:1.25rem; }
+    .sol-img-vend { background:linear-gradient(145deg,#fef3c7,#fdba74); }
+    .sol-card-body { padding:2rem;flex:1;display:flex;flex-direction:column; }
+    .sol-card-body h3 { font-size:1.3rem;margin-bottom:.6rem; }
+    .sol-card-body p { font-size:.875rem;color:var(--muted);line-height:1.7;flex:1;margin-bottom:1.25rem; }
     .sol-link { display:inline-flex;align-items:center;gap:5px;color:var(--primary);font-weight:700;font-size:.875rem;transition:gap .2s; }
     .sol-card:hover .sol-link { gap:10px; }
 
@@ -107,53 +114,75 @@
     .ind-bg { background:linear-gradient(160deg,#f1f5f9,#e8f4fd); }
 
     /* TESTIMONIALS */
-    .test-bg { background:linear-gradient(135deg,#071528,#0f2a4a); }
-    .test-bg .section-tag { color:rgba(255,255,255,.6); }
-    .test-bg .section-title { color:#fff; }
-    .test-bg .section-sub { color:rgba(255,255,255,.65); }
+    .test-bg { background:linear-gradient(135deg,#030b18,#071528); }
+    .test-bg .section-tag { color:rgba(0,212,255,.9); }
+    .test-bg .section-title { color:#f5f5f7; }
+    .test-bg .section-sub { color:rgba(245,245,247,.55); }
     .test-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem; }
     .test-card {
-      background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);
       border-radius:20px;padding:2rem;
-      transition:transform .3s,background .3s;
-      position:relative;overflow:hidden;
+      transition:transform .3s,background .3s;position:relative;overflow:hidden;
     }
-    .test-card::before {
-      content:'"';position:absolute;top:0.5rem;left:1.25rem;
-      font-size:5rem;color:var(--accent);opacity:.18;font-family:Georgia,serif;line-height:1;
-    }
-    .test-card:hover { transform:translateY(-6px);background:rgba(255,255,255,.1); }
+    .test-card::before { content:'"';position:absolute;top:.5rem;left:1.25rem;font-size:5rem;color:#00b4d8;opacity:.15;font-family:Georgia,serif;line-height:1; }
+    .test-card:hover { transform:translateY(-6px);background:rgba(255,255,255,.08); }
     .test-tag { display:inline-block;font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.25rem .7rem;border-radius:99px;margin-bottom:1rem; }
-    .test-quote { font-size:.9rem;color:rgba(255,255,255,.75);line-height:1.7;margin-bottom:1.5rem;font-style:italic; }
+    .test-quote { font-size:.9rem;color:rgba(255,255,255,.72);line-height:1.7;margin-bottom:1.5rem;font-style:italic; }
     .test-meta { display:flex;align-items:center;gap:.75rem; }
     .test-avatar { width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;color:#fff;flex-shrink:0; }
     .test-name { font-size:.875rem;font-weight:700;color:#fff; }
-    .test-co   { font-size:.75rem;color:rgba(255,255,255,.5); }
+    .test-co { font-size:.75rem;color:rgba(255,255,255,.45); }
 
     /* TRUST */
     .trust-bg { background:#fff; }
 
     /* CTA BANNER */
     .cta-banner {
-      background:linear-gradient(135deg,var(--primary),#1565a0,var(--accent));
-      padding:5rem 2rem;text-align:center;position:relative;overflow:hidden;
+      background:linear-gradient(135deg,#030b18 0%,#071f40 50%,#030b18 100%);
+      padding:7rem 2rem;text-align:center;position:relative;overflow:hidden;
     }
     .cta-banner::before {
       content:'';position:absolute;inset:0;
-      background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4z'/%3E%3C/g%3E%3C/svg%3E");
+      background:radial-gradient(ellipse 60% 80% at 50% 50%,rgba(0,180,216,.12) 0%,transparent 70%);
     }
-    .cta-banner h2 { color:#fff;font-size:clamp(1.8rem,4vw,2.6rem);margin-bottom:.85rem;position:relative;z-index:1; }
-    .cta-banner p  { color:rgba(255,255,255,.8);font-size:1.05rem;max-width:520px;margin:0 auto 2.5rem;line-height:1.7;position:relative;z-index:1; }
+    .cta-banner h2 { color:#f5f5f7;font-size:clamp(2rem,5vw,3.2rem);margin-bottom:.85rem;position:relative;z-index:1; }
+    .cta-banner p { color:rgba(245,245,247,.6);font-size:1.1rem;max-width:540px;margin:0 auto 2.75rem;line-height:1.8;position:relative;z-index:1; }
     .cta-btns { display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;position:relative;z-index:1; }
 
-    @media(max-width:900px){
-      .hero-inner { grid-template-columns:1fr;text-align:center; }
-      .hero-btns { justify-content:center; }
+    /* Hero animates via CSS */
+    .hero-instant { animation: heroIn .75s cubic-bezier(.22,1,.36,1) both; }
+    @keyframes heroIn { from{opacity:0;transform:translateY(32px)} to{opacity:1;transform:none} }
+
+    /* Reliability metrics */
+    .rel-metrics {
+      display:flex;align-items:stretch;
+      background:linear-gradient(135deg,#f0f7ff,#e8f4fd);
+      border-radius:20px;border:1px solid rgba(0,180,216,.18);
+      overflow:hidden;margin-bottom:2rem;flex-wrap:wrap;
+    }
+    .rel-metric { flex:1;min-width:160px;padding:2rem 1.5rem;text-align:center; }
+    .rel-metric-val { font-size:2.5rem;font-weight:900;color:var(--primary);line-height:1;margin-bottom:.4rem;letter-spacing:-0.03em; }
+    .rel-metric-val span { font-size:1.2rem;color:var(--accent); }
+    .rel-metric-bar { height:4px;background:#e2e8f0;border-radius:2px;margin:.6rem 0;overflow:hidden; }
+    .rel-bar-fill { height:100%;background:linear-gradient(90deg,var(--primary),var(--accent));border-radius:2px; }
+    .rel-metric-label { font-size:.72rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em; }
+    .rel-divider { width:1px;background:rgba(0,180,216,.15);align-self:stretch; }
+
+    @media(max-width:1024px) {
+      .hero-inner { gap:2.5rem; }
+      .hf-1 { right:-15px;top:-15px; }
+      .hf-2 { left:-15px;bottom:0; }
+      .rel-metrics { flex-wrap:wrap; }
+      .rel-metric { min-width:45%; }
+      .rel-divider { display:none; }
+    }
+    @media(max-width:640px) {
+      .hf-1,.hf-2 { display:none; }
       .hero-visual { display:none; }
     }
   </style>
 </head>
-<body>
+<body class="dark-page">
 
 <!-- NAV -->
 <nav id="mainNav">
@@ -187,26 +216,53 @@
     <div class="nav-actions">
       <button class="nav-cta" onclick="openModal()">Request Demo</button>
     </div>
-    <button class="hamburger" onclick="toggleMobileNav()"><span></span><span></span><span></span></button>
+    <div class="hamburger-wrap">
+      <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
   </div>
 </nav>
 
-<!-- HERO -->
+<!-- MOBILE NAV PANEL -->
+<div class="mobile-nav" id="mobileNav">
+  <button class="mobile-nav-link" data-sub="mobSolutions" aria-expanded="false">
+    Solutions <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+  </button>
+  <div class="mobile-sub" id="mobSolutions">
+    <a href="kiosk.html"><div class="dropdown-icon di-blue">🖥️</div><span>Kiosk — Queue Management</span></a>
+    <a href="vending.html"><div class="dropdown-icon di-orange">🖨️</div><span>Print & Dispense Station</span></a>
+  </div>
+  <button class="mobile-nav-link" data-sub="mobIndustries" aria-expanded="false">
+    Industries <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+  </button>
+  <div class="mobile-sub" id="mobIndustries">
+    <a href="industries.html#healthcare"><div class="dropdown-icon di-green">🏥</div><span>Healthcare</span></a>
+    <a href="industries.html#banking"><div class="dropdown-icon di-blue">🏦</div><span>Banking & Finance</span></a>
+    <a href="industries.html#retail"><div class="dropdown-icon di-yellow">🛒</div><span>Retail</span></a>
+    <a href="industries.html#govt"><div class="dropdown-icon di-purple">🏛️</div><span>Government</span></a>
+    <a href="industries.html#corporate"><div class="dropdown-icon di-red">🏢</div><span>Corporate</span></a>
+    <a href="industries.html#education"><div class="dropdown-icon di-green">🎓</div><span>Education</span></a>
+  </div>
+  <a href="about.html" class="mobile-nav-link">About</a>
+  <a href="#contact" class="mobile-nav-link">Contact</a>
+  <button class="mobile-nav-cta">Request Free Demo</button>
+</div>
+
+<!-- HERO — Dark cinematic (Apple-inspired) -->
 <section class="hero">
-  <div class="blob blob-1"></div>
-  <div class="blob blob-2"></div>
-  <div class="blob blob-3"></div>
+  <div class="hero-glow hero-glow-1"></div>
+  <div class="hero-glow hero-glow-2"></div>
+  <div class="hero-glow hero-glow-3"></div>
   <div class="hero-inner">
-    <div class="hero-text fade-up">
+    <div class="hero-text hero-instant">
       <div class="hero-badge"><span class="badge-dot"></span>Software-First Solutions · Made in India</div>
-      <h1>Your time is <span class="text-gradient">priceless.</span></h1>
+      <h1>Your time is<br><span class="text-gradient">priceless.</span></h1>
       <p>Intelligent software-powered products that eliminate queues and automate stationery — turning everyday frustrations into seamless experiences.</p>
       <div class="hero-btns">
         <button class="btn btn-primary" onclick="openModal()">
           <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.069A1 1 0 0121 8.845v6.31a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
           Book a Free Demo
         </button>
-        <a href="#solutions" class="btn btn-secondary">Explore Solutions</a>
+        <a href="#solutions" class="btn btn-secondary">Explore Solutions ↓</a>
       </div>
     </div>
     <div class="hero-visual fade-up d2">
@@ -272,6 +328,31 @@
   </div>
 </div>
 
+<!-- APPLE-STYLE FEATURE BAND — Impact statement -->
+<div class="feature-band fb-dark">
+  <div class="section-inner">
+    <span class="fb-eyebrow fade-up">Proven Impact</span>
+    <h2 class="fb-headline fade-up d1">Queue time.<br><em>Cut in half.</em></h2>
+    <p class="fb-body fade-up d2">Our clients report an average 40% reduction in customer wait time from the very first day — no training needed, no disruption to operations.</p>
+    <div class="fb-stats fade-up d3">
+      <div class="fb-stat-item">
+        <span class="fb-stat-num" data-count="40">0</span><span class="fb-stat-unit">%</span>
+        <span class="fb-stat-label">Avg wait reduction</span>
+      </div>
+      <div class="fb-stat-div"></div>
+      <div class="fb-stat-item">
+        <span class="fb-stat-num" data-count="500">0</span><span class="fb-stat-unit">+</span>
+        <span class="fb-stat-label">Clients deployed</span>
+      </div>
+      <div class="fb-stat-div"></div>
+      <div class="fb-stat-item">
+        <span class="fb-stat-num" data-count="5">0</span><span class="fb-stat-unit">M+</span>
+        <span class="fb-stat-label">People served yearly</span>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- SOLUTIONS -->
 <section class="section" id="solutions">
   <div class="section-inner">
@@ -303,6 +384,98 @@
           <span class="sol-link">Explore Station →</span>
         </div>
       </a>
+    </div>
+  </div>
+</section>
+
+<!-- APPLE DARK FEATURE SPLIT — Kiosk showcase -->
+<section class="section apple-dark">
+  <div class="section-inner">
+    <div class="feature-split">
+      <div class="feature-split-text fade-up">
+        <span class="section-tag">Kiosk · Queue Intelligence</span>
+        <h2>No more queues.<br><em>Ever.</em></h2>
+        <p>Our AI-powered kiosk system predicts wait times, sends SMS alerts, and manages hundreds of tokens simultaneously — all viewable from a cloud dashboard you can check on your phone.</p>
+        <ul class="feature-list">
+          <li><span class="fl-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span>Digital token issuance — no paper, no manual counting</li>
+          <li><span class="fl-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span>Real-time SMS alerts when their turn is near</li>
+          <li><span class="fl-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span>AI wait-time prediction and smart routing</li>
+          <li><span class="fl-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span>Live cloud dashboard — accessible anywhere, on any device</li>
+        </ul>
+        <a href="kiosk.html" class="btn btn-outline" style="display:inline-flex;">Explore Kiosk →</a>
+      </div>
+      <div class="feature-split-visual fade-up d2">
+        <div style="position:relative;filter:drop-shadow(0 30px 70px rgba(0,180,216,.25));">
+          <div style="width:300px;border-radius:24px;background:#fff;overflow:hidden;border:1px solid rgba(255,255,255,.1);">
+            <div style="background:linear-gradient(135deg,#0f4c81,#00b4d8);padding:1.25rem 1.25rem 1rem;">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+                <span style="font-size:.65rem;font-weight:800;color:rgba(255,255,255,.85);letter-spacing:.08em;text-transform:uppercase;">⚡ Queue Intelligence</span>
+                <span style="display:flex;align-items:center;gap:4px;font-size:.6rem;color:rgba(255,255,255,.8);font-weight:600;"><span style="width:6px;height:6px;border-radius:50%;background:#4ade80;display:inline-block;"></span>LIVE</span>
+              </div>
+              <div style="background:rgba(255,255,255,.15);border-radius:12px;padding:.75rem 1rem;display:flex;align-items:center;justify-content:space-between;">
+                <div><div style="font-size:.58rem;color:rgba(255,255,255,.7);margin-bottom:2px;">NOW SERVING</div><div style="font-size:2rem;font-weight:900;color:#fff;">A-041</div></div>
+                <div style="text-align:right;"><div style="font-size:.58rem;color:rgba(255,255,255,.7);margin-bottom:2px;">WAITING</div><div style="font-size:1.4rem;font-weight:900;color:#fff;">12</div></div>
+              </div>
+            </div>
+            <div style="padding:.8rem;background:#f8fafc;display:flex;flex-direction:column;gap:.45rem;">
+              <div style="background:#fff;border:1.5px solid #bfdbfe;border-radius:12px;padding:.6rem .8rem;display:flex;align-items:center;gap:.6rem;"><div style="width:10px;height:10px;border-radius:50%;background:#22c55e;flex-shrink:0;"></div><span style="font-size:.68rem;font-weight:700;flex:1;">Token #A-042</span><span style="font-size:.62rem;font-weight:700;color:#0f4c81;">~2 min</span></div>
+              <div style="background:#fff;border:1px solid #f1f5f9;border-radius:12px;padding:.6rem .8rem;display:flex;align-items:center;gap:.6rem;"><div style="width:10px;height:10px;border-radius:50%;background:#f97316;flex-shrink:0;"></div><span style="font-size:.68rem;font-weight:700;flex:1;">Token #A-043</span><span style="font-size:.62rem;font-weight:700;color:#94a3b8;">~6 min</span></div>
+              <div style="background:#fff;border:1px solid #f1f5f9;border-radius:12px;padding:.6rem .8rem;display:flex;align-items:center;gap:.6rem;"><div style="width:10px;height:10px;border-radius:50%;background:#94a3b8;flex-shrink:0;"></div><span style="font-size:.68rem;font-weight:700;flex:1;">Token #A-044</span><span style="font-size:.62rem;font-weight:700;color:#94a3b8;">~10 min</span></div>
+            </div>
+            <div style="background:#fff;padding:.65rem .8rem;border-top:1px solid #f1f5f9;display:flex;justify-content:space-between;align-items:center;"><span style="font-size:.62rem;color:#64748b;font-weight:500;">3 waiting · Counter 2</span><strong style="font-size:.62rem;color:#0f4c81;font-weight:800;">Avg: 6 min</strong></div>
+          </div>
+          <div style="position:absolute;top:-20px;right:-50px;background:rgba(0,180,216,.15);border:1px solid rgba(0,180,216,.3);border-radius:14px;padding:.65rem 1rem;backdrop-filter:blur(12px);white-space:nowrap;">
+            <div style="font-size:1.4rem;font-weight:900;color:#00d4ff;line-height:1;">−40%</div>
+            <div style="font-size:.68rem;color:rgba(245,245,247,.6);font-weight:500;margin-top:2px;">Wait time</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- APPLE DARK FEATURE SPLIT — Print Station showcase -->
+<section class="section apple-dark" style="border-top:1px solid rgba(255,255,255,.06);">
+  <div class="section-inner">
+    <div class="feature-split">
+      <div class="feature-split-visual fade-up" style="order:-1;">
+        <div style="position:relative;filter:drop-shadow(0 30px 70px rgba(249,115,22,.2));">
+          <div style="width:300px;border-radius:24px;background:#fff;overflow:hidden;border:1px solid rgba(255,255,255,.1);">
+            <div style="background:linear-gradient(135deg,#b45309,#f97316);padding:1.25rem 1.25rem 1rem;">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+                <span style="font-size:.65rem;font-weight:800;color:rgba(255,255,255,.85);letter-spacing:.08em;text-transform:uppercase;">🖨️ Print Station</span>
+                <span style="display:flex;align-items:center;gap:4px;font-size:.6rem;color:rgba(255,255,255,.8);font-weight:600;"><span style="width:6px;height:6px;border-radius:50%;background:#4ade80;display:inline-block;"></span>READY</span>
+              </div>
+              <div style="background:rgba(255,255,255,.15);border-radius:12px;padding:.75rem 1rem;">
+                <div style="font-size:.62rem;color:rgba(255,255,255,.8);margin-bottom:6px;font-weight:600;">CASHLESS PAYMENT</div>
+                <div style="display:flex;gap:.4rem;"><span style="background:rgba(255,255,255,.2);border-radius:6px;padding:.25rem .55rem;font-size:.6rem;color:#fff;font-weight:700;">UPI</span><span style="background:rgba(255,255,255,.2);border-radius:6px;padding:.25rem .55rem;font-size:.6rem;color:#fff;font-weight:700;">Card</span><span style="background:rgba(255,255,255,.2);border-radius:6px;padding:.25rem .55rem;font-size:.6rem;color:#fff;font-weight:700;">NFC</span></div>
+              </div>
+            </div>
+            <div style="padding:.8rem;background:#f8fafc;display:flex;flex-direction:column;gap:.45rem;">
+              <div style="background:#fff;border:1px solid #f1f5f9;border-radius:12px;padding:.7rem .85rem;display:flex;align-items:center;gap:.6rem;"><span style="font-size:1.1rem;">📄</span><div style="flex:1;"><div style="font-size:.68rem;font-weight:700;">A4 Black &amp; White</div><div style="font-size:.6rem;color:#64748b;">₹2 per page</div></div><span style="font-size:.72rem;font-weight:800;color:#b45309;">Print</span></div>
+              <div style="background:#fff;border:1px solid #f1f5f9;border-radius:12px;padding:.7rem .85rem;display:flex;align-items:center;gap:.6rem;"><span style="font-size:1.1rem;">🎨</span><div style="flex:1;"><div style="font-size:.68rem;font-weight:700;">A4 Color Print</div><div style="font-size:.6rem;color:#64748b;">₹8 per page</div></div><span style="font-size:.72rem;font-weight:800;color:#b45309;">Print</span></div>
+              <div style="background:#fff;border:1px solid #f1f5f9;border-radius:12px;padding:.7rem .85rem;display:flex;align-items:center;gap:.6rem;"><span style="font-size:1.1rem;">📦</span><div style="flex:1;"><div style="font-size:.68rem;font-weight:700;">Stationery Bundle</div><div style="font-size:.6rem;color:#64748b;">Pen, Stapler, Clips</div></div><span style="font-size:.72rem;font-weight:800;color:#b45309;">Buy</span></div>
+            </div>
+            <div style="background:#fff;padding:.65rem .8rem;border-top:1px solid #f1f5f9;display:flex;justify-content:space-between;"><span style="font-size:.62rem;color:#64748b;font-weight:500;">Stock: 340 sheets</span><strong style="font-size:.62rem;color:#b45309;font-weight:800;">Zero staff needed</strong></div>
+          </div>
+          <div style="position:absolute;bottom:-15px;left:-45px;background:rgba(249,115,22,.15);border:1px solid rgba(249,115,22,.3);border-radius:14px;padding:.65rem 1rem;backdrop-filter:blur(12px);white-space:nowrap;">
+            <div style="font-size:1.4rem;font-weight:900;color:#fb923c;line-height:1;">100%</div>
+            <div style="font-size:.68rem;color:rgba(245,245,247,.6);font-weight:500;margin-top:2px;">Self-service</div>
+          </div>
+        </div>
+      </div>
+      <div class="feature-split-text fade-up d2">
+        <span class="section-tag">Print &amp; Dispense Station</span>
+        <h2>Stationery on demand.<br><em>Zero staff.</em></h2>
+        <p>Self-service document printing and stationery dispensing with cashless UPI/card payments, remote stock monitoring, and real-time analytics — no staff involvement ever needed.</p>
+        <ul class="feature-list">
+          <li><span class="fl-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span>UPI, card, and NFC cashless payment support</li>
+          <li><span class="fl-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span>Remote stock level alerts — never run out</li>
+          <li><span class="fl-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span>B&amp;W, color printing and scanning</li>
+          <li><span class="fl-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span>Real-time usage analytics and revenue reports</li>
+        </ul>
+        <a href="vending.html" class="btn btn-outline" style="display:inline-flex;">Explore Print Station →</a>
+      </div>
     </div>
   </div>
 </section>
@@ -365,7 +538,7 @@
       <p class="section-sub">We handle everything — from site survey to go-live to 24/7 support. You stay focused on your business.</p>
     </div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:2rem;position:relative;margin-top:1rem;">
-      <div style="position:absolute;top:26px;left:10%;right:10%;height:2px;background:linear-gradient(90deg,var(--primary),var(--accent));z-index:0;"></div>
+      <div class="step-conn" style="position:absolute;top:26px;left:10%;right:10%;height:2px;background:linear-gradient(90deg,var(--primary),var(--accent));z-index:0;"></div>
       <div class="step fade-up d1" style="text-align:center;position:relative;z-index:1;padding:0 1rem;">
         <div style="width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--accent));color:#fff;font-size:1.2rem;font-weight:900;display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem;box-shadow:0 4px 16px rgba(15,76,129,.3);border:3px solid #fff;transition:transform .3s;">1</div>
         <h3 style="margin-bottom:.5rem;">Consultation</h3>
@@ -435,21 +608,74 @@
   </div>
 </section>
 
-<!-- TRUST BADGES -->
-<section class="section trust-bg">
+<!-- RELIABILITY & TRUST -->
+<section class="section trust-bg" id="reliability">
   <div class="section-inner">
     <div class="section-header center fade-up">
-      <span class="section-tag">Why GoStationery</span>
-      <h2 class="section-title">The Software Advantage</h2>
-      <p class="section-sub" style="margin:0 auto;">Unlike hardware-only alternatives, our real power is in the software — intelligent, cloud-connected, always improving.</p>
+      <span class="section-tag">Reliability & Trust</span>
+      <h2 class="section-title">Built to Run. Built to Last.</h2>
+      <p class="section-sub" style="margin:0 auto;">We engineer reliability into every layer — from the hardware on your floor to the cloud dashboard in your pocket.</p>
     </div>
+
+    <!-- Reliability metrics bar -->
+    <div class="rel-metrics fade-up d1">
+      <div class="rel-metric">
+        <div class="rel-metric-val">99.9<span>%</span></div>
+        <div class="rel-metric-bar"><div class="rel-bar-fill" style="width:99.9%"></div></div>
+        <div class="rel-metric-label">Uptime SLA</div>
+      </div>
+      <div class="rel-divider"></div>
+      <div class="rel-metric">
+        <div class="rel-metric-val">&lt;30<span>min</span></div>
+        <div class="rel-metric-bar"><div class="rel-bar-fill" style="width:85%"></div></div>
+        <div class="rel-metric-label">Avg Support Response</div>
+      </div>
+      <div class="rel-divider"></div>
+      <div class="rel-metric">
+        <div class="rel-metric-val">48<span>hr</span></div>
+        <div class="rel-metric-bar"><div class="rel-bar-fill" style="width:70%"></div></div>
+        <div class="rel-metric-label">Contract to Go-Live</div>
+      </div>
+      <div class="rel-divider"></div>
+      <div class="rel-metric">
+        <div class="rel-metric-val">100<span>%</span></div>
+        <div class="rel-metric-bar"><div class="rel-bar-fill" style="width:100%"></div></div>
+        <div class="rel-metric-label">India Data Residency</div>
+      </div>
+    </div>
+
+    <!-- Trust cards -->
     <div class="trust-grid" style="margin-top:2.5rem;">
-      <div class="trust-card fade-up d1"><span class="trust-icon">🛡️</span><h4>SLA 99.9% Uptime</h4><p>Guaranteed reliability with cloud redundancy, automatic failover, and proactive monitoring.</p></div>
-      <div class="trust-card fade-up d2"><span class="trust-icon">☁️</span><h4>SaaS & On-Prem</h4><p>Deploy in the cloud for instant setup or on-premises for full data control — your choice.</p></div>
-      <div class="trust-card fade-up d3"><span class="trust-icon">🔒</span><h4>DPDP & IT Act Compliant</h4><p>India-hosted servers, end-to-end encryption, role-based access, and complete audit logs.</p></div>
-      <div class="trust-card fade-up d4"><span class="trust-icon">🔧</span><h4>24/7 Support & Training</h4><p>Dedicated account managers, remote diagnostics, on-site visits, and video training resources.</p></div>
-      <div class="trust-card fade-up d5"><span class="trust-icon">🔗</span><h4>Open API Integration</h4><p>Connect to your ERP, HRMS, POS, or CRM via REST APIs. Plug in, not rip out.</p></div>
-      <div class="trust-card fade-up d6"><span class="trust-icon">🚀</span><h4>Rapid Deployment</h4><p>From signed contract to go-live in as little as 48 hours. Our proven methodology minimises disruption.</p></div>
+      <div class="trust-card fade-up d1">
+        <span class="trust-icon">🛡️</span>
+        <h4>SLA 99.9% Uptime</h4>
+        <p>Cloud redundancy, automatic failover, and 24/7 proactive monitoring keep you running — always.</p>
+      </div>
+      <div class="trust-card fade-up d2">
+        <span class="trust-icon">☁️</span>
+        <h4>SaaS & On-Prem</h4>
+        <p>Choose cloud deployment for instant setup, or on-premises for maximum data control — your call.</p>
+      </div>
+      <div class="trust-card fade-up d3">
+        <span class="trust-icon">🔒</span>
+        <h4>DPDP & IT Act Compliant</h4>
+        <p>India-hosted servers, end-to-end encryption, role-based access, and complete audit trails.</p>
+      </div>
+      <div class="trust-card fade-up d4">
+        <span class="trust-icon">🔧</span>
+        <h4>24/7 Support</h4>
+        <p>Dedicated account managers, remote diagnostics, on-site visits, and video training — always there.</p>
+      </div>
+      <div class="trust-card fade-up d5">
+        <span class="trust-icon">🔗</span>
+        <h4>Open API Integration</h4>
+        <p>REST APIs connect to your ERP, HRMS, POS, or CRM seamlessly. Plug in — don't rip out.</p>
+      </div>
+      <div class="trust-card fade-up d6">
+        <span class="trust-icon">🚀</span>
+        <h4>Rapid Deployment</h4>
+        <p>Signed contract to go-live in as little as 48 hours. Proven methodology, zero disruption.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -590,10 +816,6 @@
     setTimeout(() => s.style.transform = '', 300);
   }, 3500);
 
-  function toggleMobileNav() {
-    document.querySelector('.nav-menu').style.display =
-      document.querySelector('.nav-menu').style.display === 'flex' ? 'none' : 'flex';
-  }
 </script>
 </body>
 </html>
