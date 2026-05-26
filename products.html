@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Products — GoStationery</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#050d1a;--cyan:#00d4ff;--navy:#0d2a4a;--text:#e8f0fe;--muted:#8899aa}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.6}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:64px;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;background:rgba(5,13,26,.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,212,255,.08)}
+.nav-logo{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.25rem;font-weight:800;color:white;text-decoration:none;letter-spacing:-.02em}
+.nav-logo span{color:var(--cyan)}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:.875rem;font-weight:500;transition:color .2s}
+.nav-links a:hover,.nav-links a.active{color:var(--cyan)}
+.nav-cta{background:linear-gradient(135deg,#00d4ff,#0099cc);color:#050d1a;border:none;padding:.5rem 1.25rem;border-radius:6px;font-size:.875rem;font-weight:700;cursor:pointer;text-decoration:none;transition:opacity .2s,transform .2s}
+.nav-cta:hover{opacity:.9;transform:translateY(-1px)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px}
+.hamburger span{display:block;width:24px;height:2px;background:white;border-radius:2px}
+.mobile-menu{display:none;position:fixed;inset:0;z-index:99;background:#050d1a;flex-direction:column;align-items:center;justify-content:center;gap:2rem}
+.mobile-menu.open{display:flex}
+.mobile-menu a{color:white;font-size:1.75rem;font-weight:700;text-decoration:none;font-family:'Plus Jakarta Sans',sans-serif;transition:color .2s}
+.mobile-menu a:hover{color:var(--cyan)}
+.mobile-close{position:absolute;top:1.25rem;right:1.5rem;background:none;border:none;color:var(--muted);font-size:1.75rem;cursor:pointer}
+.page-hero{padding:9rem 2rem 5rem;text-align:center;position:relative;overflow:hidden;background:radial-gradient(ellipse 100% 55% at 50% 0%,rgba(13,42,74,.85) 0%,#050d1a 65%)}
+.hero-glow{position:absolute;top:-80px;left:50%;transform:translateX(-50%);width:700px;height:500px;background:radial-gradient(circle,rgba(0,212,255,.1),transparent 70%);filter:blur(60px);pointer-events:none;border-radius:50%}
+.page-tag{display:inline-block;background:rgba(0,212,255,.07);border:1px solid rgba(0,212,255,.18);color:var(--cyan);font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.32rem .85rem;border-radius:100px;margin-bottom:1.25rem}
+.page-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(2.25rem,6vw,4rem);font-weight:900;line-height:1.07;letter-spacing:-.03em;color:white;margin-bottom:1.25rem}
+.page-title .grad{background:linear-gradient(135deg,#00d4ff,#0099ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.page-desc{font-size:clamp(.95rem,2vw,1.1rem);color:var(--muted);max-width:560px;margin:0 auto;line-height:1.75}
+
+/* Products */
+.products-section{padding:5rem 2rem 6rem}
+.products-inner{max-width:1150px;margin:0 auto}
+.section-header{text-align:center;max-width:680px;margin:0 auto 3.5rem}
+.section-tag{display:inline-block;background:rgba(0,212,255,.07);border:1px solid rgba(0,212,255,.18);color:var(--cyan);font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.32rem .85rem;border-radius:100px;margin-bottom:1rem}
+.section-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(1.75rem,3.5vw,2.5rem);font-weight:800;color:white;letter-spacing:-.025em;line-height:1.14;margin-bottom:1rem}
+.section-desc{color:var(--muted);font-size:.975rem;line-height:1.75}
+.products-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1.75rem;margin-bottom:3rem}
+.product-card{background:rgba(13,42,74,.38);border:1px solid rgba(0,212,255,.1);border-radius:22px;padding:2rem;position:relative;overflow:hidden;transition:border-color .3s,transform .3s,background .3s}
+.product-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(0,212,255,.35),transparent)}
+.product-card:hover{border-color:rgba(0,212,255,.28);transform:translateY(-5px);background:rgba(13,42,74,.55)}
+.prod-num{font-size:.68rem;font-weight:700;color:rgba(0,212,255,.45);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.75rem}
+.prod-category{display:inline-block;background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.18);color:var(--cyan);font-size:.6rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.2rem .6rem;border-radius:100px;margin-bottom:1rem}
+.prod-name{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.15rem;font-weight:800;color:white;margin-bottom:.75rem;line-height:1.25;letter-spacing:-.015em}
+.prod-desc{font-size:.85rem;color:var(--muted);line-height:1.7;margin-bottom:1.25rem}
+.prod-specs{list-style:none;display:flex;flex-direction:column;gap:.45rem;margin-bottom:1.5rem}
+.prod-specs li{display:flex;align-items:flex-start;gap:.6rem;font-size:.8rem;color:rgba(200,220,255,.7);line-height:1.5}
+.prod-specs li::before{content:'✓';color:var(--cyan);font-weight:700;flex-shrink:0}
+.prod-divider{height:1px;background:rgba(0,212,255,.08);margin:1.25rem 0}
+.prod-ideal{font-size:.75rem;color:rgba(0,212,255,.6);font-weight:600}
+.prod-ideal span{color:rgba(200,220,255,.5);font-weight:400}
+.prod-cta{display:inline-flex;align-items:center;gap:.4rem;font-size:.82rem;font-weight:700;color:var(--cyan);text-decoration:none;margin-top:1.25rem;transition:gap .2s}
+.prod-cta:hover{gap:.7rem}
+
+/* Enterprise banner */
+.enterprise-banner{background:linear-gradient(135deg,#15005c 0%,#0d2a4a 45%,#001840 100%);border:1px solid rgba(99,102,241,.28);border-radius:24px;padding:3.5rem 3rem;text-align:center;position:relative;overflow:hidden;margin-top:1rem}
+.enterprise-banner::before{content:'';position:absolute;top:-40%;left:50%;transform:translateX(-50%);width:500px;height:400px;background:radial-gradient(circle,rgba(99,102,241,.07),transparent 65%);pointer-events:none}
+.ent-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(1.35rem,2.5vw,1.9rem);font-weight:800;color:white;margin-bottom:1rem;position:relative}
+.ent-desc{color:rgba(200,215,255,.72);max-width:680px;margin:0 auto 2rem;line-height:1.75;font-size:.95rem;position:relative}
+.ent-features{display:flex;justify-content:center;flex-wrap:wrap;gap:.65rem;margin-bottom:2.25rem;position:relative}
+.ent-tag{background:rgba(99,102,241,.13);border:1px solid rgba(99,102,241,.28);border-radius:7px;padding:.35rem .85rem;font-size:.72rem;color:rgba(200,215,255,.88);font-weight:500}
+
+/* Comparison table */
+.compare-section{padding:3rem 2rem 5rem}
+.compare-inner{max-width:900px;margin:0 auto}
+.compare-table{width:100%;border-collapse:collapse;font-size:.85rem}
+.compare-table th{background:rgba(13,42,74,.6);color:var(--cyan);font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.875rem 1rem;text-align:left;border-bottom:2px solid rgba(0,212,255,.15)}
+.compare-table th:first-child{width:38%}
+.compare-table td{padding:.75rem 1rem;border-bottom:1px solid rgba(0,212,255,.06);color:var(--muted);vertical-align:middle}
+.compare-table td:first-child{color:white;font-weight:600}
+.compare-table tr:hover td{background:rgba(13,42,74,.25)}
+.check{color:#00ff88;font-weight:700}
+.cross{color:rgba(255,100,100,.5)}
+.partial{color:var(--cyan)}
+
+/* CTA */
+.cta-strip{padding:5.5rem 2rem;text-align:center;background:radial-gradient(ellipse 80% 60% at 50% 100%,rgba(0,212,255,.05) 0%,transparent 70%)}
+.cta-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(1.75rem,3.5vw,2.5rem);font-weight:900;color:white;letter-spacing:-.025em;margin-bottom:1rem}
+.cta-sub{color:var(--muted);max-width:440px;margin:0 auto 2.25rem;font-size:.975rem;line-height:1.7}
+.cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.btn-primary{background:linear-gradient(135deg,#00d4ff,#0099cc);color:#050d1a;border:none;padding:.875rem 2.25rem;border-radius:8px;font-size:1rem;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block;transition:transform .2s,box-shadow .2s;box-shadow:0 0 28px rgba(0,212,255,.2)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 0 40px rgba(0,212,255,.35)}
+.btn-ghost{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,.18);padding:.875rem 2.25rem;border-radius:8px;font-size:1rem;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;transition:border-color .2s,color .2s}
+.btn-ghost:hover{border-color:var(--cyan);color:var(--cyan)}
+footer{background:rgba(5,13,26,.98);border-top:1px solid rgba(0,212,255,.07);padding:3rem 2rem 2.25rem;text-align:center}
+.footer-logo{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.3rem;font-weight:800;color:white;margin-bottom:.5rem}
+.footer-logo span{color:var(--cyan)}
+.footer-links{display:flex;gap:2rem;justify-content:center;flex-wrap:wrap;margin:1rem 0 1.5rem}
+.footer-links a{color:var(--muted);text-decoration:none;font-size:.85rem;transition:color .2s}
+.footer-links a:hover{color:var(--cyan)}
+.footer-copy{color:rgba(100,130,150,.5);font-size:.75rem}
+.pulse-dot{width:6px;height:6px;background:#00ff88;border-radius:50%;display:inline-block;animation:pulse 2s infinite;vertical-align:middle}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.75)}}
+.fade-up{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+@media(max-width:768px){.nav-links,.nav-cta{display:none}.hamburger{display:flex}.products-grid{grid-template-columns:1fr}.enterprise-banner{padding:2.5rem 1.5rem}.compare-section{overflow-x:auto}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Go<span>Stationery</span></a>
+  <ul class="nav-links">
+    <li><a href="solutions.html">Solutions</a></li>
+    <li><a href="industries.html">Industries</a></li>
+    <li><a href="products.html" class="active">Products</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Book a Demo</a>
+  <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" id="mobileClose">✕</button>
+  <a href="index.html" class="menu-link">Home</a>
+  <a href="solutions.html" class="menu-link">Solutions</a>
+  <a href="industries.html" class="menu-link">Industries</a>
+  <a href="products.html" class="menu-link">Products</a>
+  <a href="contact.html" class="menu-link">Contact</a>
+</div>
+
+<section class="page-hero">
+  <div class="hero-glow"></div>
+  <span class="page-tag">Product Lineup</span>
+  <h1 class="page-title">Every setup.<br><span class="grad">Every scale.</span></h1>
+  <p class="page-desc">Six products covering every queue management and automated dispensing need — from a single wall-mount kiosk to a full enterprise platform.</p>
+</section>
+
+<section class="products-section">
+  <div class="products-inner">
+    <div class="section-header fade-up">
+      <span class="section-tag">Hardware &amp; Software</span>
+      <h2 class="section-title">Choose your setup</h2>
+      <p class="section-desc">Mix and match products based on your space, traffic volume, and budget. Our team will help you find the right combination.</p>
+    </div>
+
+    <div class="products-grid">
+
+      <div class="product-card fade-up">
+        <div class="prod-num">Product 01</div>
+        <span class="prod-category">Queue Kiosk</span>
+        <div class="prod-name">Mini Kiosk — Wall Mount</div>
+        <p class="prod-desc">A compact wall-mounted touchscreen kiosk for small to medium spaces. Ideal where floor space is limited but queue management is essential.</p>
+        <ul class="prod-specs">
+          <li>7" or 10" capacitive HD touchscreen</li>
+          <li>Built-in 80mm thermal token printer</li>
+          <li>WiFi + 4G dual connectivity</li>
+          <li>Offline mode — syncs when reconnected</li>
+          <li>SMS &amp; WhatsApp customer notifications</li>
+          <li>Cloud analytics dashboard included</li>
+        </ul>
+        <div class="prod-divider"></div>
+        <div class="prod-ideal">Ideal for: <span>Small clinics, bank branches, pharmacy counters, govt. offices</span></div>
+        <a href="contact.html" class="prod-cta">Enquire about this product →</a>
+      </div>
+
+      <div class="product-card fade-up">
+        <div class="prod-num">Product 02</div>
+        <span class="prod-category">Queue Kiosk</span>
+        <div class="prod-name">Mini Kiosk — Floor Mount</div>
+        <p class="prod-desc">A freestanding pedestal kiosk for large open spaces. Supports higher traffic volume and multiple counters simultaneously.</p>
+        <ul class="prod-specs">
+          <li>15" full HD touchscreen on adjustable stand</li>
+          <li>Built-in thermal token printer with auto-cutter</li>
+          <li>Multi-counter routing (up to 20 counters)</li>
+          <li>WiFi + Ethernet + 4G connectivity</li>
+          <li>Offline mode with local data backup</li>
+          <li>TV display board integration (HDMI out)</li>
+        </ul>
+        <div class="prod-divider"></div>
+        <div class="prod-ideal">Ideal for: <span>Large hospitals, RTO offices, temples, malls, government buildings</span></div>
+        <a href="contact.html" class="prod-cta">Enquire about this product →</a>
+      </div>
+
+      <div class="product-card fade-up">
+        <div class="prod-num">Product 03</div>
+        <span class="prod-category">Vending Machine</span>
+        <div class="prod-name">Print Vending Machine</div>
+        <p class="prod-desc">A fully cashless self-service printing and scanning station. No staff needed — customers print documents and scan pages independently.</p>
+        <ul class="prod-specs">
+          <li>B&amp;W printing from ₹2/page, color from ₹8/page</li>
+          <li>Document scanning at ₹5/page (PDF output)</li>
+          <li>A4 + A3 support, 500-sheet auto-feed tray</li>
+          <li>UPI, debit/credit card, NFC payments</li>
+          <li>Cloud print (upload from phone/email)</li>
+          <li>Remote monitoring &amp; pricing control</li>
+        </ul>
+        <div class="prod-divider"></div>
+        <div class="prod-ideal">Ideal for: <span>Libraries, campuses, office premises, government offices</span></div>
+        <a href="contact.html" class="prod-cta">Enquire about this product →</a>
+      </div>
+
+      <div class="product-card fade-up">
+        <div class="prod-num">Product 04</div>
+        <span class="prod-category">Vending Machine</span>
+        <div class="prod-name">Stationery + Print Vending Machine</div>
+        <p class="prod-desc">All printing and scanning features combined with an 18-slot stationery dispensing grid. One machine replaces both the stationery shop and the print shop.</p>
+        <ul class="prod-specs">
+          <li>Full print + scan capabilities (same as Product 03)</li>
+          <li>18-slot configurable stationery grid</li>
+          <li>Dispenses items up to 500g per slot</li>
+          <li>Live stock count with low-stock SMS alerts</li>
+          <li>Sales analytics per item and per day</li>
+          <li>Custom slot configuration for your items</li>
+        </ul>
+        <div class="prod-divider"></div>
+        <div class="prod-ideal">Ideal for: <span>Universities, corporate stationery rooms, exam centres</span></div>
+        <a href="contact.html" class="prod-cta">Enquire about this product →</a>
+      </div>
+
+      <div class="product-card fade-up">
+        <div class="prod-num">Product 05</div>
+        <span class="prod-category">Vending Machine</span>
+        <div class="prod-name">Products Vending Machine</div>
+        <p class="prod-desc">A fully configurable vending machine for any type of product. Stock it with whatever your customers need — medicines, snacks, PPE, supplies, or accessories.</p>
+        <ul class="prod-specs">
+          <li>30-slot configurable vending grid</li>
+          <li>Accepts any product up to 1kg per slot</li>
+          <li>UPI, card, and NFC cashless payments</li>
+          <li>Remote slot restocking management</li>
+          <li>Real-time sales and inventory dashboard</li>
+          <li>Custom branding on the machine screen</li>
+        </ul>
+        <div class="prod-divider"></div>
+        <div class="prod-ideal">Ideal for: <span>Hospitals (masks/gloves), corporate (snacks), factories (PPE)</span></div>
+        <a href="contact.html" class="prod-cta">Enquire about this product →</a>
+      </div>
+
+      <div class="product-card fade-up">
+        <div class="prod-num">Product 06</div>
+        <span class="prod-category">Software Platform</span>
+        <div class="prod-name">Enterprise Software Platform</div>
+        <p class="prod-desc">A full-stack cloud platform that ties together all your kiosks and machines across multiple locations — with billing, PoS, role-based access, and white-label branding.</p>
+        <ul class="prod-specs">
+          <li>Multi-location cloud dashboard</li>
+          <li>Role-based access (admin / manager / staff)</li>
+          <li>Integrated billing engine with GST invoicing</li>
+          <li>PoS terminal integration</li>
+          <li>White-label branding — your logo, your colours</li>
+          <li>REST API access for custom integrations</li>
+        </ul>
+        <div class="prod-divider"></div>
+        <div class="prod-ideal">Ideal for: <span>Hospital chains, bank networks, franchise businesses, large campuses</span></div>
+        <a href="contact.html" class="prod-cta">Request Enterprise Demo →</a>
+      </div>
+
+    </div>
+
+    <!-- Enterprise Banner -->
+    <div class="enterprise-banner fade-up">
+      <div class="ent-title">🏢 Enterprise Version — End-to-End Billing &amp; PoS</div>
+      <p class="ent-desc">Built for large organisations running multiple locations. Includes a complete billing engine, PoS terminals, multi-branch cloud dashboard, role-based access control, and white-label branding so GoStationery runs under your brand identity.</p>
+      <div class="ent-features">
+        <span class="ent-tag">Billing Engine</span>
+        <span class="ent-tag">PoS Terminals</span>
+        <span class="ent-tag">Multi-Branch Dashboard</span>
+        <span class="ent-tag">Role-Based Access</span>
+        <span class="ent-tag">White-Label Branding</span>
+        <span class="ent-tag">REST API Access</span>
+        <span class="ent-tag">Priority Support</span>
+      </div>
+      <a href="contact.html" class="btn-primary">Request Enterprise Demo →</a>
+    </div>
+  </div>
+</section>
+
+<!-- Comparison Table -->
+<section class="compare-section fade-up">
+  <div class="compare-inner">
+    <div class="section-header" style="margin-bottom:2rem">
+      <span class="section-tag">Quick Compare</span>
+      <h2 class="section-title" style="font-size:clamp(1.5rem,3vw,2rem)">Feature comparison</h2>
+    </div>
+    <div style="overflow-x:auto">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Wall Kiosk</th>
+            <th>Floor Kiosk</th>
+            <th>Print Vend</th>
+            <th>Stat+Print</th>
+            <th>Products Vend</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Token issuance</td><td class="check">✓</td><td class="check">✓</td><td class="cross">—</td><td class="cross">—</td><td class="cross">—</td></tr>
+          <tr><td>Multi-counter routing</td><td class="partial">Up to 8</td><td class="check">Up to 20</td><td class="cross">—</td><td class="cross">—</td><td class="cross">—</td></tr>
+          <tr><td>SMS / WhatsApp alerts</td><td class="check">✓</td><td class="check">✓</td><td class="cross">—</td><td class="cross">—</td><td class="cross">—</td></tr>
+          <tr><td>B&amp;W + Color printing</td><td class="cross">—</td><td class="cross">—</td><td class="check">✓</td><td class="check">✓</td><td class="cross">—</td></tr>
+          <tr><td>Document scanning</td><td class="cross">—</td><td class="cross">—</td><td class="check">✓</td><td class="check">✓</td><td class="cross">—</td></tr>
+          <tr><td>Stationery dispensing</td><td class="cross">—</td><td class="cross">—</td><td class="cross">—</td><td class="check">18 slots</td><td class="check">30 slots</td></tr>
+          <tr><td>UPI / Card / NFC payment</td><td class="cross">—</td><td class="cross">—</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
+          <tr><td>Cloud dashboard</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
+          <tr><td>Offline mode</td><td class="check">✓</td><td class="check">✓</td><td class="partial">Partial</td><td class="partial">Partial</td><td class="cross">—</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="cta-strip fade-up">
+  <h2 class="cta-title">Not sure which product fits?</h2>
+  <p class="cta-sub">Share your setup with us and we'll recommend the right combination — no obligation, no sales pressure.</p>
+  <div class="cta-btns">
+    <a href="contact.html" class="btn-primary">Talk to Our Team</a>
+    <a href="solutions.html" class="btn-ghost">View Solutions</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Go<span>Stationery</span></div>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="solutions.html">Solutions</a>
+    <a href="industries.html">Industries</a>
+    <a href="products.html">Products</a>
+    <a href="contact.html">Contact</a>
+  </div>
+  <p class="footer-copy">© 2025 GoStationery. All rights reserved. &nbsp;·&nbsp; Made in India <span class="pulse-dot"></span></p>
+</footer>
+
+<script>
+const hamburger=document.getElementById('hamburger'),mobileMenu=document.getElementById('mobileMenu'),mobileClose=document.getElementById('mobileClose');
+function openMobile(){mobileMenu.classList.add('open');hamburger.setAttribute('aria-expanded','true');document.body.style.overflow='hidden'}
+function closeMobile(){mobileMenu.classList.remove('open');hamburger.setAttribute('aria-expanded','false');document.body.style.overflow=''}
+hamburger.addEventListener('click',openMobile);mobileClose.addEventListener('click',closeMobile);
+document.querySelectorAll('.menu-link').forEach(l=>l.addEventListener('click',closeMobile));
+const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target)}})},{threshold:.08});
+document.querySelectorAll('.fade-up').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
