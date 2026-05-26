@@ -180,6 +180,53 @@
       .hf-1,.hf-2 { display:none; }
       .hero-visual { display:none; }
     }
+
+    /* ── Hero Machines Layout ── */
+    .hero-machines { display:flex;align-items:flex-end;justify-content:center;gap:1.5rem;position:relative;padding-bottom:1rem; }
+    .machine-wrap { display:flex;flex-direction:column;align-items:center;gap:.6rem;position:relative; }
+    .machine-label { font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(0,212,255,.7);background:rgba(0,180,216,.08);border:1px solid rgba(0,180,216,.2);border-radius:20px;padding:.28rem .85rem;white-space:nowrap; }
+    .machine-svg { filter:drop-shadow(0 30px 60px rgba(0,180,216,.22)) drop-shadow(0 8px 24px rgba(0,0,0,.5)); }
+    .machine-svg-vend { filter:drop-shadow(0 30px 60px rgba(249,115,22,.18)) drop-shadow(0 8px 24px rgba(0,0,0,.5)); }
+    @media(max-width:640px){ .hero-machines{gap:.75rem;} .machine-wrap svg{transform:scale(.82);transform-origin:bottom center;} }
+
+    /* ── Products Lineup Section ── */
+    .products-section { background:linear-gradient(180deg,#060c18 0%,#050d1a 100%); border-top:1px solid rgba(255,255,255,.06); }
+    .products-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem;margin-top:2rem; }
+    .product-card {
+      background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);
+      border-radius:20px;padding:1.75rem;display:flex;flex-direction:column;
+      transition:transform .3s,border-color .3s,background .3s;
+    }
+    .product-card:hover { transform:translateY(-6px);border-color:rgba(0,180,216,.3);background:rgba(0,180,216,.04); }
+    .product-card-icon { width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:1rem;flex-shrink:0; }
+    .pi-blue { background:linear-gradient(135deg,rgba(15,76,129,.5),rgba(0,180,216,.25)); }
+    .pi-orange { background:linear-gradient(135deg,rgba(180,83,9,.5),rgba(249,115,22,.25)); }
+    .pi-purple { background:linear-gradient(135deg,rgba(109,40,217,.5),rgba(139,92,246,.25)); }
+    .pi-green { background:linear-gradient(135deg,rgba(6,95,70,.5),rgba(16,185,129,.25)); }
+    .pi-teal { background:linear-gradient(135deg,rgba(15,118,110,.5),rgba(20,184,166,.25)); }
+    .pi-indigo { background:linear-gradient(135deg,rgba(67,56,202,.5),rgba(99,102,241,.25)); }
+    .product-card h3 { font-size:1rem;font-weight:700;color:#f5f5f7;margin:0 0 .4rem;line-height:1.3; }
+    .product-card .pc-sub { font-size:.68rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgba(0,212,255,.6);margin-bottom:.75rem;display:block; }
+    .product-card p { font-size:.85rem;color:rgba(245,245,247,.5);line-height:1.7;flex:1;margin:0 0 1.25rem; }
+    .pc-tags { display:flex;flex-wrap:wrap;gap:.4rem;margin-top:auto; }
+    .pc-tag { font-size:.68rem;font-weight:600;color:rgba(245,245,247,.4);background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:.25rem .7rem; }
+    .pc-tag.hi { color:#00d4ff;border-color:rgba(0,212,255,.2);background:rgba(0,212,255,.06); }
+    .pc-tag.orange { color:#fb923c;border-color:rgba(251,146,60,.2);background:rgba(251,146,60,.06); }
+    .products-enterprise {
+      margin-top:1.5rem;border-radius:20px;
+      background:linear-gradient(135deg,rgba(67,56,202,.15),rgba(99,102,241,.06));
+      border:1px solid rgba(99,102,241,.25);padding:2rem 2.25rem;
+      display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem;
+    }
+    .products-enterprise h3 { font-size:1.2rem;font-weight:800;color:#f5f5f7;margin:0 0 .4rem; }
+    .products-enterprise p { font-size:.88rem;color:rgba(245,245,247,.5);line-height:1.7;margin:0;max-width:540px; }
+    .ent-text { flex:1;min-width:280px; }
+    .products-enterprise .btn-ent {
+      background:linear-gradient(135deg,#4338ca,#6366f1);color:#fff;
+      border:none;border-radius:50px;padding:.9rem 2rem;font-size:.85rem;font-weight:700;
+      letter-spacing:.04em;cursor:pointer;white-space:nowrap;transition:opacity .2s,transform .2s;flex-shrink:0;
+    }
+    .products-enterprise .btn-ent:hover { opacity:.88;transform:translateY(-2px); }
   </style>
 </head>
 <body class="dark-page">
@@ -266,41 +313,122 @@
       </div>
     </div>
     <div class="hero-visual fade-up d2">
-      <div class="hero-mockup-wrap">
-        <div class="hero-float hf-1">🟢 Token A-041 called</div>
-        <div class="kiosk-screen">
-          <div class="ks-header">
-            <div class="ks-hrow">
-              <span class="ks-label">⚡ Kiosk — Live Queue</span>
-              <span class="ks-live"><span class="ks-live-dot"></span>LIVE</span>
-            </div>
-            <div class="ks-serving">
-              <span class="ks-sl">NOW SERVING</span>
-              <span class="ks-sn" id="heroServing">A-041</span>
-            </div>
-          </div>
-          <div class="ks-body">
-            <div class="ks-row active">
-              <div class="ks-dot" style="background:#22c55e"></div>
-              <span class="ks-tok" id="hT1">Token #A-042</span>
-              <span class="ks-wt" style="color:var(--primary)">~2 min</span>
-            </div>
-            <div class="ks-row">
-              <div class="ks-dot" style="background:#f97316"></div>
-              <span class="ks-tok" id="hT2">Token #A-043</span>
-              <span class="ks-wt" style="color:var(--muted)">~6 min</span>
-            </div>
-            <div class="ks-row">
-              <div class="ks-dot" style="background:#94a3b8"></div>
-              <span class="ks-tok" id="hT3">Token #A-044</span>
-              <span class="ks-wt" style="color:#94a3b8">~10 min</span>
-            </div>
-          </div>
-          <div class="ks-foot">
-            <span>3 waiting</span><strong>Avg wait: 6 min</strong>
-          </div>
+      <div class="hero-machines">
+        <!-- Wall-Mount Smart Kiosk -->
+        <div class="machine-wrap">
+          <div class="hero-float hf-1">🟢 Token A-041 called</div>
+          <svg class="machine-svg" width="130" height="310" viewBox="0 0 130 310" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="kbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1e3a5c"/><stop offset="100%" stop-color="#0a1e35"/></linearGradient>
+              <linearGradient id="ksh" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0f4c81"/><stop offset="100%" stop-color="#00b4d8"/></linearGradient>
+            </defs>
+            <rect x="47" y="0" width="36" height="16" rx="5" fill="#0d2035"/>
+            <rect x="52" y="3" width="26" height="4" rx="2" fill="rgba(255,255,255,0.08)"/>
+            <rect x="8" y="14" width="114" height="264" rx="16" fill="url(#kbg)"/>
+            <rect x="10" y="14" width="110" height="3" rx="2" fill="rgba(255,255,255,0.12)"/>
+            <rect x="18" y="28" width="94" height="170" rx="10" fill="#060f1c"/>
+            <rect x="20" y="30" width="90" height="166" rx="8" fill="#0b243d"/>
+            <rect x="20" y="30" width="90" height="42" rx="8" fill="url(#ksh)"/>
+            <text x="65" y="47" text-anchor="middle" fill="rgba(255,255,255,0.95)" font-size="7.5" font-weight="800" font-family="system-ui,sans-serif" letter-spacing="0.5">GoStationery</text>
+            <text x="65" y="62" text-anchor="middle" fill="rgba(255,255,255,0.55)" font-size="5.5" font-weight="600" font-family="system-ui" letter-spacing="2">QUEUE MANAGEMENT</text>
+            <rect x="26" y="79" width="78" height="46" rx="8" fill="rgba(255,255,255,0.07)"/>
+            <text x="65" y="92" text-anchor="middle" fill="rgba(255,255,255,0.45)" font-size="5.5" font-weight="700" font-family="system-ui" letter-spacing="2">NOW SERVING</text>
+            <text x="65" y="118" text-anchor="middle" fill="#fff" font-size="30" font-weight="900" font-family="system-ui,sans-serif">A-041</text>
+            <rect x="26" y="132" width="78" height="1" fill="rgba(255,255,255,0.08)"/>
+            <rect x="24" y="138" width="82" height="16" rx="5" fill="rgba(0,180,216,0.12)"/>
+            <circle cx="33" cy="146" r="3.5" fill="#22c55e"/>
+            <text x="42" y="150" fill="rgba(255,255,255,0.8)" font-size="6.5" font-family="system-ui" font-weight="600">A-042 · ~2 min</text>
+            <rect x="24" y="158" width="82" height="16" rx="5" fill="rgba(255,255,255,0.04)"/>
+            <circle cx="33" cy="166" r="3.5" fill="#f97316"/>
+            <text x="42" y="170" fill="rgba(255,255,255,0.45)" font-size="6.5" font-family="system-ui" font-weight="600">A-043 · ~6 min</text>
+            <rect x="24" y="178" width="82" height="16" rx="5" fill="rgba(255,255,255,0.04)"/>
+            <circle cx="33" cy="186" r="3.5" fill="#94a3b8"/>
+            <text x="42" y="190" fill="rgba(255,255,255,0.3)" font-size="6.5" font-family="system-ui" font-weight="600">A-044 · ~10 min</text>
+            <rect x="32" y="210" width="66" height="7" rx="3.5" fill="#04101f"/>
+            <rect x="38" y="212" width="54" height="3" rx="1.5" fill="rgba(0,180,216,0.35)"/>
+            <text x="65" y="228" text-anchor="middle" fill="rgba(0,212,255,0.35)" font-size="5" font-family="system-ui" letter-spacing="1">TOKEN PRINTER</text>
+            <circle cx="55" cy="244" r="1.5" fill="rgba(255,255,255,0.12)"/>
+            <circle cx="62" cy="244" r="1.5" fill="rgba(255,255,255,0.12)"/>
+            <circle cx="69" cy="244" r="1.5" fill="rgba(255,255,255,0.12)"/>
+            <circle cx="76" cy="244" r="1.5" fill="rgba(255,255,255,0.12)"/>
+            <text x="65" y="264" text-anchor="middle" fill="rgba(255,255,255,0.15)" font-size="5.5" font-family="system-ui" font-weight="700" letter-spacing="1">GoKiosk™</text>
+            <rect x="28" y="278" width="74" height="18" rx="8" fill="#07121e"/>
+            <rect x="38" y="284" width="54" height="6" rx="3" fill="#04101f"/>
+            <ellipse cx="65" cy="296" rx="48" ry="7" fill="rgba(0,180,216,0.12)"/>
+          </svg>
+          <div class="machine-label">Smart Kiosk</div>
         </div>
-        <div class="hero-float hf-2">📊 Dashboard updated</div>
+
+        <!-- Print &amp; Dispense Vending Machine -->
+        <div class="machine-wrap" style="margin-bottom:18px;">
+          <div class="hero-float hf-2">📊 Dashboard updated</div>
+          <svg class="machine-svg-vend" width="160" height="290" viewBox="0 0 160 290" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="vbg" x1="0" y1="0" x2="0.3" y2="1"><stop offset="0%" stop-color="#1c2a3a"/><stop offset="100%" stop-color="#0b1726"/></linearGradient>
+              <linearGradient id="vsh" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#b45309"/><stop offset="100%" stop-color="#f97316"/></linearGradient>
+              <linearGradient id="vwin" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0c1d2e"/><stop offset="100%" stop-color="#071426"/></linearGradient>
+            </defs>
+            <rect x="5" y="5" width="130" height="262" rx="16" fill="url(#vbg)"/>
+            <rect x="117" y="5" width="18" height="262" rx="16" fill="#0a1827"/>
+            <rect x="117" y="5" width="2" height="262" fill="#071220"/>
+            <rect x="7" y="5" width="126" height="3" rx="2" fill="rgba(255,255,255,0.1)"/>
+            <rect x="13" y="14" width="96" height="58" rx="9" fill="#060f1c"/>
+            <rect x="15" y="16" width="92" height="54" rx="7" fill="#0b243d"/>
+            <rect x="15" y="16" width="92" height="22" rx="7" fill="url(#vsh)"/>
+            <text x="61" y="26" text-anchor="middle" fill="rgba(255,255,255,0.95)" font-size="7" font-weight="800" font-family="system-ui" letter-spacing="0.3">Print &amp; Dispense</text>
+            <text x="61" y="35" text-anchor="middle" fill="rgba(255,255,255,0.65)" font-size="5.5" font-family="system-ui">Ready · Cashless Payment</text>
+            <rect x="18" y="44" width="22" height="12" rx="4" fill="rgba(0,180,216,0.2)"/>
+            <text x="29" y="53" text-anchor="middle" fill="#00d4ff" font-size="6" font-weight="800" font-family="system-ui">UPI</text>
+            <rect x="44" y="44" width="22" height="12" rx="4" fill="rgba(255,255,255,0.07)"/>
+            <text x="55" y="53" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="6" font-weight="700" font-family="system-ui">Card</text>
+            <rect x="70" y="44" width="22" height="12" rx="4" fill="rgba(255,255,255,0.07)"/>
+            <text x="81" y="53" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="6" font-weight="700" font-family="system-ui">NFC</text>
+            <rect x="13" y="80" width="96" height="128" rx="9" fill="#060f1c"/>
+            <rect x="15" y="82" width="92" height="124" rx="7" fill="url(#vwin)"/>
+            <rect x="17" y="120" width="88" height="1" fill="rgba(255,255,255,0.07)"/>
+            <rect x="17" y="158" width="88" height="1" fill="rgba(255,255,255,0.07)"/>
+            <rect x="20" y="86" width="24" height="30" rx="5" fill="rgba(15,76,129,0.4)"/>
+            <text x="32" y="103" text-anchor="middle" font-size="11">📄</text>
+            <text x="32" y="114" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="4.5" font-family="system-ui">B&amp;W</text>
+            <rect x="48" y="86" width="24" height="30" rx="5" fill="rgba(15,76,129,0.4)"/>
+            <text x="60" y="103" text-anchor="middle" font-size="11">🎨</text>
+            <text x="60" y="114" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="4.5" font-family="system-ui">Color</text>
+            <rect x="76" y="86" width="24" height="30" rx="5" fill="rgba(15,76,129,0.4)"/>
+            <text x="88" y="103" text-anchor="middle" font-size="11">📋</text>
+            <text x="88" y="114" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="4.5" font-family="system-ui">Scan</text>
+            <rect x="20" y="124" width="24" height="30" rx="5" fill="rgba(21,90,50,0.4)"/>
+            <text x="32" y="141" text-anchor="middle" font-size="11">✏️</text>
+            <text x="32" y="152" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="4.5" font-family="system-ui">Pens</text>
+            <rect x="48" y="124" width="24" height="30" rx="5" fill="rgba(21,90,50,0.4)"/>
+            <text x="60" y="141" text-anchor="middle" font-size="11">📎</text>
+            <text x="60" y="152" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="4.5" font-family="system-ui">Clips</text>
+            <rect x="76" y="124" width="24" height="30" rx="5" fill="rgba(21,90,50,0.4)"/>
+            <text x="88" y="141" text-anchor="middle" font-size="11">📁</text>
+            <text x="88" y="152" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="4.5" font-family="system-ui">Files</text>
+            <rect x="20" y="162" width="24" height="36" rx="5" fill="rgba(109,40,217,0.3)"/>
+            <text x="32" y="181" text-anchor="middle" font-size="11">🖊️</text>
+            <text x="32" y="195" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="4.5" font-family="system-ui">Markers</text>
+            <rect x="48" y="162" width="24" height="36" rx="5" fill="rgba(109,40,217,0.3)"/>
+            <text x="60" y="181" text-anchor="middle" font-size="11">🗂️</text>
+            <text x="60" y="195" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="4.5" font-family="system-ui">Folder</text>
+            <rect x="76" y="162" width="24" height="36" rx="5" fill="rgba(109,40,217,0.3)"/>
+            <text x="88" y="181" text-anchor="middle" font-size="11">🔖</text>
+            <text x="88" y="195" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="4.5" font-family="system-ui">Tags</text>
+            <rect x="13" y="215" width="96" height="10" rx="5" fill="#04101f"/>
+            <rect x="20" y="218" width="82" height="4" rx="2" fill="rgba(249,115,22,0.3)"/>
+            <text x="61" y="238" text-anchor="middle" fill="rgba(249,115,22,0.3)" font-size="5" font-family="system-ui" letter-spacing="1">PAPER OUTPUT</text>
+            <rect x="121" y="24" width="10" height="16" rx="3" fill="#071526"/>
+            <rect x="122" y="26" width="8" height="10" rx="2" fill="#0a2540"/>
+            <text x="126" y="33" text-anchor="middle" fill="rgba(0,212,255,0.7)" font-size="5" font-weight="700">$</text>
+            <circle cx="126" cy="52" r="4.5" fill="rgba(0,180,216,0.2)"/>
+            <circle cx="126" cy="52" r="2.5" fill="#00d4ff"/>
+            <text x="126" y="72" text-anchor="middle" fill="rgba(255,255,255,0.2)" font-size="4" font-family="system-ui" font-weight="600">STOCK</text>
+            <text x="126" y="83" text-anchor="middle" fill="rgba(249,115,22,0.7)" font-size="8" font-weight="800" font-family="system-ui">340</text>
+            <text x="61" y="257" text-anchor="middle" fill="rgba(255,255,255,0.12)" font-size="5.5" font-family="system-ui" font-weight="700" letter-spacing="1">GoVend™</text>
+            <ellipse cx="70" cy="270" rx="55" ry="8" fill="rgba(249,115,22,0.1)"/>
+          </svg>
+          <div class="machine-label">Print &amp; Vend Station</div>
+        </div>
       </div>
     </div>
   </div>
@@ -525,6 +653,125 @@
         <p>Manage student admin queues and stationery dispensing at colleges and universities effortlessly.</p>
         <span class="arrow">Learn more →</span>
       </a>
+      <a href="industries.html#temples" class="industry-card fade-up d7">
+        <span class="industry-icon">🛕</span>
+        <h3>Temples &amp; Religious Venues</h3>
+        <p>Manage large devotee footfall during peak hours and festivals with fair, orderly token-based darshan queues.</p>
+        <span class="arrow">Learn more →</span>
+      </a>
+      <a href="industries.html#hospitality" class="industry-card fade-up d8">
+        <span class="industry-icon">🍽️</span>
+        <h3>Large Kitchens &amp; Canteens</h3>
+        <p>Streamline meal token issuance and stationery dispensing for corporate canteens, hostels, and mess halls.</p>
+        <span class="arrow">Learn more →</span>
+      </a>
+      <a href="industries.html#visitor" class="industry-card fade-up d9">
+        <span class="industry-icon">🪪</span>
+        <h3>Visitor Pass Management</h3>
+        <p>Issue, print, and track visitor passes automatically — eliminating manual registers at reception desks.</p>
+        <span class="arrow">Learn more →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCT LINEUP -->
+<section class="section products-section" id="products">
+  <div class="section-inner">
+    <div class="section-header center fade-up">
+      <span class="section-tag">Product Lineup</span>
+      <h2 class="section-title">Every Setup, Every Scale</h2>
+      <p class="section-sub">From compact wall-mount kiosks to full enterprise deployments — GoStationery has a product built for your exact environment.</p>
+    </div>
+    <div class="products-grid">
+
+      <!-- Mini Kiosk — Wall Mount -->
+      <div class="product-card fade-up d1">
+        <div class="product-card-icon pi-blue">🖥️</div>
+        <h3>Mini Kiosk — Wall Mount</h3>
+        <span class="pc-sub">Space-Saving · Indoor</span>
+        <p>A compact touchscreen kiosk that mounts directly on a wall. Ideal for clinics, bank branches, and offices where floor space is at a premium.</p>
+        <div class="pc-tags">
+          <span class="pc-tag hi">Touchscreen</span>
+          <span class="pc-tag">Token Printer</span>
+          <span class="pc-tag">SMS Alerts</span>
+        </div>
+      </div>
+
+      <!-- Mini Kiosk — Floor Mount -->
+      <div class="product-card fade-up d2">
+        <div class="product-card-icon pi-blue">🖥️</div>
+        <h3>Mini Kiosk — Floor Mount</h3>
+        <span class="pc-sub">Standalone · High Traffic</span>
+        <p>A freestanding pedestal kiosk for open lobbies and large waiting areas. Highly visible and accessible without any wall installation required.</p>
+        <div class="pc-tags">
+          <span class="pc-tag hi">Floor Stand</span>
+          <span class="pc-tag">Multi-Counter</span>
+          <span class="pc-tag">Cloud Dashboard</span>
+        </div>
+      </div>
+
+      <!-- Print Vending Machine -->
+      <div class="product-card fade-up d3">
+        <div class="product-card-icon pi-orange">🖨️</div>
+        <h3>Print Vending Machine</h3>
+        <span class="pc-sub">Self-Service · Cashless</span>
+        <p>A fully autonomous document printing station supporting A4 B&amp;W, colour prints, and scanning — accepting UPI, card, and NFC payments 24/7.</p>
+        <div class="pc-tags">
+          <span class="pc-tag orange">B&amp;W + Color</span>
+          <span class="pc-tag">Scanning</span>
+          <span class="pc-tag">UPI / Card / NFC</span>
+        </div>
+      </div>
+
+      <!-- Stationery + Print Vending Machine -->
+      <div class="product-card fade-up d4">
+        <div class="product-card-icon pi-teal">📦</div>
+        <h3>Stationery + Print Vending Machine</h3>
+        <span class="pc-sub">Combined · All-in-One</span>
+        <p>The ultimate self-service station — combines document printing with a stationery vending unit. Dispenses pens, files, staples, and more alongside print jobs.</p>
+        <div class="pc-tags">
+          <span class="pc-tag hi">Print + Dispense</span>
+          <span class="pc-tag">Stock Alerts</span>
+          <span class="pc-tag">Analytics</span>
+        </div>
+      </div>
+
+      <!-- Products Vending Machine -->
+      <div class="product-card fade-up d5">
+        <div class="product-card-icon pi-purple">🗃️</div>
+        <h3>Products Vending Machine</h3>
+        <span class="pc-sub">General Merchandise</span>
+        <p>A customisable vending unit for dispensing any physical product — stationery, safety equipment, ID cards, or office supplies — with full remote monitoring.</p>
+        <div class="pc-tags">
+          <span class="pc-tag">Customisable Slots</span>
+          <span class="pc-tag">Remote Monitoring</span>
+          <span class="pc-tag hi">Any Product</span>
+        </div>
+      </div>
+
+      <!-- Enterprise Version Teaser Card -->
+      <div class="product-card fade-up d6" style="border-color:rgba(99,102,241,.2);background:rgba(67,56,202,.05);">
+        <div class="product-card-icon pi-indigo">🏢</div>
+        <h3>Enterprise Software Platform</h3>
+        <span class="pc-sub" style="color:rgba(167,139,250,.7);">End-to-End · Scalable</span>
+        <p>Full billing engine, Point-of-Sale integration, multi-location dashboard, role-based access, and white-label branding for large-scale deployments.</p>
+        <div class="pc-tags">
+          <span class="pc-tag" style="color:#a78bfa;border-color:rgba(167,139,250,.2);background:rgba(167,139,250,.06);">PoS Integration</span>
+          <span class="pc-tag" style="color:#a78bfa;border-color:rgba(167,139,250,.2);background:rgba(167,139,250,.06);">Multi-Location</span>
+          <span class="pc-tag" style="color:#a78bfa;border-color:rgba(167,139,250,.2);background:rgba(167,139,250,.06);">White-Label</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Enterprise CTA Banner -->
+    <div class="products-enterprise fade-up">
+      <div class="ent-text">
+        <h3>🏢 Enterprise Version — End-to-End Billing &amp; PoS</h3>
+        <p>For organisations managing multiple locations or high transaction volumes. Our enterprise platform includes a full billing engine, PoS terminal integration, real-time analytics, multi-branch management, and custom white-label branding. One dashboard. Total control.</p>
+      </div>
+      <button class="btn-ent" onclick="openModal()">Request Enterprise Demo →</button>
     </div>
   </div>
 </section>
