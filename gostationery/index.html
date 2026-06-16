@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>GoStationery — Smart Queue & Printing Solutions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    /* ── HOME-SPECIFIC ── */
+    body { padding-top: var(--nav-h); }
+
+    /* ── HERO — Dark cinematic (Apple-inspired) ── */
+    .hero {
+      min-height: calc(100vh - var(--nav-h));
+      display: flex; align-items: center; justify-content: center;
+      background: radial-gradient(ellipse 110% 70% at 50% -5%, #0d2a4a 0%, #050d1a 55%);
+      padding: 4.5rem 2rem 5rem; position: relative; overflow: hidden;
+      text-align: center;
+    }
+    .hero-glow { position: absolute; border-radius: 50%; pointer-events: none; }
+    .hero-glow-1 { width:800px;height:800px;background:radial-gradient(circle,rgba(0,180,216,.11) 0%,transparent 65%);top:-300px;right:-200px; }
+    .hero-glow-2 { width:700px;height:700px;background:radial-gradient(circle,rgba(15,76,129,.15) 0%,transparent 65%);bottom:-250px;left:-150px; }
+    .hero-glow-3 { width:400px;height:400px;background:radial-gradient(circle,rgba(0,180,216,.08) 0%,transparent 65%);top:40%;left:50%;transform:translate(-50%,-50%); }
+
+    .hero-inner {
+      max-width: 980px; margin: 0 auto; position: relative; z-index: 1;
+      display: flex; flex-direction: column; align-items: center; gap: 3.5rem;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(0,180,216,.1); border: 1px solid rgba(0,180,216,.25);
+      color: #7dd3fc; border-radius: 99px; padding: .45rem 1.1rem;
+      font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+      backdrop-filter: blur(8px); margin-bottom: 1.5rem;
+    }
+    .badge-dot { width:6px;height:6px;border-radius:50%;background:#4ade80;animation:blink 1.4s infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+    .hero-text h1 {
+      font-size: clamp(3.5rem,9vw,6.8rem); font-weight: 900;
+      color: #f5f5f7; line-height: 1.03; letter-spacing: -0.04em; margin-bottom: 1.5rem;
+    }
+    .hero-text p {
+      font-size: clamp(1rem,2vw,1.2rem); color: rgba(245,245,247,.52);
+      line-height: 1.9; margin-bottom: 2.5rem;
+      max-width: 560px; margin-left: auto; margin-right: auto;
+    }
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; justify-content: center; }
+    .hero .btn-primary { background: linear-gradient(135deg,#00b4d8,#0f4c81); box-shadow: 0 8px 30px rgba(0,180,216,.35); }
+    .hero .btn-primary:hover { box-shadow: 0 14px 40px rgba(0,180,216,.5); }
+    .hero .btn-secondary { background: rgba(255,255,255,.08); color: #f5f5f7; border: 1.5px solid rgba(255,255,255,.18); backdrop-filter: blur(8px); }
+    .hero .btn-secondary:hover { background: rgba(255,255,255,.14); border-color: rgba(255,255,255,.35); }
+
+    /* Hero kiosk mockup */
+    .hero-visual { display:flex;align-items:flex-start;justify-content:center;gap:1.5rem;position:relative; }
+    .hero-mockup-wrap {
+      position: relative;
+      filter: drop-shadow(0 40px 80px rgba(0,180,216,.22)) drop-shadow(0 0 1px rgba(255,255,255,.1));
+    }
+    .kiosk-screen { width:280px;border-radius:22px;background:#fff;overflow:hidden;border:1px solid rgba(255,255,255,.12); }
+    .ks-header { background:linear-gradient(135deg,var(--primary),var(--accent));padding:1rem 1.1rem .8rem; }
+    .ks-hrow { display:flex;align-items:center;justify-content:space-between;margin-bottom:8px; }
+    .ks-label { font-size:.6rem;font-weight:800;color:rgba(255,255,255,.85);letter-spacing:.08em;text-transform:uppercase; }
+    .ks-live { display:flex;align-items:center;gap:4px;font-size:.55rem;color:rgba(255,255,255,.8);font-weight:600; }
+    .ks-live-dot { width:6px;height:6px;border-radius:50%;background:#4ade80;animation:blink 1.2s infinite; }
+    .ks-serving { background:rgba(255,255,255,.15);border-radius:10px;padding:.6rem .85rem;display:flex;align-items:center;justify-content:space-between; }
+    .ks-sl { font-size:.58rem;color:rgba(255,255,255,.7);font-weight:500; }
+    .ks-sn { font-size:1.4rem;font-weight:900;color:#fff; }
+    .ks-body { padding:.7rem;background:#f8fafc;display:flex;flex-direction:column;gap:.4rem; }
+    .ks-row { background:#fff;border:1px solid #f1f5f9;border-radius:10px;padding:.5rem .7rem;display:flex;align-items:center;gap:.5rem;transition:.3s; }
+    .ks-row.active { background:#eff6ff;border-color:#bfdbfe; }
+    .ks-dot { width:8px;height:8px;border-radius:50%;flex-shrink:0; }
+    .ks-tok { font-size:.64rem;font-weight:700;flex:1; }
+    .ks-wt { font-size:.6rem;font-weight:700; }
+    .ks-foot { background:#fff;padding:.55rem .7rem;border-top:1px solid #f1f5f9;display:flex;justify-content:space-between;align-items:center; }
+    .ks-foot span { font-size:.58rem;color:var(--muted);font-weight:500; }
+    .ks-foot strong { font-size:.58rem;color:var(--primary);font-weight:800; }
+
+    /* Floating badges — dark glass */
+    .hero-float {
+      position:absolute;background:rgba(5,13,26,.85);border-radius:14px;
+      padding:.75rem 1rem;
+      box-shadow:0 8px 30px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.1);font-size:.75rem;font-weight:700;
+      display:flex;align-items:center;gap:.5rem;color:#f0f0f5;
+      animation:floatBadge 3s ease-in-out infinite;white-space:nowrap;
+    }
+    @keyframes floatBadge { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+    .hf-1 { top:-24px;right:-65px;animation-delay:0s; }
+    .hf-2 { bottom:-5px;left:-55px;animation-delay:-1.5s; }
+
+    /* SOLUTION CARDS */
+    .sol-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:2rem; }
+    .sol-card {
+      border-radius:24px;overflow:hidden;text-decoration:none;color:var(--text);
+      border:1px solid var(--border);background:var(--surface);
+      transition:transform .35s cubic-bezier(.34,1.56,.64,1),box-shadow .35s;
+      display:flex;flex-direction:column;
+    }
+    .sol-card:hover { transform:translateY(-10px) scale(1.015);box-shadow:0 30px 70px rgba(0,0,0,.13); }
+    .sol-card-img { height:200px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;font-size:4.5rem; }
+    .sol-img-kiosk { background:linear-gradient(145deg,#dbeafe,#93c5fd); }
+    .sol-img-vend { background:linear-gradient(145deg,#fef3c7,#fdba74); }
+    .sol-card-body { padding:2rem;flex:1;display:flex;flex-direction:column; }
+    .sol-card-body h3 { font-size:1.3rem;margin-bottom:.6rem; }
+    .sol-card-body p { font-size:.875rem;color:var(--muted);line-height:1.7;flex:1;margin-bottom:1.25rem; }
+    .sol-link { display:inline-flex;align-items:center;gap:5px;color:var(--primary);font-weight:700;font-size:.875rem;transition:gap .2s; }
+    .sol-card:hover .sol-link { gap:10px; }
+
+    /* INDUSTRIES */
+    .ind-bg { background:linear-gradient(160deg,#f1f5f9,#e8f4fd); }
+
+    /* TESTIMONIALS */
+    .test-bg { background:linear-gradient(135deg,#030b18,#071528); }
+    .test-bg .section-tag { color:rgba(0,212,255,.9); }
+    .test-bg .section-title { color:#f5f5f7; }
+    .test-bg .section-sub { color:rgba(245,245,247,.55); }
+    .test-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem; }
+    .test-card {
+      background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);
+      border-radius:20px;padding:2rem;
+      transition:transform .3s,background .3s;position:relative;overflow:hidden;
+    }
+    .test-card::before { content:'"';position:absolute;top:.5rem;left:1.25rem;font-size:5rem;color:#00b4d8;opacity:.15;font-family:Georgia,serif;line-height:1; }
+    .test-card:hover { transform:translateY(-6px);background:rgba(255,255,255,.08); }
+    .test-tag { display:inline-block;font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.25rem .7rem;border-radius:99px;margin-bottom:1rem; }
+    .test-quote { font-size:.9rem;color:rgba(255,255,255,.72);line-height:1.7;margin-bottom:1.5rem;font-style:italic; }
+    .test-meta { display:flex;align-items:center;gap:.75rem; }
+    .test-avatar { width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;color:#fff;flex-shrink:0; }
+    .test-name { font-size:.875rem;font-weight:700;color:#fff; }
+    .test-co { font-size:.75rem;color:rgba(255,255,255,.45); }
+
+    /* TRUST */
+    .trust-bg { background:#fff; }
+
+    /* CTA BANNER */
+    .cta-banner {
+      background:linear-gradient(135deg,#030b18 0%,#071f40 50%,#030b18 100%);
+      padding:7rem 2rem;text-align:center;position:relative;overflow:hidden;
+    }
+    .cta-banner::before {
+      content:'';position:absolute;inset:0;
+      background:radial-gradient(ellipse 60% 80% at 50% 50%,rgba(0,180,216,.12) 0%,transparent 70%);
+    }
+    .cta-banner h2 { color:#f5f5f7;font-size:clamp(2rem,5vw,3.2rem);margin-bottom:.85rem;position:relative;z-index:1; }
+    .cta-banner p { color:rgba(245,245,247,.6);font-size:1.1rem;max-width:540px;margin:0 auto 2.75rem;line-height:1.8;position:relative;z-index:1; }
+    .cta-btns { display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;position:relative;z-index:1; }
+
+    /* Hero animates via CSS */
+    .hero-instant { animation: heroIn .75s cubic-bezier(.22,1,.36,1) both; }
+    @keyframes heroIn { from{opacity:0;transform:translateY(32px)} to{opacity:1;transform:none} }
+
+    /* Reliability metrics */
+    .rel-metrics {
+      display:flex;align-items:stretch;
+      background:linear-gradient(135deg,#f0f7ff,#e8f4fd);
+      border-radius:20px;border:1px solid rgba(0,180,216,.18);
+      overflow:hidden;margin-bottom:2rem;flex-wrap:wrap;
+    }
+    .rel-metric { flex:1;min-width:160px;padding:2rem 1.5rem;text-align:center; }
+    .rel-metric-val { font-size:2.5rem;font-weight:900;color:var(--primary);line-height:1;margin-bottom:.4rem;letter-spacing:-0.03em; }
+    .rel-metric-val span { font-size:1.2rem;color:var(--accent); }
+    .rel-metric-bar { height:4px;background:#e2e8f0;border-radius:2px;margin:.6rem 0;overflow:hidden; }
+    .rel-bar-fill { height:100%;background:linear-gradient(90deg,var(--primary),var(--accent));border-radius:2px; }
+    .rel-metric-label { font-size:.72rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em; }
+    .rel-divider { width:1px;background:rgba(0,180,216,.15);align-self:stretch; }
+
+    @media(max-width:1024px) {
+      .hero-inner { gap:2.5rem; }
+      .hf-1 { right:-15px;top:-15px; }
+      .hf-2 { left:-15px;bottom:0; }
+      .rel-metrics { flex-wrap:wrap; }
+      .rel-metric { min-width:45%; }
+      .rel-divider { display:none; }
+    }
+    @media(max-width:640px) {
+      .hf-1,.hf-2 { display:none; }
+      .hero-visual { display:none; }
+    }
+
+    /* ── Hero Machines Layout ── */
+    .hero-machines { display:flex;align-items:flex-end;justify-content:center;gap:1.5rem;position:relative;padding-bottom:1rem; }
+    .machine-wrap { display:flex;flex-direction:column;align-items:center;gap:.6rem;position:relative; }
+    .machine-label { font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(0,212,255,.7);background:rgba(0,180,216,.08);border:1px solid rgba(0,180,216,.2);border-radius:20px;padding:.28rem .85rem;white-space:nowrap; }
+    .machine-svg { filter:drop-shadow(0 30px 60px rgba(0,180,216,.22)) drop-shadow(0 8px 24px rgba(0,0,0,.5)); }
+    .machine-svg-vend { filter:drop-shadow(0 30px 60px rgba(249,115,22,.18)) drop-shadow(0 8px 24px rgba(0,0,0,.5)); }
+    @media(max-width:640px){ .hero-machines{gap:.75rem;} .machine-wrap svg{transform:scale(.82);transform-origin:bottom center;} }
+
+    /* ── Products Lineup Section ── */
+    .products-section { background:linear-gradient(180deg,#060c18 0%,#050d1a 100%); border-top:1px solid rgba(255,255,255,.06); }
+    .products-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem;margin-top:2rem; }
+    .product-card {
+      background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);
+      border-radius:20px;padding:1.75rem;display:flex;flex-direction:column;
+      transition:transform .3s,border-color .3s,background .3s;
+    }
+    .product-card:hover { transform:translateY(-6px);border-color:rgba(0,180,216,.3);background:rgba(0,180,216,.04); }
+    .product-card-icon { width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:1rem;flex-shrink:0; }
+    .pi-blue { background:linear-gradient(135deg,rgba(15,76,129,.5),rgba(0,180,216,.25)); }
+    .pi-orange { background:linear-gradient(135deg,rgba(180,83,9,.5),rgba(249,115,22,.25)); }
+    .pi-purple { background:linear-gradient(135deg,rgba(109,40,217,.5),rgba(139,92,246,.25)); }
+    .pi-green { background:linear-gradient(135deg,rgba(6,95,70,.5),rgba(16,185,129,.25)); }
+    .pi-teal { background:linear-gradient(135deg,rgba(15,118,110,.5),rgba(20,184,166,.25)); }
+    .pi-indigo { background:linear-gradient(135deg,rgba(67,56,202,.5),rgba(99,102,241,.25)); }
+    .product-card h3 { font-size:1rem;font-weight:700;color:#f5f5f7;margin:0 0 .4rem;line-height:1.3; }
+    .product-card .pc-sub { font-size:.68rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgba(0,212,255,.6);margin-bottom:.75rem;display:block; }
+    .product-card p { font-size:.85rem;color:rgba(245,245,247,.5);line-height:1.7;flex:1;margin:0 0 1.25rem; }
+    .pc-tags { display:flex;flex-wrap:wrap;gap:.4rem;margin-top:auto; }
+    .pc-tag { font-size:.68rem;font-weight:600;color:rgba(245,245,247,.4);background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:.25rem .7rem; }
+    .pc-tag.hi { color:#00d4ff;border-color:rgba(0,212,255,.2);background:rgba(0,212,255,.06); }
+    .pc-tag.orange { color:#fb923c;border-color:rgba(251,146,60,.2);background:rgba(251,146,60,.06); }
+    .products-enterprise {
+      margin-top:1.5rem;border-radius:20px;
+      background:linear-gradient(135deg,rgba(67,56,202,.15),rgba(99,102,241,.06));
+      border:1px solid rgba(99,102,241,.25);padding:2rem 2.25rem;
+      display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem;
+    }
+    .products-enterprise h3 { font-size:1.2rem;font-weight:800;color:#f5f5f7;margin:0 0 .4rem; }
+    .products-enterprise p { font-size:.88rem;color:rgba(245,245,247,.5);line-height:1.7;margin:0;max-width:540px; }
+    .ent-text { flex:1;min-width:280px; }
+    .products-enterprise .btn-ent {
+      background:linear-gradient(135deg,#4338ca,#6366f1);color:#fff;
+      border:none;border-radius:50px;padding:.9rem 2rem;font-size:.85rem;font-weight:700;
+      letter-spacing:.04em;cursor:pointer;white-space:nowrap;transition:opacity .2s,transform .2s;flex-shrink:0;
+    }
+    .products-enterprise .btn-ent:hover { opacity:.88;transform:translateY(-2px); }
+  </style>
+</head>
+<body class="dark-page">
+
+<!-- NAV -->
+<nav id="mainNav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <div class="logo-icon">G</div>
+      <span class="logo-text">Go<span>Stationery</span></span>
+    </a>
+    <ul class="nav-menu">
+      <li class="nav-item">
+        <button class="nav-link">Solutions <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></button>
+        <div class="dropdown">
+          <a href="kiosk.html"><div class="dropdown-icon di-blue">🖥️</div><div><span>Kiosk</span><span class="dropdown-desc">Queue management system</span></div></a>
+          <a href="vending.html"><div class="dropdown-icon di-orange">🖨️</div><div><span>Print & Dispense Station</span><span class="dropdown-desc">Smart stationery vending</span></div></a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link">Industries <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></button>
+        <div class="dropdown" style="min-width:260px;">
+          <a href="industries.html#healthcare"><div class="dropdown-icon di-green">🏥</div><div><span>Healthcare</span><span class="dropdown-desc">Clinics, hospitals, labs</span></div></a>
+          <a href="industries.html#banking"><div class="dropdown-icon di-blue">🏦</div><div><span>Banking & Finance</span><span class="dropdown-desc">Branches, NBFCs, insurance</span></div></a>
+          <a href="industries.html#retail"><div class="dropdown-icon di-yellow">🛒</div><div><span>Retail</span><span class="dropdown-desc">Malls, counters, service desks</span></div></a>
+          <a href="industries.html#govt"><div class="dropdown-icon di-purple">🏛️</div><div><span>Government</span><span class="dropdown-desc">Offices, ration shops, RTO</span></div></a>
+          <a href="industries.html#corporate"><div class="dropdown-icon di-red">🏢</div><div><span>Corporate</span><span class="dropdown-desc">Offices, HR, reception</span></div></a>
+          <a href="industries.html#education"><div class="dropdown-icon di-green">🎓</div><div><span>Education</span><span class="dropdown-desc">Colleges, admin offices</span></div></a>
+        </div>
+      </li>
+      <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+      <li class="nav-item"><a href="#contact" class="nav-link">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="nav-cta" onclick="openModal()">Request Demo</button>
+    </div>
+    <div class="hamburger-wrap">
+      <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE NAV PANEL -->
+<div class="mobile-nav" id="mobileNav">
+  <button class="mobile-nav-link" data-sub="mobSolutions" aria-expanded="false">
+    Solutions <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+  </button>
+  <div class="mobile-sub" id="mobSolutions">
+    <a href="kiosk.html"><div class="dropdown-icon di-blue">🖥️</div><span>Kiosk — Queue Management</span></a>
+    <a href="vending.html"><div class="dropdown-icon di-orange">🖨️</div><span>Print & Dispense Station</span></a>
+  </div>
+  <button class="mobile-nav-link" data-sub="mobIndustries" aria-expanded="false">
+    Industries <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+  </button>
+  <div class="mobile-sub" id="mobIndustries">
+    <a href="industries.html#healthcare"><div class="dropdown-icon di-green">🏥</div><span>Healthcare</span></a>
+    <a href="industries.html#banking"><div class="dropdown-icon di-blue">🏦</div><span>Banking & Finance</span></a>
+    <a href="industries.html#retail"><div class="dropdown-icon di-yellow">🛒</div><span>Retail</span></a>
+    <a href="industries.html#govt"><div class="dropdown-icon di-purple">🏛️</div><span>Government</span></a>
+    <a href="industries.html#corporate"><div class="dropdown-icon di-red">🏢</div><span>Corporate</span></a>
+    <a href="industries.html#education"><div class="dropdown-icon di-green">🎓</div><span>Education</span></a>
+  </div>
+  <a href="about.html" class="mobile-nav-link">About</a>
+  <a href="#contact" class="mobile-nav-link">Contact</a>
+  <button class="mobile-nav-cta">Request Free Demo</button>
+</div>
+
+<!-- HERO — Dark cinematic (Apple-inspired) -->
+<section class="hero">
+  <div class="hero-glow hero-glow-1"></div>
+  <div class="hero-glow hero-glow-2"></div>
+  <div class="hero-glow hero-glow-3"></div>
+  <div class="hero-inner">
+    <div class="hero-text hero-instant">
+      <div class="hero-badge"><span class="badge-dot"></span>Software-First Solutions · Made in India</div>
+      <h1>Your time is<br><span class="text-gradient">priceless.</span></h1>
+      <p>Intelligent software-powered products that eliminate queues and automate stationery — turning everyday frustrations into seamless experiences.</p>
+      <div class="hero-btns">
+        <button class="btn btn-primary" onclick="openModal()">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.069A1 1 0 0121 8.845v6.31a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+          Book a Free Demo
+        </button>
+        <a href="#solutions" class="btn btn-secondary">Explore Solutions ↓</a>
+      </div>
+    </div>
+    <div class="hero-visual fade-up d2">
+      <div class="hero-machines">
+        <!-- Wall-Mount Smart Kiosk -->
+        <div class="machine-wrap">
+          <div class="hero-float hf-1">🟢 Token A-041 called</div>
+          <svg class="machine-svg" width="130" height="310" viewBox="0 0 130 310" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="kbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1e3a5c"/><stop offset="100%" stop-color="#0a1e35"/></linearGradient>
+              <linearGradient id="ksh" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0f4c81"/><stop offset="100%" stop-color="#00b4d8"/></linearGradient>
+            </defs>
+            <rect x="47" y="0" width="36" height="16" rx="5" fill="#0d2035"/>
+            <rect x="52" y="3" width="26" height="4" rx="2" fill="rgba(255,255,255,0.08)"/>
+            <rect x="8" y="14" width="114" height="264" rx="16" fill="url(#kbg)"/>
+            <rect x="10" y="14" width="110" height="3" rx="2" fill="rgba(255,255,255,0.12)"/>
+            <rect x="18" y="28" width="94" height="170" rx="10" fill="#060f1c"/>
+            <rect x="20" y="30" width="90" height="166" rx="8" fill="#0b243d"/>
+            <rect x="20" y="30" width="90" height="42" rx="8" fill="url(#ksh)"/>
+            <text x="65" y="47" text-anchor="middle" fill="rgba(255,255,255,0.95)" font-size="7.5" font-weight="800" font-family="system-ui,sans-serif" letter-spacing="0.5">GoStationery</text>
+            <text x="65" y="62" text-anchor="middle" fill="rgba(255,255,255,0.55)" font-size="5.5" font-weight="600" font-family="system-ui" letter-spacing="2">QUEUE MANAGEMENT</text>
+            <rect x="26" y="79" width="78" height="46" rx="8" fill="rgba(255,255,255,0.07)"/>
+            <text x="65" y="92" text-anchor="middle" fill="rgba(255,255,255,0.45)" font-size="5.5" font-weight="700" font-family="system-ui" letter-spacing="2">NOW SERVING</text>
+            <text x="65" y="118" text-anchor="middle" fill="#fff" font-size="30" font-weight="900" font-family="system-ui,sans-serif">A-041</text>
+            <rect x="26" y="132" width="78" height="1" fill="rgba(255,255,255,0.08)"/>
+            <rect x="24" y="138" width="82" height="16" rx="5" fill="rgba(0,180,216,0.12)"/>
+            <circle cx="33" cy="146" r="3.5" fill="#22c55e"/>
+            <text x="42" y="150" fill="rgba(255,255,255,0.8)" font-size="6.5" font-family="system-ui" font-weight="600">A-042 · ~2 min</text>
+            <rect x="24" y="158" width="82" height="16" rx="5" fill="rgba(255,255,255,0.04)"/>
+            <circle cx="33" cy="166" r="3.5" fill="#f97316"/>
+            <text x="42" y="170" fill="rgba(255,255,255,0.45)" font-size="6.5" font-family="system-ui" font-weight="600">A-043 · ~6 min</text>
+            <rect x="24" y="178" width="82" height="16" rx="5" fill="rgba(255,255,255,0.04)"/>
+            <circle cx="33" cy="186" r="3.5" fill="#94a3b8"/>
+            <text x="42" y="190" fill="rgba(255,255,255,0.3)" font-size="6.5" font-family="system-ui" font-weight="600">A-044 · ~10 min</text>
+            <rect x="32" y="210" width="66" height="7" rx="3.5" fill="#04101f"/>
+            <rect x="38" y="212" width="54" height="3" rx="1.5" fill="rgba(0,180,216,0.35)"/>
+            <text x="65" y="228" text-anchor="middle" fill="rgba(0,212,255,0.35)" font-size="5" font-family="system-ui" letter-spacing="1">TOKEN PRINTER</text>
+            <circle cx="55" cy="244" r="1.5" fill="rgba(255,255,255,0.12)"/>
+            <circle cx="62" cy="244" r="1.5" fill="rgba(255,255,255,0.12)"/>
+            <circle cx="69" cy="244" r="1.5" fill="rgba(255,255,255,0.12)"/>
+            <circle cx="76" cy="244" r="1.5" fill="rgba(255,255,255,0.12)"/>
+            <text x="65" y="264" text-anchor="middle" fill="rgba(255,255,255,0.15)" font-size="5.5" font-family="system-ui" font-weight="700" letter-spacing="1">GoKiosk™</text>
+            <rect x="28" y="278" width="74" height="18" rx="8" fill="#07121e"/>
+            <rect x="38" y="284" width="54" height="6" rx="3" fill="#04101f"/>
+            <ellipse cx="65" cy="296" rx="48" ry="7" fill="rgba(0,180,216,0.12)"/>
+          </svg>
+          <div class="machine-label">Smart Kiosk</div>
+        </div>
+
+        <!-- Print &amp; Dispense Vending Machine -->
+        <div class="machine-wrap" style="margin-bottom:18px;">
+          <div class="hero-float hf-2">📊 Dashboard updated</div>
+          <svg class="machine-svg-vend" width="160" height="290" viewBox="0 0 160 290" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="vbg" x1="0" y1="0" x2="0.3" y2="1"><stop offset="0%" stop-color="#1c2a3a"/><stop offset="100%" stop-color="#0b1726"/></linearGradient>
+              <linearGradient id="vsh" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#b45309"/><stop offset="100%" stop-color="#f97316"/></linearGradient>
+              <linearGradient id="vwin" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0c1d2e"/><stop offset="100%" stop-color="#071426"/></linearGradient>
+            </defs>
+            <rect x="5" y="5" width="130" height="262" rx="16" fill="url(#vbg)"/>
+            <rect x="117" y="5" width="18" height="262" rx="16" fill="#0a1827"/>
+            <rect x="117" y="5" width="2" height="262" fill="#071220"/>
+            <rect x="7" y="5" width="126" height="3" rx="2" fill="rgba(255,255,255,0.1)"/>
+            <rect x="13" y="14" width="96" height="58" rx="9" fill="#060f1c"/>
+            <rect x="15" y="16" width="92" height="54" rx="7" fill="#0b243d"/>
+            <rect x="15" y="16" width="92" height="22" rx="7" fill="url(#vsh)"/>
+            <text x="61" y="26" text-anchor="middle" fill="rgba(255,255,255,0.95)" font-size="7" font-weight="800" font-family="system-ui" letter-spacing="0.3">Print &amp; Dispense</text>
+            <text x="61" y="35" text-anchor="middle" fill="rgba(255,255,255,0.65)" font-size="5.5" font-family="system-ui">Ready · Cashless Payment</text>
+            <rect x="18" y="44" width="22" height="12" rx="4" fill="rgba(0,180,216,0.2)"/>
+            <text x="29" y="53" text-anchor="middle" fill="#00d4ff" font-size="6" font-weight="800" font-family="system-ui">UPI</text>
+            <rect x="44" y="44" width="22" height="12" rx="4" fill="rgba(255,255,255,0.07)"/>
+            <text x="55" y="53" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="6" font-weight="700" font-family="system-ui">Card</text>
+            <rect x="70" y="44" width="22" height="12" rx="4" fill="rgba(255,255,255,0.07)"/>
+            <text x="81" y="53" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="6" font-weight="700" font-family="system-ui">NFC</text>
+            <rect x="13" y="80" width="96" height="128" rx="9" fill="#060f1c"/>
+            <rect x="15" y="82" width="92" height="124" rx="7" fill="url(#vwin)"/>
+            <rect x="17" y="120" width="88" height="1" fill="rgba(255,255,255,0.07)"/>
+            <rect x="17" y="158" width="88" height="1" fill="rgba(255,255,255,0.07)"/>
+            <rect x="20" y="86" width="24" height="30" rx="5" fill="rgba(15,76,129,0.4)"/>
+            <text x="32" y="103" text-anchor="middle" font-size="11">📄</text>
+            <text x="32" y="114" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="4.5" font-family="system-ui">B&amp;W</text>
+            <rect x="48" y="86" width="24" height="30" rx="5" fill="rgba(15,76,129,0.4)"/>
+            <text x="60" y="103" text-anchor="middle" font-size="11">🎨</text>
+            <text x="60" y="114" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="4.5" font-family="system-ui">Color</text>
+            <rect x="76" y="86" width="24" height="30" rx="5" fill="rgba(15,76,129,0.4)"/>
+            <text x="88" y="103" text-anchor="middle" font-size="11">📋</text>
+            <text x="88" y="114" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="4.5" font-family="system-ui">Scan</text>
+            <rect x="20" y="124" width="24" height="30" rx="5" fill="rgba(21,90,50,0.4)"/>
+            <text x="32" y="141" text-anchor="middle" font-size="11">✏️</text>
+            <text x="32" y="152" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="4.5" font-family="system-ui">Pens</text>
+            <rect x="48" y="124" width="24" height="30" rx="5" fill="rgba(21,90,50,0.4)"/>
+            <text x="60" y="141" text-anchor="middle" font-size="11">📎</text>
+            <text x="60" y="152" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="4.5" font-family="system-ui">Clips</text>
+            <rect x="76" y="124" width="24" height="30" rx="5" fill="rgba(21,90,50,0.4)"/>
+            <text x="88" y="141" text-anchor="middle" font-size="11">📁</text>
+            <text x="88" y="152" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="4.5" font-family="system-ui">Files</text>
+            <rect x="20" y="162" width="24" height="36" rx="5" fill="rgba(109,40,217,0.3)"/>
+            <text x="32" y="181" text-anchor="middle" font-size="11">🖊️</text>
+            <text x="32" y="195" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="4.5" font-family="system-ui">Markers</text>
+            <rect x="48" y="162" width="24" height="36" rx="5" fill="rgba(109,40,217,0.3)"/>
+            <text x="60" y="181" text-anchor="middle" font-size="11">🗂️</text>
+            <text x="60" y="195" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="4.5" font-family="system-ui">Folder</text>
+            <rect x="76" y="162" width="24" height="36" rx="5" fill="rgba(109,40,217,0.3)"/>
+            <text x="88" y="181" text-anchor="middle" font-size="11">🔖</text>
+            <text x="88" y="195" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="4.5" font-family="system-ui">Tags</text>
+            <rect x="13" y="215" width="96" height="10" rx="5" fill="#04101f"/>
+            <rect x="20" y="218" width="82" height="4" rx="2" fill="rgba(249,115,22,0.3)"/>
+            <text x="61" y="238" text-anchor="middle" fill="rgba(249,115,22,0.3)" font-size="5" font-family="system-ui" letter-spacing="1">PAPER OUTPUT</text>
+            <rect x="121" y="24" width="10" height="16" rx="3" fill="#071526"/>
+            <rect x="122" y="26" width="8" height="10" rx="2" fill="#0a2540"/>
+            <text x="126" y="33" text-anchor="middle" fill="rgba(0,212,255,0.7)" font-size="5" font-weight="700">$</text>
+            <circle cx="126" cy="52" r="4.5" fill="rgba(0,180,216,0.2)"/>
+            <circle cx="126" cy="52" r="2.5" fill="#00d4ff"/>
+            <text x="126" y="72" text-anchor="middle" fill="rgba(255,255,255,0.2)" font-size="4" font-family="system-ui" font-weight="600">STOCK</text>
+            <text x="126" y="83" text-anchor="middle" fill="rgba(249,115,22,0.7)" font-size="8" font-weight="800" font-family="system-ui">340</text>
+            <text x="61" y="257" text-anchor="middle" fill="rgba(255,255,255,0.12)" font-size="5.5" font-family="system-ui" font-weight="700" letter-spacing="1">GoVend™</text>
+            <ellipse cx="70" cy="270" rx="55" ry="8" fill="rgba(249,115,22,0.1)"/>
+          </svg>
+          <div class="machine-label">Print &amp; Vend Station</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stats-grid">
+    <div class="stat-item fade-up">
+      <span class="stat-num"><span data-count="500" class="text-gradient" style="-webkit-text-fill-color:#fff">0</span><span class="stat-unit">+</span></span>
+      <div class="stat-label">Clients Served</div>
+    </div>
+    <div class="stat-item fade-up d1">
+      <span class="stat-num"><span data-count="1200" style="color:#fff">0</span><span class="stat-unit">+</span></span>
+      <div class="stat-label">Locations Deployed</div>
+    </div>
+    <div class="stat-item fade-up d2">
+      <span class="stat-num"><span data-count="5" style="color:#fff">0</span><span class="stat-unit">M+</span></span>
+      <div class="stat-label">People Served Yearly</div>
+    </div>
+    <div class="stat-item fade-up d3">
+      <span class="stat-num" style="color:#fff">99.9<span class="stat-unit">%</span></span>
+      <div class="stat-label">SLA Uptime</div>
+    </div>
+  </div>
+</div>
+
+<!-- APPLE-STYLE FEATURE BAND — Impact statement -->
+<div class="feature-band fb-dark">
+  <div class="section-inner">
+    <span class="fb-eyebrow fade-up">Proven Impact</span>
+    <h2 class="fb-headline fade-up d1">Queue time.<br><em>Cut in half.</em></h2>
+    <p class="fb-body fade-up d2">Our clients report an average 40% reduction in customer wait time from the very first day — no training needed, no disruption to operations.</p>
+    <div class="fb-stats fade-up d3">
+      <div class="fb-stat-item">
+        <span class="fb-stat-num" data-count="40">0</span><span class="fb-stat-unit">%</span>
+        <span class="fb-stat-label">Avg wait reduction</span>
+      </div>
+      <div class="fb-stat-div"></div>
+      <div class="fb-stat-item">
+        <span class="fb-stat-num" data-count="500">0</span><span class="fb-stat-unit">+</span>
+        <span class="fb-stat-label">Clients deployed</span>
+      </div>
+      <div class="fb-stat-div"></div>
+      <div class="fb-stat-item">
+        <span class="fb-stat-num" data-count="5">0</span><span class="fb-stat-unit">M+</span>
+        <span class="fb-stat-label">People served yearly</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SOLUTIONS -->
+<section class="section" id="solutions">
+  <div class="section-inner">
+    <div class="section-header fade-up">
+      <span class="section-tag">Our Solutions</span>
+      <h2 class="section-title">Built for the Modern Workspace</h2>
+      <p class="section-sub">Two flagship software-powered products. One mission — making your operations frictionless.</p>
+    </div>
+    <div class="sol-grid">
+      <a href="kiosk.html" class="sol-card fade-up d1">
+        <div class="sol-card-img sol-img-kiosk">
+          🖥️
+          <div style="position:absolute;bottom:12px;right:12px;background:rgba(255,255,255,.9);border-radius:8px;padding:4px 10px;font-size:.72rem;font-weight:700;color:var(--primary);">Queue Management</div>
+        </div>
+        <div class="sol-card-body">
+          <h3>Kiosk</h3>
+          <p>A fully software-powered queue management system with digital token issuance, real-time displays, AI wait-time prediction, and a live cloud dashboard — eliminating lines forever.</p>
+          <span class="sol-link">Explore Kiosk →</span>
+        </div>
+      </a>
+      <a href="vending.html" class="sol-card fade-up d2">
+        <div class="sol-card-img sol-img-vend">
+          🖨️
+          <div style="position:absolute;bottom:12px;right:12px;background:rgba(255,255,255,.9);border-radius:8px;padding:4px 10px;font-size:.72rem;font-weight:700;color:var(--accent2);">Smart Vending</div>
+        </div>
+        <div class="sol-card-body">
+          <h3>Print & Dispense Station</h3>
+          <p>Self-service document printing and stationery dispensing with cashless payments, remote stock monitoring, and real-time usage analytics — zero staff involvement.</p>
+          <span class="sol-link">Explore Station →</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- APPLE DARK FEATURE SPLIT — Kiosk showcase -->
+<section class="section apple-dark">
+  <div class="section-inner">
+    <div class="feature-split">
+      <div class="feature-split-text fade-up">
+        <span class="section-tag">Kiosk · Queue Intelligence</span>
+        <h2>No more queues.<br><em>Ever.</em></h2>
+        <p>Our AI-powered kiosk system predicts wait times, sends SMS alerts, and manages hundreds of tokens simultaneously — all viewable from a cloud dashboard you can check on your phone.</p>
+        <ul class="feature-list">
+          <li><span class="fl-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span>Digital token issuance — no paper, no manual counting</li>
+          <li><span class="fl-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span>Real-time SMS alerts when their turn is near</li>
+          <li><span class="fl-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span>AI wait-time prediction and smart routing</li>
+          <li><span class="fl-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span>Live cloud dashboard — accessible anywhere, on any device</li>
+        </ul>
+        <a href="kiosk.html" class="btn btn-outline" style="display:inline-flex;">Explore Kiosk →</a>
+      </div>
+      <div class="feature-split-visual fade-up d2">
+        <div style="position:relative;filter:drop-shadow(0 30px 70px rgba(0,180,216,.25));">
+          <div style="width:300px;border-radius:24px;background:#fff;overflow:hidden;border:1px solid rgba(255,255,255,.1);">
+            <div style="background:linear-gradient(135deg,#0f4c81,#00b4d8);padding:1.25rem 1.25rem 1rem;">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+                <span style="font-size:.65rem;font-weight:800;color:rgba(255,255,255,.85);letter-spacing:.08em;text-transform:uppercase;">⚡ Queue Intelligence</span>
+                <span style="display:flex;align-items:center;gap:4px;font-size:.6rem;color:rgba(255,255,255,.8);font-weight:600;"><span style="width:6px;height:6px;border-radius:50%;background:#4ade80;display:inline-block;"></span>LIVE</span>
+              </div>
+              <div style="background:rgba(255,255,255,.15);border-radius:12px;padding:.75rem 1rem;display:flex;align-items:center;justify-content:space-between;">
+                <div><div style="font-size:.58rem;color:rgba(255,255,255,.7);margin-bottom:2px;">NOW SERVING</div><div style="font-size:2rem;font-weight:900;color:#fff;">A-041</div></div>
+                <div style="text-align:right;"><div style="font-size:.58rem;color:rgba(255,255,255,.7);margin-bottom:2px;">WAITING</div><div style="font-size:1.4rem;font-weight:900;color:#fff;">12</div></div>
+              </div>
+            </div>
+            <div style="padding:.8rem;background:#f8fafc;display:flex;flex-direction:column;gap:.45rem;">
+              <div style="background:#fff;border:1.5px solid #bfdbfe;border-radius:12px;padding:.6rem .8rem;display:flex;align-items:center;gap:.6rem;"><div style="width:10px;height:10px;border-radius:50%;background:#22c55e;flex-shrink:0;"></div><span style="font-size:.68rem;font-weight:700;flex:1;">Token #A-042</span><span style="font-size:.62rem;font-weight:700;color:#0f4c81;">~2 min</span></div>
+              <div style="background:#fff;border:1px solid #f1f5f9;border-radius:12px;padding:.6rem .8rem;display:flex;align-items:center;gap:.6rem;"><div style="width:10px;height:10px;border-radius:50%;background:#f97316;flex-shrink:0;"></div><span style="font-size:.68rem;font-weight:700;flex:1;">Token #A-043</span><span style="font-size:.62rem;font-weight:700;color:#94a3b8;">~6 min</span></div>
+              <div style="background:#fff;border:1px solid #f1f5f9;border-radius:12px;padding:.6rem .8rem;display:flex;align-items:center;gap:.6rem;"><div style="width:10px;height:10px;border-radius:50%;background:#94a3b8;flex-shrink:0;"></div><span style="font-size:.68rem;font-weight:700;flex:1;">Token #A-044</span><span style="font-size:.62rem;font-weight:700;color:#94a3b8;">~10 min</span></div>
+            </div>
+            <div style="background:#fff;padding:.65rem .8rem;border-top:1px solid #f1f5f9;display:flex;justify-content:space-between;align-items:center;"><span style="font-size:.62rem;color:#64748b;font-weight:500;">3 waiting · Counter 2</span><strong style="font-size:.62rem;color:#0f4c81;font-weight:800;">Avg: 6 min</strong></div>
+          </div>
+          <div style="position:absolute;top:-20px;right:-50px;background:rgba(0,180,216,.15);border:1px solid rgba(0,180,216,.3);border-radius:14px;padding:.65rem 1rem;backdrop-filter:blur(12px);white-space:nowrap;">
+            <div style="font-size:1.4rem;font-weight:900;color:#00d4ff;line-height:1;">−40%</div>
+            <div style="font-size:.68rem;color:rgba(245,245,247,.6);font-weight:500;margin-top:2px;">Wait time</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- APPLE DARK FEATURE SPLIT — Print Station showcase -->
+<section class="section apple-dark" style="border-top:1px solid rgba(255,255,255,.06);">
+  <div class="section-inner">
+    <div class="feature-split">
+      <div class="feature-split-visual fade-up" style="order:-1;">
+        <div style="position:relative;filter:drop-shadow(0 30px 70px rgba(249,115,22,.2));">
+          <div style="width:300px;border-radius:24px;background:#fff;overflow:hidden;border:1px solid rgba(255,255,255,.1);">
+            <div style="background:linear-gradient(135deg,#b45309,#f97316);padding:1.25rem 1.25rem 1rem;">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+                <span style="font-size:.65rem;font-weight:800;color:rgba(255,255,255,.85);letter-spacing:.08em;text-transform:uppercase;">🖨️ Print Station</span>
+                <span style="display:flex;align-items:center;gap:4px;font-size:.6rem;color:rgba(255,255,255,.8);font-weight:600;"><span style="width:6px;height:6px;border-radius:50%;background:#4ade80;display:inline-block;"></span>READY</span>
+              </div>
+              <div style="background:rgba(255,255,255,.15);border-radius:12px;padding:.75rem 1rem;">
+                <div style="font-size:.62rem;color:rgba(255,255,255,.8);margin-bottom:6px;font-weight:600;">CASHLESS PAYMENT</div>
+                <div style="display:flex;gap:.4rem;"><span style="background:rgba(255,255,255,.2);border-radius:6px;padding:.25rem .55rem;font-size:.6rem;color:#fff;font-weight:700;">UPI</span><span style="background:rgba(255,255,255,.2);border-radius:6px;padding:.25rem .55rem;font-size:.6rem;color:#fff;font-weight:700;">Card</span><span style="background:rgba(255,255,255,.2);border-radius:6px;padding:.25rem .55rem;font-size:.6rem;color:#fff;font-weight:700;">NFC</span></div>
+              </div>
+            </div>
+            <div style="padding:.8rem;background:#f8fafc;display:flex;flex-direction:column;gap:.45rem;">
+              <div style="background:#fff;border:1px solid #f1f5f9;border-radius:12px;padding:.7rem .85rem;display:flex;align-items:center;gap:.6rem;"><span style="font-size:1.1rem;">📄</span><div style="flex:1;"><div style="font-size:.68rem;font-weight:700;">A4 Black &amp; White</div><div style="font-size:.6rem;color:#64748b;">₹2 per page</div></div><span style="font-size:.72rem;font-weight:800;color:#b45309;">Print</span></div>
+              <div style="background:#fff;border:1px solid #f1f5f9;border-radius:12px;padding:.7rem .85rem;display:flex;align-items:center;gap:.6rem;"><span style="font-size:1.1rem;">🎨</span><div style="flex:1;"><div style="font-size:.68rem;font-weight:700;">A4 Color Print</div><div style="font-size:.6rem;color:#64748b;">₹8 per page</div></div><span style="font-size:.72rem;font-weight:800;color:#b45309;">Print</span></div>
+              <div style="background:#fff;border:1px solid #f1f5f9;border-radius:12px;padding:.7rem .85rem;display:flex;align-items:center;gap:.6rem;"><span style="font-size:1.1rem;">📦</span><div style="flex:1;"><div style="font-size:.68rem;font-weight:700;">Stationery Bundle</div><div style="font-size:.6rem;color:#64748b;">Pen, Stapler, Clips</div></div><span style="font-size:.72rem;font-weight:800;color:#b45309;">Buy</span></div>
+            </div>
+            <div style="background:#fff;padding:.65rem .8rem;border-top:1px solid #f1f5f9;display:flex;justify-content:space-between;"><span style="font-size:.62rem;color:#64748b;font-weight:500;">Stock: 340 sheets</span><strong style="font-size:.62rem;color:#b45309;font-weight:800;">Zero staff needed</strong></div>
+          </div>
+          <div style="position:absolute;bottom:-15px;left:-45px;background:rgba(249,115,22,.15);border:1px solid rgba(249,115,22,.3);border-radius:14px;padding:.65rem 1rem;backdrop-filter:blur(12px);white-space:nowrap;">
+            <div style="font-size:1.4rem;font-weight:900;color:#fb923c;line-height:1;">100%</div>
+            <div style="font-size:.68rem;color:rgba(245,245,247,.6);font-weight:500;margin-top:2px;">Self-service</div>
+          </div>
+        </div>
+      </div>
+      <div class="feature-split-text fade-up d2">
+        <span class="section-tag">Print &amp; Dispense Station</span>
+        <h2>Stationery on demand.<br><em>Zero staff.</em></h2>
+        <p>Self-service document printing and stationery dispensing with cashless UPI/card payments, remote stock monitoring, and real-time analytics — no staff involvement ever needed.</p>
+        <ul class="feature-list">
+          <li><span class="fl-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span>UPI, card, and NFC cashless payment support</li>
+          <li><span class="fl-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span>Remote stock level alerts — never run out</li>
+          <li><span class="fl-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span>B&amp;W, color printing and scanning</li>
+          <li><span class="fl-dot"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></span>Real-time usage analytics and revenue reports</li>
+        </ul>
+        <a href="vending.html" class="btn btn-outline" style="display:inline-flex;">Explore Print Station →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INDUSTRIES -->
+<section class="section ind-bg" id="industries">
+  <div class="section-inner">
+    <div class="section-header center fade-up">
+      <span class="section-tag">Industries</span>
+      <h2 class="section-title">Trusted Across Every Sector</h2>
+      <p class="section-sub">GoStationery solutions adapt to the unique flow and demands of every industry — from hospitals to banks to corporate offices.</p>
+    </div>
+    <div class="industry-grid">
+      <a href="industries.html#healthcare" class="industry-card fade-up d1">
+        <span class="industry-icon">🏥</span>
+        <h3>Healthcare</h3>
+        <p>Reduce patient wait anxiety, manage OPD queues, and streamline reception in clinics and hospitals.</p>
+        <span class="arrow">Learn more →</span>
+      </a>
+      <a href="industries.html#banking" class="industry-card fade-up d2">
+        <span class="industry-icon">🏦</span>
+        <h3>Banking & Finance</h3>
+        <p>Manage teller queues, loan desks, and branch footfall with real-time dashboards and SMS alerts.</p>
+        <span class="arrow">Learn more →</span>
+      </a>
+      <a href="industries.html#retail" class="industry-card fade-up d3">
+        <span class="industry-icon">🛒</span>
+        <h3>Retail</h3>
+        <p>Let shoppers roam freely while waiting. Virtual tokens and display boards replace crowded counters.</p>
+        <span class="arrow">Learn more →</span>
+      </a>
+      <a href="industries.html#govt" class="industry-card fade-up d4">
+        <span class="industry-icon">🏛️</span>
+        <h3>Government</h3>
+        <p>Transparent, fair queuing for citizens at RTOs, municipal offices, and ration centres.</p>
+        <span class="arrow">Learn more →</span>
+      </a>
+      <a href="industries.html#corporate" class="industry-card fade-up d5">
+        <span class="industry-icon">🏢</span>
+        <h3>Corporate</h3>
+        <p>Digitise visitor reception, print stations, and HR service desks with zero infrastructure overhead.</p>
+        <span class="arrow">Learn more →</span>
+      </a>
+      <a href="industries.html#education" class="industry-card fade-up d6">
+        <span class="industry-icon">🎓</span>
+        <h3>Education</h3>
+        <p>Manage student admin queues and stationery dispensing at colleges and universities effortlessly.</p>
+        <span class="arrow">Learn more →</span>
+      </a>
+      <a href="industries.html#temples" class="industry-card fade-up d7">
+        <span class="industry-icon">🛕</span>
+        <h3>Temples &amp; Religious Venues</h3>
+        <p>Manage large devotee footfall during peak hours and festivals with fair, orderly token-based darshan queues.</p>
+        <span class="arrow">Learn more →</span>
+      </a>
+      <a href="industries.html#hospitality" class="industry-card fade-up d8">
+        <span class="industry-icon">🍽️</span>
+        <h3>Large Kitchens &amp; Canteens</h3>
+        <p>Streamline meal token issuance and stationery dispensing for corporate canteens, hostels, and mess halls.</p>
+        <span class="arrow">Learn more →</span>
+      </a>
+      <a href="industries.html#visitor" class="industry-card fade-up d9">
+        <span class="industry-icon">🪪</span>
+        <h3>Visitor Pass Management</h3>
+        <p>Issue, print, and track visitor passes automatically — eliminating manual registers at reception desks.</p>
+        <span class="arrow">Learn more →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCT LINEUP -->
+<section class="section products-section" id="products">
+  <div class="section-inner">
+    <div class="section-header center fade-up">
+      <span class="section-tag">Product Lineup</span>
+      <h2 class="section-title">Every Setup, Every Scale</h2>
+      <p class="section-sub">From compact wall-mount kiosks to full enterprise deployments — GoStationery has a product built for your exact environment.</p>
+    </div>
+    <div class="products-grid">
+
+      <!-- Mini Kiosk — Wall Mount -->
+      <div class="product-card fade-up d1">
+        <div class="product-card-icon pi-blue">🖥️</div>
+        <h3>Mini Kiosk — Wall Mount</h3>
+        <span class="pc-sub">Space-Saving · Indoor</span>
+        <p>A compact touchscreen kiosk that mounts directly on a wall. Ideal for clinics, bank branches, and offices where floor space is at a premium.</p>
+        <div class="pc-tags">
+          <span class="pc-tag hi">Touchscreen</span>
+          <span class="pc-tag">Token Printer</span>
+          <span class="pc-tag">SMS Alerts</span>
+        </div>
+      </div>
+
+      <!-- Mini Kiosk — Floor Mount -->
+      <div class="product-card fade-up d2">
+        <div class="product-card-icon pi-blue">🖥️</div>
+        <h3>Mini Kiosk — Floor Mount</h3>
+        <span class="pc-sub">Standalone · High Traffic</span>
+        <p>A freestanding pedestal kiosk for open lobbies and large waiting areas. Highly visible and accessible without any wall installation required.</p>
+        <div class="pc-tags">
+          <span class="pc-tag hi">Floor Stand</span>
+          <span class="pc-tag">Multi-Counter</span>
+          <span class="pc-tag">Cloud Dashboard</span>
+        </div>
+      </div>
+
+      <!-- Print Vending Machine -->
+      <div class="product-card fade-up d3">
+        <div class="product-card-icon pi-orange">🖨️</div>
+        <h3>Print Vending Machine</h3>
+        <span class="pc-sub">Self-Service · Cashless</span>
+        <p>A fully autonomous document printing station supporting A4 B&amp;W, colour prints, and scanning — accepting UPI, card, and NFC payments 24/7.</p>
+        <div class="pc-tags">
+          <span class="pc-tag orange">B&amp;W + Color</span>
+          <span class="pc-tag">Scanning</span>
+          <span class="pc-tag">UPI / Card / NFC</span>
+        </div>
+      </div>
+
+      <!-- Stationery + Print Vending Machine -->
+      <div class="product-card fade-up d4">
+        <div class="product-card-icon pi-teal">📦</div>
+        <h3>Stationery + Print Vending Machine</h3>
+        <span class="pc-sub">Combined · All-in-One</span>
+        <p>The ultimate self-service station — combines document printing with a stationery vending unit. Dispenses pens, files, staples, and more alongside print jobs.</p>
+        <div class="pc-tags">
+          <span class="pc-tag hi">Print + Dispense</span>
+          <span class="pc-tag">Stock Alerts</span>
+          <span class="pc-tag">Analytics</span>
+        </div>
+      </div>
+
+      <!-- Products Vending Machine -->
+      <div class="product-card fade-up d5">
+        <div class="product-card-icon pi-purple">🗃️</div>
+        <h3>Products Vending Machine</h3>
+        <span class="pc-sub">General Merchandise</span>
+        <p>A customisable vending unit for dispensing any physical product — stationery, safety equipment, ID cards, or office supplies — with full remote monitoring.</p>
+        <div class="pc-tags">
+          <span class="pc-tag">Customisable Slots</span>
+          <span class="pc-tag">Remote Monitoring</span>
+          <span class="pc-tag hi">Any Product</span>
+        </div>
+      </div>
+
+      <!-- Enterprise Version Teaser Card -->
+      <div class="product-card fade-up d6" style="border-color:rgba(99,102,241,.2);background:rgba(67,56,202,.05);">
+        <div class="product-card-icon pi-indigo">🏢</div>
+        <h3>Enterprise Software Platform</h3>
+        <span class="pc-sub" style="color:rgba(167,139,250,.7);">End-to-End · Scalable</span>
+        <p>Full billing engine, Point-of-Sale integration, multi-location dashboard, role-based access, and white-label branding for large-scale deployments.</p>
+        <div class="pc-tags">
+          <span class="pc-tag" style="color:#a78bfa;border-color:rgba(167,139,250,.2);background:rgba(167,139,250,.06);">PoS Integration</span>
+          <span class="pc-tag" style="color:#a78bfa;border-color:rgba(167,139,250,.2);background:rgba(167,139,250,.06);">Multi-Location</span>
+          <span class="pc-tag" style="color:#a78bfa;border-color:rgba(167,139,250,.2);background:rgba(167,139,250,.06);">White-Label</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Enterprise CTA Banner -->
+    <div class="products-enterprise fade-up">
+      <div class="ent-text">
+        <h3>🏢 Enterprise Version — End-to-End Billing &amp; PoS</h3>
+        <p>For organisations managing multiple locations or high transaction volumes. Our enterprise platform includes a full billing engine, PoS terminal integration, real-time analytics, multi-branch management, and custom white-label branding. One dashboard. Total control.</p>
+      </div>
+      <button class="btn-ent" onclick="openModal()">Request Enterprise Demo →</button>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section" style="background:#fff">
+  <div class="section-inner">
+    <div class="section-header center fade-up">
+      <span class="section-tag">Process</span>
+      <h2 class="section-title">Up & Running in 4 Steps</h2>
+      <p class="section-sub">We handle everything — from site survey to go-live to 24/7 support. You stay focused on your business.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:2rem;position:relative;margin-top:1rem;">
+      <div class="step-conn" style="position:absolute;top:26px;left:10%;right:10%;height:2px;background:linear-gradient(90deg,var(--primary),var(--accent));z-index:0;"></div>
+      <div class="step fade-up d1" style="text-align:center;position:relative;z-index:1;padding:0 1rem;">
+        <div style="width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--accent));color:#fff;font-size:1.2rem;font-weight:900;display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem;box-shadow:0 4px 16px rgba(15,76,129,.3);border:3px solid #fff;transition:transform .3s;">1</div>
+        <h3 style="margin-bottom:.5rem;">Consultation</h3>
+        <p style="font-size:.86rem;color:var(--muted);line-height:1.65;">We understand your space, daily footfall, and goals to recommend the ideal setup.</p>
+      </div>
+      <div class="step fade-up d2" style="text-align:center;position:relative;z-index:1;padding:0 1rem;">
+        <div style="width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--accent));color:#fff;font-size:1.2rem;font-weight:900;display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem;box-shadow:0 4px 16px rgba(15,76,129,.3);border:3px solid #fff;">2</div>
+        <h3 style="margin-bottom:.5rem;">Install & Configure</h3>
+        <p style="font-size:.86rem;color:var(--muted);line-height:1.65;">Hardware goes in, software is customised with your branding, counters, and workflow.</p>
+      </div>
+      <div class="step fade-up d3" style="text-align:center;position:relative;z-index:1;padding:0 1rem;">
+        <div style="width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--accent));color:#fff;font-size:1.2rem;font-weight:900;display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem;box-shadow:0 4px 16px rgba(15,76,129,.3);border:3px solid #fff;">3</div>
+        <h3 style="margin-bottom:.5rem;">Go Live</h3>
+        <p style="font-size:.86rem;color:var(--muted);line-height:1.65;">Quick team walkthrough — typically live within a day, with zero disruption to operations.</p>
+      </div>
+      <div class="step fade-up d4" style="text-align:center;position:relative;z-index:1;padding:0 1rem;">
+        <div style="width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--accent));color:#fff;font-size:1.2rem;font-weight:900;display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem;box-shadow:0 4px 16px rgba(15,76,129,.3);border:3px solid #fff;">4</div>
+        <h3 style="margin-bottom:.5rem;">Ongoing Support</h3>
+        <p style="font-size:.86rem;color:var(--muted);line-height:1.65;">24/7 remote monitoring, OTA updates, and a dedicated support team keeps you running.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section test-bg">
+  <div class="section-inner">
+    <div class="section-header center fade-up">
+      <span class="section-tag">Customer Stories</span>
+      <h2 class="section-title" style="color:#fff">What Our Clients Say</h2>
+      <p class="section-sub" style="color:rgba(255,255,255,.65);margin:0 auto;">Real results from real businesses across India.</p>
+    </div>
+    <div class="test-grid">
+      <div class="test-card fade-up d1">
+        <span class="test-tag tag-health">Healthcare</span>
+        <p class="test-quote">"Patient wait times dropped by 40% in the first month. The kiosk system transformed our OPD reception — staff now focus on care, not crowd management."</p>
+        <div class="test-meta">
+          <div class="test-avatar" style="background:linear-gradient(135deg,#0f4c81,#00b4d8)">R</div>
+          <div><div class="test-name">Dr. Ravi Mehta</div><div class="test-co">Apollo Multispeciality, Ahmedabad</div></div>
+        </div>
+      </div>
+      <div class="test-card fade-up d2">
+        <span class="test-tag tag-banking">Banking</span>
+        <p class="test-quote">"Customers no longer stand in line — they get an SMS when their turn is near. Complaints dropped, NPS went up. The cloud dashboard is a game changer for branch managers."</p>
+        <div class="test-meta">
+          <div class="test-avatar" style="background:linear-gradient(135deg,#1d4ed8,#3b82f6)">P</div>
+          <div><div class="test-name">Priya Nair</div><div class="test-co">Co-operative Bank, Pune</div></div>
+        </div>
+      </div>
+      <div class="test-card fade-up d3">
+        <span class="test-tag tag-retail">Retail</span>
+        <p class="test-quote">"Shoppers can browse while waiting for their service token. Zero queues at the counter. The print station also replaced our stationery room — incredible ROI."</p>
+        <div class="test-meta">
+          <div class="test-avatar" style="background:linear-gradient(135deg,#b45309,#f97316)">A</div>
+          <div><div class="test-name">Arjun Patel</div><div class="test-co">Reliance Smart, Surat</div></div>
+        </div>
+      </div>
+      <div class="test-card fade-up d4">
+        <span class="test-tag tag-govt">Government</span>
+        <p class="test-quote">"Citizens now know exactly when to come in. Our office went from chaotic to completely organised. GoStationery's team handled everything — we just showed up on launch day."</p>
+        <div class="test-meta">
+          <div class="test-avatar" style="background:linear-gradient(135deg,#7c3aed,#a78bfa)">S</div>
+          <div><div class="test-name">Suresh Yadav</div><div class="test-co">Municipal Corporation, Vadodara</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RELIABILITY & TRUST -->
+<section class="section trust-bg" id="reliability">
+  <div class="section-inner">
+    <div class="section-header center fade-up">
+      <span class="section-tag">Reliability & Trust</span>
+      <h2 class="section-title">Built to Run. Built to Last.</h2>
+      <p class="section-sub" style="margin:0 auto;">We engineer reliability into every layer — from the hardware on your floor to the cloud dashboard in your pocket.</p>
+    </div>
+
+    <!-- Reliability metrics bar -->
+    <div class="rel-metrics fade-up d1">
+      <div class="rel-metric">
+        <div class="rel-metric-val">99.9<span>%</span></div>
+        <div class="rel-metric-bar"><div class="rel-bar-fill" style="width:99.9%"></div></div>
+        <div class="rel-metric-label">Uptime SLA</div>
+      </div>
+      <div class="rel-divider"></div>
+      <div class="rel-metric">
+        <div class="rel-metric-val">&lt;30<span>min</span></div>
+        <div class="rel-metric-bar"><div class="rel-bar-fill" style="width:85%"></div></div>
+        <div class="rel-metric-label">Avg Support Response</div>
+      </div>
+      <div class="rel-divider"></div>
+      <div class="rel-metric">
+        <div class="rel-metric-val">48<span>hr</span></div>
+        <div class="rel-metric-bar"><div class="rel-bar-fill" style="width:70%"></div></div>
+        <div class="rel-metric-label">Contract to Go-Live</div>
+      </div>
+      <div class="rel-divider"></div>
+      <div class="rel-metric">
+        <div class="rel-metric-val">100<span>%</span></div>
+        <div class="rel-metric-bar"><div class="rel-bar-fill" style="width:100%"></div></div>
+        <div class="rel-metric-label">India Data Residency</div>
+      </div>
+    </div>
+
+    <!-- Trust cards -->
+    <div class="trust-grid" style="margin-top:2.5rem;">
+      <div class="trust-card fade-up d1">
+        <span class="trust-icon">🛡️</span>
+        <h4>SLA 99.9% Uptime</h4>
+        <p>Cloud redundancy, automatic failover, and 24/7 proactive monitoring keep you running — always.</p>
+      </div>
+      <div class="trust-card fade-up d2">
+        <span class="trust-icon">☁️</span>
+        <h4>SaaS & On-Prem</h4>
+        <p>Choose cloud deployment for instant setup, or on-premises for maximum data control — your call.</p>
+      </div>
+      <div class="trust-card fade-up d3">
+        <span class="trust-icon">🔒</span>
+        <h4>DPDP & IT Act Compliant</h4>
+        <p>India-hosted servers, end-to-end encryption, role-based access, and complete audit trails.</p>
+      </div>
+      <div class="trust-card fade-up d4">
+        <span class="trust-icon">🔧</span>
+        <h4>24/7 Support</h4>
+        <p>Dedicated account managers, remote diagnostics, on-site visits, and video training — always there.</p>
+      </div>
+      <div class="trust-card fade-up d5">
+        <span class="trust-icon">🔗</span>
+        <h4>Open API Integration</h4>
+        <p>REST APIs connect to your ERP, HRMS, POS, or CRM seamlessly. Plug in — don't rip out.</p>
+      </div>
+      <div class="trust-card fade-up d6">
+        <span class="trust-icon">🚀</span>
+        <h4>Rapid Deployment</h4>
+        <p>Signed contract to go-live in as little as 48 hours. Proven methodology, zero disruption.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<section class="cta-banner" id="contact">
+  <h2 class="fade-up">Ready to Transform Your Space?</h2>
+  <p class="fade-up d1">See GoStationery in action — a live demo built around your exact use case. No commitment, no pressure.</p>
+  <div class="cta-btns fade-up d2">
+    <button class="btn btn-primary" style="background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.4);backdrop-filter:blur(8px)" onclick="openModal()">
+      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.069A1 1 0 0121 8.845v6.31a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+      Request Free Demo
+    </button>
+    <a href="about.html" class="btn btn-outline">Learn About Us</a>
+  </div>
+  <div style="display:flex;justify-content:center;gap:2.5rem;margin-top:3rem;flex-wrap:wrap;position:relative;z-index:1;">
+    <span style="color:rgba(255,255,255,.75);font-size:.875rem">📧 hello@gostationery.in</span>
+    <span style="color:rgba(255,255,255,.75);font-size:.875rem">📞 +91 98765 43210</span>
+    <span style="color:rgba(255,255,255,.75);font-size:.875rem">📍 Pan-India Deployment</span>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">
+          <div class="logo-icon">G</div>
+          <span class="logo-text">Go<span>Stationery</span></span>
+        </a>
+        <p>Software-powered queue management and smart printing solutions for modern Indian businesses. Your time is priceless — we protect it.</p>
+        <div class="footer-social">
+          <a href="#" class="social-btn" title="LinkedIn">in</a>
+          <a href="#" class="social-btn" title="Twitter">𝕏</a>
+          <a href="#" class="social-btn" title="YouTube">▶</a>
+          <a href="#" class="social-btn" title="Instagram">◎</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>Solutions</h5>
+        <ul>
+          <li><a href="kiosk.html">Kiosk — Queue Management</a></li>
+          <li><a href="vending.html">Print & Dispense Station</a></li>
+          <li><a href="#" onclick="openModal()">Request Demo</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Industries</h5>
+        <ul>
+          <li><a href="industries.html#healthcare">Healthcare</a></li>
+          <li><a href="industries.html#banking">Banking & Finance</a></li>
+          <li><a href="industries.html#retail">Retail</a></li>
+          <li><a href="industries.html#govt">Government</a></li>
+          <li><a href="industries.html#corporate">Corporate</a></li>
+          <li><a href="industries.html#education">Education</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="about.html">About GoStationery</a></li>
+          <li><a href="about.html#mission">Our Mission</a></li>
+          <li><a href="about.html#careers">Careers</a></li>
+          <li><a href="#contact">Contact Us</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 GoStationery. All rights reserved.</span>
+      <span>Made with <span class="heart">♥</span> in India</span>
+      <span><a href="#">Privacy</a> · <a href="#">Terms</a></span>
+    </div>
+  </div>
+</footer>
+
+<!-- DEMO MODAL -->
+<div class="modal-overlay" id="demoModal">
+  <div class="modal" role="dialog" aria-modal="true">
+    <div class="modal-header">
+      <div><div class="modal-title">Request a Free Demo</div><div class="modal-sub">Our team will reach out within 24 hours.</div></div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <form id="demoForm" novalidate>
+        <div class="form-row">
+          <div class="form-group"><label>Your Name *</label><input id="demoName" type="text" placeholder="Rahul Sharma" required/></div>
+          <div class="form-group"><label>Phone Number *</label><input id="demoPhone" type="tel" placeholder="+91 98765 43210" required/></div>
+        </div>
+        <div class="form-group"><label>Email Address *</label><input id="demoEmail" type="email" placeholder="you@company.com" required/></div>
+        <div class="form-group">
+          <label>Interested In *</label>
+          <select id="demoProduct" required>
+            <option value="" disabled selected>Select a product</option>
+            <option>Kiosk — Queue Management</option>
+            <option>Print & Dispense Station</option>
+            <option>Both Products</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Your Industry</label>
+          <select>
+            <option value="" disabled selected>Select your industry</option>
+            <option>Healthcare</option><option>Banking & Finance</option>
+            <option>Retail</option><option>Government</option>
+            <option>Corporate</option><option>Education</option><option>Other</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Tell us about your requirement</label><textarea id="demoMsg" placeholder="Your location, daily footfall, specific needs…"></textarea></div>
+        <button type="submit" class="modal-submit" id="demoSubmitBtn">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+          Send Demo Request
+        </button>
+      </form>
+      <div class="modal-success" id="modalSuccess">
+        <div class="success-icon">✅</div>
+        <h3>Request Sent!</h3>
+        <p>Thank you! Our team will contact you within 24 hours to schedule your personalised demo.</p>
+        <button class="btn btn-primary btn-sm" style="margin:1.5rem auto 0;display:inline-flex" onclick="closeModal()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="common.js"></script>
+<script>
+  /* live kiosk in hero */
+  let base = 41;
+  setInterval(() => {
+    base++;
+    const s = document.getElementById('heroServing');
+    if (!s) return;
+    s.textContent = 'A-0' + base;
+    document.getElementById('hT1').textContent = 'Token #A-0' + (base+1);
+    document.getElementById('hT2').textContent = 'Token #A-0' + (base+2);
+    document.getElementById('hT3').textContent = 'Token #A-0' + (base+3);
+    s.style.transform = 'scale(1.15)';
+    setTimeout(() => s.style.transform = '', 300);
+  }, 3500);
+
+</script>
+</body>
+</html>
