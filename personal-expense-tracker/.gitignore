@@ -1,0 +1,12 @@
+.env
+.env.*
+!.env.example
+supabase-config.js
+*.sql
+!docs/schema.sql
+*.dump
+*.backup
+*.log
+.DS_Store
+.vercel
+node_modules

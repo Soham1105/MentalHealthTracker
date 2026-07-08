@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Personal Expense Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <main id="auth-screen" class="auth-screen">
+      <section class="auth-card">
+        <div>
+          <p class="eyebrow">Private finance workspace</p>
+          <h1>Personal Expense Tracker</h1>
+          <p class="muted">Track Indian bank statements, budgets, categories, and upcoming expenses with Supabase login protection.</p>
+        </div>
+
+        <form id="auth-form" class="stack">
+          <label>
+            Email
+            <input id="auth-email" type="email" autocomplete="email" required>
+          </label>
+          <label>
+            Password
+            <input id="auth-password" type="password" autocomplete="current-password" required>
+          </label>
+          <div class="split-actions">
+            <button type="submit" class="primary">Sign in</button>
+            <button type="button" id="signup-button" class="ghost">Create account</button>
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <div id="app-shell" class="app-shell hidden">
+      <aside class="sidebar">
+        <div class="brand">
+          <span class="brand-mark">₹</span>
+          <div>
+            <strong>Expense Tracker</strong>
+            <small id="user-email"></small>
+          </div>
+        </div>
+        <nav class="nav">
+          <button class="nav-link active" data-view="dashboard">Dashboard</button>
+          <button class="nav-link" data-view="transactions">Transactions</button>
+          <button class="nav-link" data-view="import">Import</button>
+          <button class="nav-link" data-view="budgets">Budgets</button>
+          <button class="nav-link" data-view="planning">Planning</button>
+          <button class="nav-link" data-view="settings">Settings</button>
+        </nav>
+        <button id="logout-button" class="ghost full">Logout</button>
+      </aside>
+
+      <section class="workspace">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">This month</p>
+            <h2 id="view-title">Dashboard</h2>
+          </div>
+          <div class="topbar-actions">
+            <input id="global-search" type="search" placeholder="Search transactions">
+            <button id="refresh-button" class="secondary">Refresh</button>
+          </div>
+        </header>
+
+        <section id="view-dashboard" class="view active">
+          <div class="metrics-grid">
+            <article class="metric">
+              <span>Spending</span>
+              <strong id="metric-spending">₹0</strong>
+            </article>
+            <article class="metric">
+              <span>Income</span>
+              <strong id="metric-income">₹0</strong>
+            </article>
+            <article class="metric">
+              <span>Net</span>
+              <strong id="metric-net">₹0</strong>
+            </article>
+            <article class="metric">
+              <span>Transactions</span>
+              <strong id="metric-count">0</strong>
+            </article>
+          </div>
+
+          <div class="two-column">
+            <article class="panel">
+              <div class="panel-header">
+                <h3>Category Breakdown</h3>
+                <span id="category-month-label"></span>
+              </div>
+              <div id="category-breakdown" class="breakdown"></div>
+            </article>
+            <article class="panel">
+              <div class="panel-header">
+                <h3>Recent Activity</h3>
+                <button class="small secondary" data-jump="transactions">View all</button>
+              </div>
+              <div id="recent-transactions" class="mini-list"></div>
+            </article>
+          </div>
+        </section>
+
+        <section id="view-transactions" class="view">
+          <article class="panel">
+            <div class="panel-header">
+              <h3>Add Transaction</h3>
+            </div>
+            <form id="transaction-form" class="form-grid">
+              <input type="hidden" id="transaction-id">
+              <label>Date<input id="txn-date" type="date" required></label>
+              <label>Description<input id="txn-description" required></label>
+              <label>Amount<input id="txn-amount" type="number" min="0" step="0.01" required></label>
+              <label>Type
+                <select id="txn-direction">
+                  <option value="expense">Expense</option>
+                  <option value="income">Income</option>
+                </select>
+              </label>
+              <label>Category<select id="txn-category"></select></label>
+              <label>Account<input id="txn-account" value="Primary"></label>
+              <label class="wide">Notes<input id="txn-notes"></label>
+              <div class="form-actions">
+                <button type="submit" class="primary">Save</button>
+                <button type="button" id="reset-transaction" class="ghost">Clear</button>
+              </div>
+            </form>
+          </article>
+
+          <article class="panel">
+            <div class="panel-header">
+              <h3>Transactions</h3>
+              <div class="filters">
+                <select id="filter-month"></select>
+                <select id="filter-direction">
+                  <option value="all">All</option>
+                  <option value="expense">Expenses</option>
+                  <option value="income">Income</option>
+                </select>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Category</th>
+                    <th>Account</th>
+                    <th class="amount-cell">Amount</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody id="transactions-table"></tbody>
+              </table>
+            </div>
+          </article>
+        </section>
+
+        <section id="view-import" class="view">
+          <article class="panel">
+            <div class="panel-header">
+              <h3>Import Statement</h3>
+            </div>
+            <form id="import-form" class="form-grid">
+              <label>Source
+                <select id="statement-source">
+                  <option>BOB</option>
+                  <option>RBL</option>
+                  <option>KOTAK</option>
+                  <option>UNION</option>
+                  <option>DCB</option>
+                  <option>GPAY</option>
+                  <option>SUPERMONEY</option>
+                  <option>CRED</option>
+                  <option>CUSTOM</option>
+                </select>
+              </label>
+              <label>Account name<input id="import-account" value="Primary"></label>
+              <label class="wide">Statement file<input id="statement-file" type="file" accept=".csv,.xlsx,.xls" required></label>
+              <div class="form-actions">
+                <button type="submit" class="primary">Import</button>
+              </div>
+            </form>
+            <div id="import-result" class="import-result"></div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-header">
+              <h3>Expected Columns</h3>
+            </div>
+            <div class="hint-grid">
+              <div><strong>Date</strong><span>transaction date, txn date, tran date, date, value date</span></div>
+              <div><strong>Description</strong><span>description, narration, particulars, remarks</span></div>
+              <div><strong>Debit</strong><span>debit, withdrawal, dr amount</span></div>
+              <div><strong>Credit</strong><span>credit, deposit, cr amount</span></div>
+              <div><strong>Balance</strong><span>balance, closing balance</span></div>
+            </div>
+          </article>
+        </section>
+
+        <section id="view-budgets" class="view">
+          <div class="two-column">
+            <article class="panel">
+              <div class="panel-header">
+                <h3>Monthly Budget</h3>
+              </div>
+              <form id="budget-form" class="stack">
+                <label>Month<input id="budget-month" type="month" required></label>
+                <label>Category<select id="budget-category" required></select></label>
+                <label>Amount<input id="budget-amount" type="number" min="0" step="0.01" required></label>
+                <button class="primary" type="submit">Save Budget</button>
+              </form>
+            </article>
+            <article class="panel">
+              <div class="panel-header">
+                <h3>Budget Progress</h3>
+              </div>
+              <div id="budget-list" class="breakdown"></div>
+            </article>
+          </div>
+        </section>
+
+        <section id="view-planning" class="view">
+          <div class="two-column">
+            <article class="panel">
+              <div class="panel-header">
+                <h3>Planned Expense</h3>
+              </div>
+              <form id="planned-form" class="stack">
+                <label>Title<input id="planned-title" required></label>
+                <label>Amount<input id="planned-amount" type="number" min="0" step="0.01" required></label>
+                <label>Due date<input id="planned-date" type="date"></label>
+                <label>Category<select id="planned-category"></select></label>
+                <button class="primary" type="submit">Add Plan</button>
+              </form>
+            </article>
+            <article class="panel">
+              <div class="panel-header">
+                <h3>Upcoming</h3>
+              </div>
+              <div id="planned-list" class="mini-list"></div>
+            </article>
+          </div>
+        </section>
+
+        <section id="view-settings" class="view">
+          <div class="two-column">
+            <article class="panel">
+              <div class="panel-header">
+                <h3>Categories</h3>
+              </div>
+              <form id="category-form" class="stack">
+                <label>Name<input id="category-name" required></label>
+                <label>Kind
+                  <select id="category-kind">
+                    <option value="expense">Expense</option>
+                    <option value="income">Income</option>
+                  </select>
+                </label>
+                <label>Color<input id="category-color" type="color" value="#0f766e"></label>
+                <button class="primary" type="submit">Add Category</button>
+              </form>
+              <div id="category-list" class="chip-list"></div>
+            </article>
+            <article class="panel">
+              <div class="panel-header">
+                <h3>Auto-tag Rules</h3>
+              </div>
+              <form id="rule-form" class="stack">
+                <label>Match text<input id="rule-text" placeholder="swiggy, amazon, salary" required></label>
+                <label>Category<select id="rule-category" required></select></label>
+                <button class="primary" type="submit">Add Rule</button>
+              </form>
+              <div id="rule-list" class="mini-list"></div>
+            </article>
+          </div>
+        </section>
+      </section>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script src="supabase-config.js"></script>
+    <script src="app.js?v=1"></script>
+  </body>
+</html>
