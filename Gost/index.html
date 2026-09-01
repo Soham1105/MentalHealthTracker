@@ -1,0 +1,1482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GoStationery — Smart Queue & Vending Solutions</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230a1628'/><rect x='7' y='9' width='18' height='2.5' rx='1.25' fill='%233b82f6'/><rect x='7' y='14' width='14' height='2.5' rx='1.25' fill='%232563eb'/><rect x='7' y='19' width='10' height='2.5' rx='1.25' fill='%231d4ed8'/><circle cx='24' cy='22' r='3' fill='%233b82f6'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #050d1a;
+  --bg-2: #0a1628;
+  --cyan: #3b82f6;
+  --teal: #2563eb;
+  --navy: #0d2a4a;
+  --text: #e8f0fe;
+  --muted: #8899aa;
+  --card-bg: rgba(13,42,74,0.4);
+  --border: rgba(59,130,246,0.15);
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* ─── NAV ─── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  height: 64px;
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(5,13,26,0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(59,130,246,0.08);
+}
+.nav-logo {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: white;
+  text-decoration: none;
+  letter-spacing: -0.02em;
+}
+.nav-logo span { color: var(--cyan); }
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+.nav-links a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--cyan); }
+.nav-cta {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: #ffffff;
+  border: none;
+  padding: 0.5rem 1.25rem;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  transition: opacity 0.2s, transform 0.2s;
+}
+.nav-cta:hover { opacity: 0.9; transform: translateY(-1px); }
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 4px;
+}
+.hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: white;
+  border-radius: 2px;
+  transition: all 0.3s;
+}
+
+/* ─── MOBILE MENU ─── */
+.mobile-menu {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 99;
+  background: #050d1a;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu a {
+  color: white;
+  font-size: 1.75rem;
+  font-weight: 700;
+  text-decoration: none;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  transition: color 0.2s;
+}
+.mobile-menu a:hover { color: var(--cyan); }
+.mobile-close {
+  position: absolute;
+  top: 1.25rem; right: 1.5rem;
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 1.75rem;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.mobile-close:hover { color: white; }
+
+/* ─── HERO ─── */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 9rem 2rem 5rem;
+  position: relative;
+  overflow: hidden;
+  background: radial-gradient(ellipse 120% 60% at 50% 0%, #0d2a4a 0%, #050d1a 65%);
+}
+.glow { position: absolute; border-radius: 50%; filter: blur(80px); pointer-events: none; }
+.glow-1 {
+  width: 700px; height: 700px;
+  background: radial-gradient(circle, rgba(59,130,246,0.11), transparent 70%);
+  top: -200px; left: 50%; transform: translateX(-50%);
+}
+.glow-2 {
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(37,99,235,0.09), transparent 70%);
+  bottom: 80px; left: 5%;
+}
+.glow-3 {
+  width: 380px; height: 380px;
+  background: radial-gradient(circle, rgba(99,102,241,0.07), transparent 70%);
+  bottom: 40px; right: 5%;
+}
+
+.live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(59,130,246,0.07);
+  border: 1px solid rgba(59,130,246,0.2);
+  border-radius: 100px;
+  padding: 0.35rem 1rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--cyan);
+  margin-bottom: 2rem;
+  letter-spacing: 0.04em;
+}
+.pulse-dot {
+  width: 7px; height: 7px;
+  background: #00ff88;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.75); }
+}
+
+.hero-headline {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(2.75rem, 8vw, 6rem);
+  font-weight: 900;
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+  color: white;
+  margin-bottom: 1.5rem;
+  max-width: 960px;
+}
+.hero-headline .grad {
+  background: linear-gradient(135deg, #3b82f6 0%, #0ef 50%, #3b82f6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-sub {
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  color: var(--muted);
+  max-width: 560px;
+  line-height: 1.75;
+  margin-bottom: 2.5rem;
+}
+.hero-ctas {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 5rem;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: #ffffff;
+  border: none;
+  padding: 0.9rem 2.25rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 0 32px rgba(59,130,246,0.25);
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 44px rgba(59,130,246,0.4); }
+.btn-ghost {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid rgba(255,255,255,0.18);
+  padding: 0.9rem 2.25rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: border-color 0.2s, color 0.2s;
+}
+.btn-ghost:hover { border-color: var(--cyan); color: var(--cyan); }
+
+/* ─── MACHINES ─── */
+.machines-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 5rem;
+  position: relative;
+}
+.machine-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.875rem;
+  position: relative;
+}
+.machine-chip {
+  background: rgba(59,130,246,0.09);
+  border: 1px solid rgba(59,130,246,0.28);
+  border-radius: 100px;
+  padding: 0.3rem 0.9rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--cyan);
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+.floating-badge {
+  position: absolute;
+  background: rgba(10,22,40,0.85);
+  border: 1px solid rgba(59,130,246,0.28);
+  backdrop-filter: blur(10px);
+  border-radius: 10px;
+  padding: 0.45rem 0.85rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--cyan);
+  white-space: nowrap;
+  z-index: 5;
+}
+.badge-kiosk {
+  top: 55px; left: -135px;
+  animation: floatA 3.2s ease-in-out infinite;
+}
+.badge-print {
+  top: 55px; right: -150px;
+  animation: floatA 3.2s ease-in-out infinite 1.6s;
+}
+@keyframes floatA {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-9px); }
+}
+
+/* ─── STATS BAND ─── */
+.stats-band {
+  padding: 3.5rem 2rem;
+  background: rgba(13,42,74,0.55);
+  border-top: 1px solid rgba(59,130,246,0.09);
+  border-bottom: 1px solid rgba(59,130,246,0.09);
+  text-align: center;
+}
+.stats-band-headline {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  font-weight: 800;
+  color: white;
+  margin-bottom: 2.5rem;
+  letter-spacing: -0.02em;
+}
+.stats-grid {
+  display: flex;
+  gap: 4rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.stat-item { text-align: center; }
+.stat-number {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 900;
+  color: var(--cyan);
+  line-height: 1;
+  margin-bottom: 0.35rem;
+}
+.stat-label { font-size: 0.875rem; color: var(--muted); font-weight: 500; }
+
+/* ─── FEATURES ─── */
+.features-section { padding: 6rem 2rem; }
+.features-inner { max-width: 1180px; margin: 0 auto; }
+.feature-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4.5rem;
+  align-items: center;
+  margin-bottom: 7rem;
+}
+.feature-split:last-child { margin-bottom: 0; }
+.feature-split.reverse .feature-text { order: 2; }
+.feature-split.reverse .feature-visual { order: 1; }
+
+.feature-tag {
+  display: inline-block;
+  background: rgba(59,130,246,0.09);
+  border: 1px solid rgba(59,130,246,0.22);
+  color: var(--cyan);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.8rem;
+  border-radius: 100px;
+  margin-bottom: 1.25rem;
+}
+.feature-headline {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(1.75rem, 3vw, 2.6rem);
+  font-weight: 800;
+  line-height: 1.14;
+  color: white;
+  margin-bottom: 1.25rem;
+  letter-spacing: -0.025em;
+}
+.feature-headline em { font-style: italic; color: var(--cyan); }
+.feature-bullets {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  margin-bottom: 2rem;
+}
+.feature-bullets li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  font-size: 0.95rem;
+  color: var(--muted);
+  line-height: 1.65;
+}
+.feature-bullets li::before {
+  content: '';
+  display: block;
+  width: 5px; height: 5px;
+  background: var(--cyan);
+  border-radius: 50%;
+  margin-top: 8px;
+  flex-shrink: 0;
+}
+
+/* ─── MOCKUP CARDS ─── */
+.mockup-card {
+  background: rgba(13,42,74,0.45);
+  border: 1px solid rgba(59,130,246,0.13);
+  border-radius: 20px;
+  padding: 1.5rem;
+  backdrop-filter: blur(8px);
+  position: relative;
+  overflow: hidden;
+}
+.mockup-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(59,130,246,0.04) 0%, transparent 55%);
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.queue-header {
+  background: rgba(0,0,0,0.3);
+  border-radius: 10px;
+  padding: 0.7rem 1rem;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.queue-header-title { font-weight: 700; font-size: 0.8rem; color: var(--cyan); }
+.serving-block {
+  text-align: center;
+  padding: 1.5rem 1rem;
+  margin-bottom: 1rem;
+}
+.serving-label { font-size: 0.62rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+.serving-number {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 2.75rem;
+  font-weight: 900;
+  color: white;
+  line-height: 1.1;
+}
+.serving-sub { font-size: 0.7rem; color: var(--muted); margin-top: 0.2rem; }
+.queue-rows { display: flex; flex-direction: column; gap: 0.4rem; }
+.queue-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(0,0,0,0.22);
+  border-radius: 7px;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.78rem;
+}
+.q-token { font-weight: 700; color: white; }
+.q-wait { color: var(--muted); font-size: 0.72rem; }
+.q-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.dot-green { background: #00ff88; }
+.dot-orange { background: #ff9900; }
+.dot-cyan { background: var(--cyan); }
+
+.print-header {
+  background: rgba(0,0,0,0.3);
+  border-radius: 10px;
+  padding: 0.7rem 1rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+.print-title { font-size: 0.85rem; font-weight: 700; color: white; }
+.print-status { font-size: 0.65rem; color: #00ff88; margin-top: 0.15rem; }
+.print-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+.print-item {
+  background: rgba(0,0,0,0.25);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 9px;
+  padding: 0.65rem 0.4rem;
+  text-align: center;
+  font-size: 0.62rem;
+  color: var(--muted);
+  line-height: 1.4;
+}
+.p-icon { font-size: 1.1rem; display: block; margin-bottom: 0.2rem; }
+.p-price { color: var(--cyan); font-weight: 600; font-size: 0.65rem; }
+.payment-row {
+  background: rgba(0,0,0,0.2);
+  border-radius: 8px;
+  padding: 0.65rem 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.pay-label { font-size: 0.7rem; color: var(--muted); margin-right: 0.25rem; }
+.pay-chip {
+  background: rgba(59,130,246,0.1);
+  border: 1px solid rgba(59,130,246,0.2);
+  border-radius: 5px;
+  padding: 0.2rem 0.55rem;
+  font-size: 0.62rem;
+  font-weight: 600;
+  color: var(--cyan);
+}
+
+/* ─── INDUSTRIES ─── */
+.industries-section {
+  padding: 6rem 2rem;
+  background: linear-gradient(180deg, transparent 0%, rgba(13,42,74,0.18) 50%, transparent 100%);
+}
+.section-header { text-align: center; max-width: 680px; margin: 0 auto 4rem; }
+.section-tag {
+  display: inline-block;
+  background: rgba(59,130,246,0.07);
+  border: 1px solid rgba(59,130,246,0.18);
+  color: var(--cyan);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.32rem 0.85rem;
+  border-radius: 100px;
+  margin-bottom: 1rem;
+}
+.section-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+  font-weight: 800;
+  color: white;
+  letter-spacing: -0.025em;
+  line-height: 1.14;
+  margin-bottom: 1rem;
+}
+.section-desc { color: var(--muted); font-size: 0.975rem; line-height: 1.75; }
+
+.industries-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1.25rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.industry-card {
+  background: rgba(13,42,74,0.38);
+  border: 1px solid rgba(59,130,246,0.09);
+  border-radius: 16px;
+  padding: 1.75rem 1.5rem;
+  cursor: default;
+  transition: border-color 0.3s, transform 0.3s, background 0.3s;
+}
+.industry-card:hover {
+  border-color: rgba(59,130,246,0.28);
+  transform: translateY(-5px);
+  background: rgba(13,42,74,0.55);
+}
+.industry-icon { font-size: 2rem; margin-bottom: 0.7rem; }
+.industry-name { font-weight: 700; font-size: 0.95rem; color: white; margin-bottom: 0.4rem; }
+.industry-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.65; }
+
+/* ─── PRODUCTS ─── */
+.products-section { padding: 6rem 2rem; }
+.products-inner { max-width: 1180px; margin: 0 auto; }
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+.product-card {
+  background: rgba(13,42,74,0.38);
+  border: 1px solid rgba(59,130,246,0.1);
+  border-radius: 20px;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.3s, transform 0.3s, background 0.3s;
+}
+.product-card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(59,130,246,0.35), transparent);
+  border-radius: inherit;
+}
+.product-card:hover {
+  border-color: rgba(59,130,246,0.28);
+  transform: translateY(-5px);
+  background: rgba(13,42,74,0.55);
+}
+.product-num {
+  font-size: 0.68rem;
+  color: rgba(59,130,246,0.5);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.875rem;
+}
+.product-name {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 1rem;
+  line-height: 1.3;
+}
+.product-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.product-tag {
+  background: rgba(0,0,0,0.28);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 5px;
+  padding: 0.2rem 0.55rem;
+  font-size: 0.62rem;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+/* ─── ENTERPRISE BANNER ─── */
+.enterprise-banner {
+  background: linear-gradient(135deg, #15005c 0%, #0d2a4a 45%, #001840 100%);
+  border: 1px solid rgba(99,102,241,0.28);
+  border-radius: 24px;
+  padding: 3.5rem 3rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.enterprise-banner::before {
+  content: '';
+  position: absolute;
+  top: -40%; left: 50%;
+  transform: translateX(-50%);
+  width: 500px; height: 400px;
+  background: radial-gradient(circle, rgba(99,102,241,0.07), transparent 65%);
+  pointer-events: none;
+}
+.enterprise-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(1.35rem, 2.5vw, 1.9rem);
+  font-weight: 800;
+  color: white;
+  margin-bottom: 1rem;
+  position: relative;
+}
+.enterprise-desc {
+  color: rgba(200,215,255,0.72);
+  max-width: 680px;
+  margin: 0 auto 2rem;
+  line-height: 1.75;
+  font-size: 0.95rem;
+  position: relative;
+}
+.enterprise-features {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-bottom: 2.25rem;
+  position: relative;
+}
+.ent-tag {
+  background: rgba(99,102,241,0.13);
+  border: 1px solid rgba(99,102,241,0.28);
+  border-radius: 7px;
+  padding: 0.35rem 0.85rem;
+  font-size: 0.72rem;
+  color: rgba(200,215,255,0.88);
+  font-weight: 500;
+}
+
+/* ─── CTA SECTION ─── */
+.cta-section {
+  padding: 7rem 2rem;
+  text-align: center;
+  background: radial-gradient(ellipse 100% 60% at 50% 100%, rgba(59,130,246,0.06) 0%, transparent 70%);
+}
+.cta-headline {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 900;
+  color: white;
+  letter-spacing: -0.03em;
+  margin-bottom: 1.25rem;
+}
+.cta-sub { color: var(--muted); font-size: 1.05rem; max-width: 480px; margin: 0 auto 2.5rem; line-height: 1.7; }
+.cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+/* ─── FOOTER ─── */
+footer {
+  background: rgba(5,13,26,0.96);
+  border-top: 1px solid rgba(59,130,246,0.07);
+  padding: 4rem 2rem 2.5rem;
+}
+.footer-inner { max-width: 1100px; margin: 0 auto; }
+.footer-top {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  gap: 3rem;
+  margin-bottom: 3rem;
+}
+.footer-brand-logo {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: white;
+  margin-bottom: 0.6rem;
+}
+.footer-brand-logo span { color: var(--cyan); }
+.footer-brand-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.7; max-width: 240px; }
+.footer-col h4 {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: rgba(255,255,255,0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 1rem;
+}
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+.footer-col ul li a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.85rem;
+  transition: color 0.2s;
+}
+.footer-col ul li a:hover { color: var(--cyan); }
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.05);
+  padding-top: 1.75rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-size: 0.78rem;
+  color: rgba(100,130,150,0.6);
+}
+.footer-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(59,130,246,0.06);
+  border: 1px solid rgba(59,130,246,0.12);
+  border-radius: 100px;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.68rem;
+  color: rgba(59,130,246,0.7);
+}
+
+/* ─── MODAL ─── */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(5,13,26,0.88);
+  backdrop-filter: blur(10px);
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: #0b1a2e;
+  border: 1px solid rgba(59,130,246,0.18);
+  border-radius: 22px;
+  padding: 2.5rem;
+  max-width: 480px;
+  width: 100%;
+  position: relative;
+  animation: modalIn 0.25s ease;
+}
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.95) translateY(10px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+.modal-close {
+  position: absolute;
+  top: 1rem; right: 1.25rem;
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 1.4rem;
+  cursor: pointer;
+  transition: color 0.2s;
+  line-height: 1;
+}
+.modal-close:hover { color: white; }
+.modal-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: white;
+  margin-bottom: 0.4rem;
+  letter-spacing: -0.02em;
+}
+.modal-sub { color: var(--muted); font-size: 0.85rem; margin-bottom: 2rem; }
+.form-group { margin-bottom: 1rem; }
+.form-group label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: rgba(200,220,255,0.6);
+  margin-bottom: 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.form-group input, .form-group select {
+  width: 100%;
+  background: rgba(13,42,74,0.4);
+  border: 1px solid rgba(59,130,246,0.14);
+  border-radius: 9px;
+  padding: 0.75rem 1rem;
+  color: white;
+  font-size: 0.9rem;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+  -webkit-appearance: none;
+}
+.form-group input:focus, .form-group select:focus {
+  border-color: rgba(59,130,246,0.4);
+  background: rgba(13,42,74,0.6);
+}
+.form-group input::placeholder { color: rgba(136,153,170,0.55); }
+.form-group select option { background: #0b1a2e; color: white; }
+
+/* ─── SCROLL ANIMATIONS ─── */
+.fade-up {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+.fade-up.visible { opacity: 1; transform: translateY(0); }
+.fade-up:nth-child(2) { transition-delay: 0.08s; }
+.fade-up:nth-child(3) { transition-delay: 0.16s; }
+.fade-up:nth-child(4) { transition-delay: 0.24s; }
+.fade-up:nth-child(5) { transition-delay: 0.32s; }
+.fade-up:nth-child(6) { transition-delay: 0.4s; }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 900px) {
+  .footer-top { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 768px) {
+  .nav-links, .nav-cta { display: none; }
+  .hamburger { display: flex; }
+  .feature-split, .feature-split.reverse {
+    grid-template-columns: 1fr;
+  }
+  .feature-split.reverse .feature-text { order: 0; }
+  .feature-split.reverse .feature-visual { order: 0; }
+  .machines-row { gap: 2rem; }
+  .badge-kiosk, .badge-print { display: none; }
+  .stats-grid { gap: 2.5rem; }
+  .industries-grid { grid-template-columns: repeat(2, 1fr); }
+  .products-grid { grid-template-columns: 1fr; }
+  .enterprise-banner { padding: 2.5rem 1.75rem; }
+  .footer-top { grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .footer-bottom { justify-content: center; text-align: center; }
+}
+@media (max-width: 520px) {
+  .hero { padding: 8rem 1.25rem 4rem; }
+  .industries-grid { grid-template-columns: 1fr; }
+  .footer-top { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══ -->
+<nav>
+  <a href="#" class="nav-logo">Go<span>Stationery</span></a>
+  <ul class="nav-links">
+    <li><a href="solutions.html">Solutions</a></li>
+    <li><a href="industries.html">Industries</a></li>
+    <li><a href="products.html">Products</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Book a Demo</a>
+  <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ═══ MOBILE MENU ═══ -->
+<div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Navigation">
+  <button class="mobile-close" id="mobileClose" aria-label="Close menu">✕</button>
+  <a href="solutions.html" class="menu-link">Solutions</a>
+  <a href="industries.html" class="menu-link">Industries</a>
+  <a href="products.html" class="menu-link">Products</a>
+  <a href="contact.html" class="menu-link">Contact</a>
+  <a href="contact.html" class="btn-primary" style="font-size:1rem;padding:0.9rem 2.5rem;margin-top:0.5rem;">Get a Free Demo</a>
+</div>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="glow glow-1"></div>
+  <div class="glow glow-2"></div>
+  <div class="glow glow-3"></div>
+
+  <div class="live-badge">
+    <span class="pulse-dot"></span>
+    Software-First Solutions &nbsp;·&nbsp; Made in India
+  </div>
+
+  <h1 class="hero-headline">
+    Smart Queues.<br>
+    <span class="grad">Zero Wait Time.</span><br>
+    Every Space.
+  </h1>
+  <p class="hero-sub">
+    GoStationery deploys intelligent queue kiosks and automated vending machines that cut wait times by 40% — from hospitals and banks to temples and canteens.
+  </p>
+
+  <div class="hero-ctas">
+    <a href="contact.html" class="btn-primary">Book a Free Demo</a>
+    <a href="solutions.html" class="btn-ghost">Explore Solutions ↓</a>
+  </div>
+
+  <!-- Machine Illustrations -->
+  <div class="machines-row">
+
+    <!-- Smart Kiosk -->
+    <div class="machine-wrapper">
+      <div class="floating-badge badge-kiosk">−40% Wait time</div>
+      <svg width="130" height="310" viewBox="0 0 130 310" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Smart Queue Kiosk">
+        <!-- Wall bracket -->
+        <rect x="48" y="0" width="34" height="12" rx="3" fill="#162d4a"/>
+        <rect x="57" y="8" width="16" height="22" rx="2" fill="#162d4a"/>
+        <!-- Body -->
+        <rect x="8" y="26" width="114" height="218" rx="13" fill="url(#kioskBody)"/>
+        <!-- Left edge highlight -->
+        <rect x="8" y="30" width="5" height="210" rx="2.5" fill="rgba(59,130,246,0.06)"/>
+        <!-- Screen frame -->
+        <rect x="16" y="36" width="98" height="160" rx="9" fill="#020a16"/>
+        <!-- Screen -->
+        <rect x="19" y="39" width="92" height="154" rx="7" fill="#040e1c"/>
+        <!-- Screen header bar -->
+        <rect x="19" y="39" width="92" height="20" rx="7" fill="rgba(59,130,246,0.14)"/>
+        <rect x="19" y="46" width="92" height="13" fill="rgba(59,130,246,0.14)"/>
+        <text x="65" y="52" text-anchor="middle" font-size="7.5" fill="#3b82f6" font-weight="bold" font-family="Inter, sans-serif" letter-spacing="0.5">GoStationery</text>
+        <!-- NOW SERVING block -->
+        <text x="65" y="73" text-anchor="middle" font-size="6" fill="#8899aa" font-family="Inter, sans-serif" letter-spacing="1">NOW SERVING</text>
+        <text x="65" y="94" text-anchor="middle" font-size="26" fill="white" font-weight="900" font-family="Plus Jakarta Sans, sans-serif">A-041</text>
+        <!-- Divider -->
+        <rect x="23" y="99" width="84" height="1" fill="rgba(59,130,246,0.13)"/>
+        <!-- Counter label -->
+        <text x="65" y="110" text-anchor="middle" font-size="6" fill="rgba(136,153,170,0.7)" font-family="Inter">Counter 3 · Dr. Mehta</text>
+        <!-- Queue rows -->
+        <rect x="22" y="115" width="86" height="14" rx="3.5" fill="rgba(0,0,0,0.32)"/>
+        <text x="28" y="125" font-size="6.5" fill="white" font-weight="700" font-family="Inter">A-042</text>
+        <text x="70" y="125" font-size="6" fill="#8899aa" font-family="Inter">~3 min</text>
+        <circle cx="111" cy="122" r="3" fill="#00ff88"/>
+        <rect x="22" y="132" width="86" height="14" rx="3.5" fill="rgba(0,0,0,0.32)"/>
+        <text x="28" y="142" font-size="6.5" fill="white" font-weight="700" font-family="Inter">A-043</text>
+        <text x="70" y="142" font-size="6" fill="#8899aa" font-family="Inter">~8 min</text>
+        <circle cx="111" cy="139" r="3" fill="#ff9900"/>
+        <rect x="22" y="149" width="86" height="14" rx="3.5" fill="rgba(0,0,0,0.32)"/>
+        <text x="28" y="159" font-size="6.5" fill="white" font-weight="700" font-family="Inter">A-044</text>
+        <text x="70" y="159" font-size="6" fill="#8899aa" font-family="Inter">~14 min</text>
+        <circle cx="111" cy="156" r="3" fill="#3b82f6"/>
+        <!-- Token print slot -->
+        <rect x="32" y="186" width="66" height="5" rx="2" fill="#000e1f"/>
+        <rect x="35" y="186" width="60" height="2" rx="1" fill="rgba(59,130,246,0.38)"/>
+        <!-- Speaker grille -->
+        <circle cx="52" cy="210" r="1.8" fill="#162d4a"/>
+        <circle cx="59" cy="210" r="1.8" fill="#162d4a"/>
+        <circle cx="66" cy="210" r="1.8" fill="#162d4a"/>
+        <circle cx="73" cy="210" r="1.8" fill="#162d4a"/>
+        <circle cx="80" cy="210" r="1.8" fill="#162d4a"/>
+        <!-- Pedestal -->
+        <rect x="42" y="244" width="46" height="52" rx="6" fill="#0c1e33"/>
+        <rect x="50" y="252" width="30" height="36" rx="4" fill="#071020"/>
+        <!-- Base glow -->
+        <ellipse cx="65" cy="307" rx="42" ry="7" fill="rgba(59,130,246,0.13)"/>
+        <defs>
+          <linearGradient id="kioskBody" x1="8" y1="26" x2="122" y2="244" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#0d2a4a"/>
+            <stop offset="100%" stop-color="#06101e"/>
+          </linearGradient>
+        </defs>
+      </svg>
+      <div class="machine-chip">Smart Kiosk</div>
+    </div>
+
+    <!-- Print & Vend Machine -->
+    <div class="machine-wrapper">
+      <div class="floating-badge badge-print">100% Self-service</div>
+      <svg width="162" height="295" viewBox="0 0 162 295" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Print and Vend Station">
+        <!-- Body -->
+        <rect x="4" y="8" width="112" height="256" rx="11" fill="url(#vendBody)"/>
+        <!-- Right control panel -->
+        <rect x="119" y="25" width="39" height="218" rx="9" fill="#0b1d30"/>
+        <!-- Right panel inner glow line -->
+        <rect x="119" y="25" width="2" height="218" fill="rgba(59,130,246,0.05)"/>
+        <!-- Vend grid window -->
+        <rect x="11" y="18" width="98" height="136" rx="7" fill="#01060e"/>
+        <!-- 3×3 vend grid -->
+        <!-- Row 1 -->
+        <rect x="15" y="22" width="28" height="28" rx="4" fill="#0a1828"/><text x="29" y="34" text-anchor="middle" font-size="8" fill="white" font-family="Inter">🖨️</text><text x="29" y="43" text-anchor="middle" font-size="5" fill="#8899aa" font-family="Inter">B&amp;W</text>
+        <rect x="47" y="22" width="28" height="28" rx="4" fill="#0a1828"/><text x="61" y="34" text-anchor="middle" font-size="8" fill="white" font-family="Inter">🎨</text><text x="61" y="43" text-anchor="middle" font-size="5" fill="#8899aa" font-family="Inter">Color</text>
+        <rect x="79" y="22" width="26" height="28" rx="4" fill="#0a1828"/><text x="92" y="34" text-anchor="middle" font-size="8" fill="white" font-family="Inter">📄</text><text x="92" y="43" text-anchor="middle" font-size="5" fill="#8899aa" font-family="Inter">Scan</text>
+        <!-- Row 2 -->
+        <rect x="15" y="54" width="28" height="28" rx="4" fill="#0a1828"/><text x="29" y="66" text-anchor="middle" font-size="8" fill="white" font-family="Inter">🖊️</text><text x="29" y="75" text-anchor="middle" font-size="5" fill="#8899aa" font-family="Inter">Pens</text>
+        <rect x="47" y="54" width="28" height="28" rx="4" fill="#0a1828"/><text x="61" y="66" text-anchor="middle" font-size="8" fill="white" font-family="Inter">📎</text><text x="61" y="75" text-anchor="middle" font-size="5" fill="#8899aa" font-family="Inter">Clips</text>
+        <rect x="79" y="54" width="26" height="28" rx="4" fill="#0a1828"/><text x="92" y="66" text-anchor="middle" font-size="8" fill="white" font-family="Inter">📁</text><text x="92" y="75" text-anchor="middle" font-size="5" fill="#8899aa" font-family="Inter">Files</text>
+        <!-- Row 3 -->
+        <rect x="15" y="86" width="28" height="28" rx="4" fill="#0a1828"/><text x="29" y="98" text-anchor="middle" font-size="8" fill="white" font-family="Inter">🖍️</text><text x="29" y="107" text-anchor="middle" font-size="5" fill="#8899aa" font-family="Inter">Markers</text>
+        <rect x="47" y="86" width="28" height="28" rx="4" fill="#0a1828"/><text x="61" y="98" text-anchor="middle" font-size="8" fill="white" font-family="Inter">📂</text><text x="61" y="107" text-anchor="middle" font-size="5" fill="#8899aa" font-family="Inter">Folders</text>
+        <rect x="79" y="86" width="26" height="28" rx="4" fill="#0a1828"/><text x="92" y="98" text-anchor="middle" font-size="8" fill="white" font-family="Inter">🏷️</text><text x="92" y="107" text-anchor="middle" font-size="5" fill="#8899aa" font-family="Inter">Tags</text>
+        <!-- Paper output slot -->
+        <rect x="11" y="158" width="98" height="8" rx="3" fill="#001428"/>
+        <rect x="20" y="158" width="70" height="3" rx="1.5" fill="rgba(255,120,30,0.45)"/>
+        <!-- Control panel screen -->
+        <rect x="123" y="33" width="31" height="52" rx="4" fill="#040e1c"/>
+        <text x="138" y="48" text-anchor="middle" font-size="5.5" fill="#3b82f6" font-weight="700" font-family="Inter">Print &amp;</text>
+        <text x="138" y="57" text-anchor="middle" font-size="5.5" fill="#3b82f6" font-weight="700" font-family="Inter">Dispense</text>
+        <rect x="125" y="60" width="27" height="1" fill="rgba(59,130,246,0.18)"/>
+        <text x="138" y="70" text-anchor="middle" font-size="5" fill="#00ff88" font-family="Inter">● Ready</text>
+        <text x="138" y="79" text-anchor="middle" font-size="4.5" fill="#8899aa" font-family="Inter">Cashless</text>
+        <!-- Payment buttons -->
+        <rect x="122" y="93" width="33" height="11" rx="2.5" fill="rgba(59,130,246,0.09)"/>
+        <text x="138" y="101" text-anchor="middle" font-size="5.5" fill="#3b82f6" font-weight="600" font-family="Inter">UPI</text>
+        <rect x="122" y="107" width="33" height="11" rx="2.5" fill="rgba(59,130,246,0.09)"/>
+        <text x="138" y="115" text-anchor="middle" font-size="5.5" fill="#3b82f6" font-weight="600" font-family="Inter">Card</text>
+        <rect x="122" y="121" width="33" height="11" rx="2.5" fill="rgba(59,130,246,0.09)"/>
+        <text x="138" y="129" text-anchor="middle" font-size="5.5" fill="#3b82f6" font-weight="600" font-family="Inter">NFC</text>
+        <!-- Stock indicator -->
+        <text x="138" y="153" text-anchor="middle" font-size="5" fill="#8899aa" font-family="Inter">Stock</text>
+        <text x="138" y="165" text-anchor="middle" font-size="9" fill="white" font-weight="800" font-family="Plus Jakarta Sans">340</text>
+        <!-- NFC reader circle -->
+        <circle cx="138" cy="195" r="11" fill="#081420" stroke="rgba(59,130,246,0.18)" stroke-width="1"/>
+        <text x="138" y="199" text-anchor="middle" font-size="7" fill="rgba(59,130,246,0.6)" font-family="Inter">NFC</text>
+        <!-- Base glow -->
+        <ellipse cx="71" cy="291" rx="52" ry="7" fill="rgba(255,100,20,0.1)"/>
+        <defs>
+          <linearGradient id="vendBody" x1="4" y1="8" x2="116" y2="264" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#0d2040"/>
+            <stop offset="100%" stop-color="#040c18"/>
+          </linearGradient>
+        </defs>
+      </svg>
+      <div class="machine-chip">Print &amp; Vend Station</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ STATS BAND ═══ -->
+<section class="stats-band">
+  <p class="stats-band-headline">Queue time. <strong>Cut in half.</strong></p>
+  <div class="stats-grid">
+    <div class="stat-item">
+      <div class="stat-number" data-target="40" data-suffix="%">0%</div>
+      <div class="stat-label">Wait Time Reduction</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number" data-target="500" data-suffix="+">0+</div>
+      <div class="stat-label">Deployments</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number" data-target="5" data-suffix="M+ Tokens">0</div>
+      <div class="stat-label">Tokens Issued</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FEATURE SPLITS ═══ -->
+<section id="solutions" class="features-section">
+  <div class="features-inner">
+
+    <!-- Feature 1 — Kiosk -->
+    <div class="feature-split fade-up">
+      <div class="feature-text">
+        <span class="feature-tag">Queue Management</span>
+        <h2 class="feature-headline">No more queues.<br><em>Ever.</em></h2>
+        <ul class="feature-bullets">
+          <li>Touchscreen token kiosk issues numbered tokens in seconds</li>
+          <li>Live display shows who's being served with estimated wait times</li>
+          <li>SMS &amp; WhatsApp alerts so people don't have to wait in line</li>
+          <li>Cloud dashboard gives managers real-time insights across all counters</li>
+        </ul>
+        <a href="#" class="btn-primary" onclick="openModal();return false;">See It in Action →</a>
+      </div>
+      <div class="feature-visual">
+        <div class="mockup-card">
+          <div class="queue-header">
+            <span class="queue-header-title">GoStationery Queue</span>
+            <span style="font-size:0.65rem;color:#00ff88;font-weight:600;">● Live</span>
+          </div>
+          <div class="serving-block">
+            <div class="serving-label">Now Serving</div>
+            <div class="serving-number">A-041</div>
+            <div class="serving-sub">Counter 3 &nbsp;·&nbsp; Dr. Mehta</div>
+          </div>
+          <div class="queue-rows">
+            <div class="queue-row"><span class="q-token">A-042</span><span class="q-wait">~3 min</span><span class="q-dot dot-green"></span></div>
+            <div class="queue-row"><span class="q-token">A-043</span><span class="q-wait">~8 min</span><span class="q-dot dot-orange"></span></div>
+            <div class="queue-row"><span class="q-token">A-044</span><span class="q-wait">~14 min</span><span class="q-dot dot-cyan"></span></div>
+            <div class="queue-row"><span class="q-token">A-045</span><span class="q-wait">~19 min</span><span class="q-dot dot-orange"></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feature 2 — Print Station -->
+    <div class="feature-split reverse fade-up">
+      <div class="feature-text">
+        <span class="feature-tag">Print &amp; Vend</span>
+        <h2 class="feature-headline">Stationery on demand.<br><em>Zero staff.</em></h2>
+        <ul class="feature-bullets">
+          <li>B&amp;W, color printing, and document scanning from one machine</li>
+          <li>Auto-dispenses pens, files, folders, and stationery items</li>
+          <li>Fully cashless — UPI, debit/credit cards, and NFC tap-to-pay</li>
+          <li>Live stock alerts and remote restocking management from the cloud</li>
+        </ul>
+        <a href="#" class="btn-primary" onclick="openModal();return false;">Request a Demo →</a>
+      </div>
+      <div class="feature-visual">
+        <div class="mockup-card">
+          <div class="print-header">
+            <div class="print-title">Print &amp; Dispense Station</div>
+            <div class="print-status">● Ready &nbsp;·&nbsp; Cashless Payment Enabled</div>
+          </div>
+          <div class="print-grid">
+            <div class="print-item"><span class="p-icon">🖨️</span>B&amp;W Print<br><span class="p-price">₹2/page</span></div>
+            <div class="print-item"><span class="p-icon">🎨</span>Color Print<br><span class="p-price">₹8/page</span></div>
+            <div class="print-item"><span class="p-icon">📄</span>Scanning<br><span class="p-price">₹5/page</span></div>
+            <div class="print-item"><span class="p-icon">🖊️</span>Pens<br><span class="p-price">₹15</span></div>
+            <div class="print-item"><span class="p-icon">📁</span>Files<br><span class="p-price">₹25</span></div>
+            <div class="print-item"><span class="p-icon">📋</span>Pads<br><span class="p-price">₹40</span></div>
+          </div>
+          <div class="payment-row">
+            <span class="pay-label">Pay via</span>
+            <span class="pay-chip">UPI</span>
+            <span class="pay-chip">Card</span>
+            <span class="pay-chip">NFC</span>
+            <span class="pay-chip">QR Code</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ INDUSTRIES ═══ -->
+<section class="industries-section" id="industries">
+  <div class="section-header fade-up">
+    <span class="section-tag">Industries We Serve</span>
+    <h2 class="section-title">Built for every<br>waiting room</h2>
+    <p class="section-desc">From hospitals to temples, GoStationery's queue and vending solutions scale to every environment and every crowd size.</p>
+  </div>
+  <div class="industries-grid">
+    <div class="industry-card fade-up">
+      <div class="industry-icon">🏥</div>
+      <div class="industry-name">Healthcare</div>
+      <div class="industry-desc">Hospitals, clinics, and labs managing patient queues, OPD flow, and report collection</div>
+    </div>
+    <div class="industry-card fade-up">
+      <div class="industry-icon">🏦</div>
+      <div class="industry-name">Banking</div>
+      <div class="industry-desc">Bank branches and NBFCs streamlining teller queues and customer service counters</div>
+    </div>
+    <div class="industry-card fade-up">
+      <div class="industry-icon">🛒</div>
+      <div class="industry-name">Retail</div>
+      <div class="industry-desc">Large format retail and service centres managing customer flow and billing queues</div>
+    </div>
+    <div class="industry-card fade-up">
+      <div class="industry-icon">🏛️</div>
+      <div class="industry-name">Government</div>
+      <div class="industry-desc">RTO, passport offices, and municipal services eliminating manual token issuance</div>
+    </div>
+    <div class="industry-card fade-up">
+      <div class="industry-icon">🏢</div>
+      <div class="industry-name">Corporate</div>
+      <div class="industry-desc">Corporate offices and IT parks with automated stationery dispensing and visitor flow</div>
+    </div>
+    <div class="industry-card fade-up">
+      <div class="industry-icon">🎓</div>
+      <div class="industry-name">Education</div>
+      <div class="industry-desc">Universities, exam centres, and schools managing admissions queues and stationery dispensing</div>
+    </div>
+    <div class="industry-card fade-up">
+      <div class="industry-icon">🛕</div>
+      <div class="industry-name">Temples &amp; Religious Venues</div>
+      <div class="industry-desc">Fair, orderly token-based darshan queues during peak hours and festivals</div>
+    </div>
+    <div class="industry-card fade-up">
+      <div class="industry-icon">🍽️</div>
+      <div class="industry-name">Large Kitchens &amp; Canteens</div>
+      <div class="industry-desc">Meal token issuance for corporate canteens, hostels, and mess halls</div>
+    </div>
+    <div class="industry-card fade-up">
+      <div class="industry-icon">🪪</div>
+      <div class="industry-name">Visitor Pass Management</div>
+      <div class="industry-desc">Auto-issue, print, and track visitor passes — no manual registers needed</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PRODUCTS ═══ -->
+<section class="products-section" id="products">
+  <div class="products-inner">
+    <div class="section-header fade-up">
+      <span class="section-tag">Product Lineup</span>
+      <h2 class="section-title">Every setup.<br>Every scale.</h2>
+      <p class="section-desc">From wall-mounted kiosks for small clinics to enterprise software for multi-location chains — we have the right fit.</p>
+    </div>
+
+    <div class="products-grid">
+      <div class="product-card fade-up">
+        <div class="product-num">01</div>
+        <div class="product-name">Mini Kiosk — Wall Mount</div>
+        <div class="product-tags">
+          <span class="product-tag">Touchscreen</span>
+          <span class="product-tag">Token Printer</span>
+          <span class="product-tag">SMS Alerts</span>
+        </div>
+      </div>
+      <div class="product-card fade-up">
+        <div class="product-num">02</div>
+        <div class="product-name">Mini Kiosk — Floor Mount</div>
+        <div class="product-tags">
+          <span class="product-tag">Floor Stand</span>
+          <span class="product-tag">Multi-Counter</span>
+          <span class="product-tag">Cloud Dashboard</span>
+        </div>
+      </div>
+      <div class="product-card fade-up">
+        <div class="product-num">03</div>
+        <div class="product-name">Print Vending Machine</div>
+        <div class="product-tags">
+          <span class="product-tag">B&amp;W + Color</span>
+          <span class="product-tag">Scanning</span>
+          <span class="product-tag">UPI / Card / NFC</span>
+        </div>
+      </div>
+      <div class="product-card fade-up">
+        <div class="product-num">04</div>
+        <div class="product-name">Stationery + Print Vending Machine</div>
+        <div class="product-tags">
+          <span class="product-tag">Print + Dispense</span>
+          <span class="product-tag">Stock Alerts</span>
+          <span class="product-tag">Analytics</span>
+        </div>
+      </div>
+      <div class="product-card fade-up">
+        <div class="product-num">05</div>
+        <div class="product-name">Products Vending Machine</div>
+        <div class="product-tags">
+          <span class="product-tag">Customisable Slots</span>
+          <span class="product-tag">Remote Monitoring</span>
+          <span class="product-tag">Any Product</span>
+        </div>
+      </div>
+      <div class="product-card fade-up">
+        <div class="product-num">06</div>
+        <div class="product-name">Enterprise Software Platform</div>
+        <div class="product-tags">
+          <span class="product-tag">PoS Integration</span>
+          <span class="product-tag">Multi-Location</span>
+          <span class="product-tag">White-Label</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Enterprise Banner -->
+    <div class="enterprise-banner fade-up">
+      <div class="enterprise-title">🏢 Enterprise Version — End-to-End Billing &amp; PoS</div>
+      <p class="enterprise-desc">
+        A complete enterprise solution with integrated billing engine, PoS terminals, multi-branch dashboard, role-based access control, and white-label branding — purpose-built for large organisations running multiple locations.
+      </p>
+      <div class="enterprise-features">
+        <span class="ent-tag">Billing Engine</span>
+        <span class="ent-tag">PoS Terminals</span>
+        <span class="ent-tag">Multi-Branch Dashboard</span>
+        <span class="ent-tag">Role-Based Access</span>
+        <span class="ent-tag">White-Label Branding</span>
+        <span class="ent-tag">API Integration</span>
+      </div>
+      <a href="#" class="btn-primary" onclick="openModal();return false;">Request Enterprise Demo →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA SECTION ═══ -->
+<section class="cta-section">
+  <h2 class="cta-headline fade-up">Ready to cut your<br>queue times in half?</h2>
+  <p class="cta-sub fade-up">Talk to our team and get a tailored demo for your space — hospitals, banks, temples, canteens, and more.</p>
+  <div class="cta-btns fade-up">
+    <a href="#" class="btn-primary" onclick="openModal();return false;">Book a Free Demo</a>
+    <a href="tel:+91XXXXXXXXXX" class="btn-ghost">Call Us</a>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer id="contact">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand-logo">Go<span>Stationery</span></div>
+        <p class="footer-brand-desc">Software-first queue management and automated vending solutions. Designed and built in India.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Solutions</h4>
+        <ul>
+          <li><a href="solutions.html">Queue Kiosks</a></li>
+          <li><a href="solutions.html">Print Stations</a></li>
+          <li><a href="products.html">Vending Machines</a></li>
+          <li><a href="products.html">Enterprise Platform</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Industries</h4>
+        <ul>
+          <li><a href="industries.html">Healthcare</a></li>
+          <li><a href="industries.html">Banking</a></li>
+          <li><a href="industries.html">Government</a></li>
+          <li><a href="industries.html">Temples &amp; Canteens</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:hello@gostationery.in">hello@gostationery.in</a></li>
+          <li><a href="tel:+91XXXXXXXXXX">+91 XXXXX XXXXX</a></li>
+          <li><a href="#">WhatsApp Us</a></li>
+          <li><a href="#">Book a Demo</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 GoStationery. All rights reserved.</span>
+      <span class="footer-badge"><span class="pulse-dot" style="width:5px;height:5px;"></span> Made in India</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══ DEMO MODAL ═══ -->
+<div class="modal-overlay" id="demoModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()" aria-label="Close">✕</button>
+    <div class="modal-title" id="modalTitle">Book a Free Demo</div>
+    <div class="modal-sub">We'll show you exactly how GoStationery works for your setup — no commitment required.</div>
+    <div class="form-group">
+      <label>Full Name</label>
+      <input type="text" placeholder="Your name" id="demoName">
+    </div>
+    <div class="form-group">
+      <label>Organisation</label>
+      <input type="text" placeholder="Hospital / Bank / Temple / Canteen etc." id="demoOrg">
+    </div>
+    <div class="form-group">
+      <label>Phone / WhatsApp</label>
+      <input type="tel" placeholder="+91 XXXXX XXXXX" id="demoPhone">
+    </div>
+    <div class="form-group">
+      <label>Interested In</label>
+      <select id="demoProduct">
+        <option value="">Select a product...</option>
+        <option>Smart Queue Kiosk (Wall Mount)</option>
+        <option>Smart Queue Kiosk (Floor Mount)</option>
+        <option>Print Vending Machine</option>
+        <option>Stationery + Print Machine</option>
+        <option>Products Vending Machine</option>
+        <option>Enterprise Platform</option>
+        <option>Full Suite</option>
+      </select>
+    </div>
+    <button class="btn-primary" id="submitDemoBtn" style="width:100%;text-align:center;margin-top:0.75rem;font-size:1rem;" onclick="submitDemo()">
+      Request Demo →
+    </button>
+  </div>
+</div>
+
+<script>
+// ─── MOBILE NAV ───
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+const mobileClose = document.getElementById('mobileClose');
+
+function openMobile() {
+  mobileMenu.classList.add('open');
+  hamburger.setAttribute('aria-expanded', 'true');
+  document.body.style.overflow = 'hidden';
+}
+function closeMobile() {
+  mobileMenu.classList.remove('open');
+  hamburger.setAttribute('aria-expanded', 'false');
+  document.body.style.overflow = '';
+}
+hamburger.addEventListener('click', openMobile);
+mobileClose.addEventListener('click', closeMobile);
+document.querySelectorAll('.menu-link').forEach(l => l.addEventListener('click', closeMobile));
+
+const mobileDemoBtn = document.getElementById('mobileDemoBtn');
+if (mobileDemoBtn) {
+  mobileDemoBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    closeMobile();
+    setTimeout(openModal, 280);
+  });
+}
+
+// ─── MODAL ───
+function openModal() {
+  document.getElementById('demoModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  document.getElementById('demoModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('demoModal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeModal();
+});
+// nav & hero CTAs now link directly to contact.html
+
+function submitDemo() {
+  const btn = document.getElementById('submitDemoBtn');
+  const name = document.getElementById('demoName').value.trim();
+  if (!name) { document.getElementById('demoName').focus(); return; }
+  btn.textContent = '✓ Request Sent! We\'ll call you soon.';
+  btn.style.background = 'linear-gradient(135deg, #00aa66, #007744)';
+  btn.style.color = 'white';
+  btn.disabled = true;
+  setTimeout(closeModal, 2200);
+  setTimeout(() => {
+    btn.textContent = 'Request Demo →';
+    btn.style.background = '';
+    btn.style.color = '';
+    btn.disabled = false;
+  }, 3000);
+}
+
+// ─── COUNTER ANIMATION ───
+function animateCounter(el) {
+  const target = parseInt(el.dataset.target);
+  const suffix = el.dataset.suffix || '';
+  const duration = 1800;
+  const start = performance.now();
+  function step(now) {
+    const t = Math.min((now - start) / duration, 1);
+    const ease = 1 - Math.pow(1 - t, 3);
+    el.textContent = Math.floor(ease * target) + suffix;
+    if (t < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+// ─── INTERSECTION OBSERVER ───
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      io.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
+
+const statsIO = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.querySelectorAll('[data-target]').forEach(animateCounter);
+      statsIO.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.4 });
+
+const statsBand = document.querySelector('.stats-band');
+if (statsBand) statsIO.observe(statsBand);
+</script>
+</body>
+</html>

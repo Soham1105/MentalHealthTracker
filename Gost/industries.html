@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Industries — GoStationery</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#050d1a;--cyan:#3b82f6;--navy:#0d2a4a;--text:#e8f0fe;--muted:#8899aa}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.6}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:64px;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;background:rgba(5,13,26,.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(59,130,246,.08)}
+.nav-logo{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.25rem;font-weight:800;color:white;text-decoration:none;letter-spacing:-.02em}
+.nav-logo span{color:var(--cyan)}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:.875rem;font-weight:500;transition:color .2s}
+.nav-links a:hover,.nav-links a.active{color:var(--cyan)}
+.nav-cta{background:linear-gradient(135deg,#3b82f6,#2563eb);color:#ffffff;border:none;padding:.5rem 1.25rem;border-radius:6px;font-size:.875rem;font-weight:700;cursor:pointer;text-decoration:none;transition:opacity .2s,transform .2s}
+.nav-cta:hover{opacity:.9;transform:translateY(-1px)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px}
+.hamburger span{display:block;width:24px;height:2px;background:white;border-radius:2px}
+.mobile-menu{display:none;position:fixed;inset:0;z-index:99;background:#050d1a;flex-direction:column;align-items:center;justify-content:center;gap:2rem}
+.mobile-menu.open{display:flex}
+.mobile-menu a{color:white;font-size:1.75rem;font-weight:700;text-decoration:none;font-family:'Plus Jakarta Sans',sans-serif;transition:color .2s}
+.mobile-menu a:hover{color:var(--cyan)}
+.mobile-close{position:absolute;top:1.25rem;right:1.5rem;background:none;border:none;color:var(--muted);font-size:1.75rem;cursor:pointer}
+.page-hero{padding:9rem 2rem 5rem;text-align:center;position:relative;overflow:hidden;background:radial-gradient(ellipse 100% 55% at 50% 0%,rgba(13,42,74,.85) 0%,#050d1a 65%)}
+.hero-glow{position:absolute;top:-80px;left:50%;transform:translateX(-50%);width:700px;height:500px;background:radial-gradient(circle,rgba(59,130,246,.1),transparent 70%);filter:blur(60px);pointer-events:none;border-radius:50%}
+.page-tag{display:inline-block;background:rgba(59,130,246,.07);border:1px solid rgba(59,130,246,.18);color:var(--cyan);font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.32rem .85rem;border-radius:100px;margin-bottom:1.25rem}
+.page-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(2.25rem,6vw,4rem);font-weight:900;line-height:1.07;letter-spacing:-.03em;color:white;margin-bottom:1.25rem}
+.page-title .grad{background:linear-gradient(135deg,#3b82f6,#3b82f6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.page-desc{font-size:clamp(.95rem,2vw,1.1rem);color:var(--muted);max-width:560px;margin:0 auto;line-height:1.75}
+
+/* Industries grid */
+.industries-section{padding:5rem 2rem 6rem}
+.industries-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.75rem;max-width:1100px;margin:0 auto}
+.industry-card{background:rgba(13,42,74,.38);border:1px solid rgba(59,130,246,.1);border-radius:20px;padding:2rem;transition:border-color .3s,transform .3s,background .3s;cursor:default}
+.industry-card:hover{border-color:rgba(59,130,246,.28);transform:translateY(-5px);background:rgba(13,42,74,.55)}
+.ind-top{display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem}
+.ind-icon{font-size:2.25rem;flex-shrink:0}
+.ind-name{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.1rem;color:white;line-height:1.2}
+.ind-badge{display:inline-block;background:rgba(59,130,246,.09);border:1px solid rgba(59,130,246,.2);color:var(--cyan);font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.2rem .6rem;border-radius:100px;margin-top:.35rem}
+.ind-desc{color:var(--muted);font-size:.875rem;line-height:1.75;margin-bottom:1.25rem}
+.ind-uses{list-style:none;display:flex;flex-direction:column;gap:.5rem}
+.ind-uses li{display:flex;align-items:flex-start;gap:.6rem;font-size:.8rem;color:rgba(200,220,255,.65);line-height:1.55}
+.ind-uses li::before{content:'→';color:var(--cyan);font-weight:700;flex-shrink:0;margin-top:1px}
+.ind-divider{height:1px;background:rgba(59,130,246,.08);margin:1.25rem 0}
+.ind-product{font-size:.72rem;color:rgba(59,130,246,.6);font-weight:600}
+
+/* Section header */
+.section-header{text-align:center;max-width:680px;margin:0 auto 3.5rem}
+.section-tag{display:inline-block;background:rgba(59,130,246,.07);border:1px solid rgba(59,130,246,.18);color:var(--cyan);font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.32rem .85rem;border-radius:100px;margin-bottom:1rem}
+.section-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(1.75rem,3.5vw,2.5rem);font-weight:800;color:white;letter-spacing:-.025em;line-height:1.14;margin-bottom:1rem}
+.section-desc{color:var(--muted);font-size:.975rem;line-height:1.75}
+
+/* Stats row */
+.stats-row{display:flex;gap:3rem;justify-content:center;flex-wrap:wrap;padding:3.5rem 2rem;background:rgba(13,42,74,.5);border-top:1px solid rgba(59,130,246,.09);border-bottom:1px solid rgba(59,130,246,.09);margin-bottom:5rem;text-align:center}
+.stat .num{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(1.75rem,3.5vw,2.75rem);font-weight:900;color:var(--cyan);line-height:1}
+.stat .lbl{font-size:.82rem;color:var(--muted);margin-top:.35rem;font-weight:500}
+
+/* CTA strip */
+.cta-strip{padding:5.5rem 2rem;text-align:center;background:radial-gradient(ellipse 80% 60% at 50% 100%,rgba(59,130,246,.05) 0%,transparent 70%)}
+.cta-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(1.75rem,3.5vw,2.5rem);font-weight:900;color:white;letter-spacing:-.025em;margin-bottom:1rem}
+.cta-sub{color:var(--muted);max-width:440px;margin:0 auto 2.25rem;font-size:.975rem;line-height:1.7}
+.cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.btn-primary{background:linear-gradient(135deg,#3b82f6,#2563eb);color:#ffffff;border:none;padding:.875rem 2.25rem;border-radius:8px;font-size:1rem;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block;transition:transform .2s,box-shadow .2s;box-shadow:0 0 28px rgba(59,130,246,.2)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 0 40px rgba(59,130,246,.35)}
+.btn-ghost{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,.18);padding:.875rem 2.25rem;border-radius:8px;font-size:1rem;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;transition:border-color .2s,color .2s}
+.btn-ghost:hover{border-color:var(--cyan);color:var(--cyan)}
+footer{background:rgba(5,13,26,.98);border-top:1px solid rgba(59,130,246,.07);padding:3rem 2rem 2.25rem;text-align:center}
+.footer-logo{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.3rem;font-weight:800;color:white;margin-bottom:.5rem}
+.footer-logo span{color:var(--cyan)}
+.footer-links{display:flex;gap:2rem;justify-content:center;flex-wrap:wrap;margin:1rem 0 1.5rem}
+.footer-links a{color:var(--muted);text-decoration:none;font-size:.85rem;transition:color .2s}
+.footer-links a:hover{color:var(--cyan)}
+.footer-copy{color:rgba(100,130,150,.5);font-size:.75rem}
+.pulse-dot{width:6px;height:6px;background:#00ff88;border-radius:50%;display:inline-block;animation:pulse 2s infinite;vertical-align:middle}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.75)}}
+.fade-up{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+@media(max-width:768px){.nav-links,.nav-cta{display:none}.hamburger{display:flex}.industries-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Go<span>Stationery</span></a>
+  <ul class="nav-links">
+    <li><a href="solutions.html">Solutions</a></li>
+    <li><a href="industries.html" class="active">Industries</a></li>
+    <li><a href="products.html">Products</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Book a Demo</a>
+  <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" id="mobileClose">✕</button>
+  <a href="index.html" class="menu-link">Home</a>
+  <a href="solutions.html" class="menu-link">Solutions</a>
+  <a href="industries.html" class="menu-link">Industries</a>
+  <a href="products.html" class="menu-link">Products</a>
+  <a href="contact.html" class="menu-link">Contact</a>
+</div>
+
+<section class="page-hero">
+  <div class="hero-glow"></div>
+  <span class="page-tag">Industries We Serve</span>
+  <h1 class="page-title">Built for every<br><span class="grad">waiting room</span></h1>
+  <p class="page-desc">From OPD queues to temple darshan, GoStationery's solutions scale to every environment, every crowd size, and every budget.</p>
+</section>
+
+<!-- Stats -->
+<div class="stats-row fade-up">
+  <div class="stat"><div class="num">9+</div><div class="lbl">Industries Served</div></div>
+  <div class="stat"><div class="num">500+</div><div class="lbl">Active Deployments</div></div>
+  <div class="stat"><div class="num">5M+</div><div class="lbl">Tokens Issued</div></div>
+  <div class="stat"><div class="num">40%</div><div class="lbl">Avg. Wait Reduction</div></div>
+</div>
+
+<!-- Industries grid -->
+<section class="industries-section">
+  <div class="section-header fade-up">
+    <span class="section-tag">Every Industry</span>
+    <h2 class="section-title">Where GoStationery works</h2>
+    <p class="section-desc">Every industry below has unique queuing and dispensing challenges. We've solved them all.</p>
+  </div>
+  <div class="industries-grid">
+
+    <div class="industry-card fade-up">
+      <div class="ind-top">
+        <div class="ind-icon">🏥</div>
+        <div>
+          <div class="ind-name">Healthcare</div>
+          <span class="ind-badge">Queue · Print · Vend</span>
+        </div>
+      </div>
+      <p class="ind-desc">Hospitals, clinics, and diagnostic labs managing patient flow across OPD, pharmacy, and report collection. Reduce patient crowding and staff workload simultaneously.</p>
+      <ul class="ind-uses">
+        <li>OPD token queues with department-wise routing</li>
+        <li>Lab report collection token system</li>
+        <li>Stationery &amp; medicine dispensing vending machines</li>
+      </ul>
+      <div class="ind-divider"></div>
+      <div class="ind-product">Recommended: Smart Kiosk + Print Vend Machine</div>
+    </div>
+
+    <div class="industry-card fade-up">
+      <div class="ind-top">
+        <div class="ind-icon">🏦</div>
+        <div>
+          <div class="ind-name">Banking &amp; Finance</div>
+          <span class="ind-badge">Queue · Token</span>
+        </div>
+      </div>
+      <p class="ind-desc">Bank branches and NBFCs dealing with teller queues, account opening, loan queries, and customer service counters. Fair queuing eliminates arguments and frustration.</p>
+      <ul class="ind-uses">
+        <li>Category-based token issuance (savings, loans, NRI)</li>
+        <li>Priority counters for senior citizens and premium customers</li>
+        <li>Real-time branch analytics for area managers</li>
+      </ul>
+      <div class="ind-divider"></div>
+      <div class="ind-product">Recommended: Smart Kiosk (Wall or Floor Mount)</div>
+    </div>
+
+    <div class="industry-card fade-up">
+      <div class="ind-top">
+        <div class="ind-icon">🛒</div>
+        <div>
+          <div class="ind-name">Retail</div>
+          <span class="ind-badge">Queue · Vend</span>
+        </div>
+      </div>
+      <p class="ind-desc">Large-format retail stores, service centres, and showrooms managing billing counters, customer service desks, and returns queues during peak hours.</p>
+      <ul class="ind-uses">
+        <li>Cashier queue management with display boards</li>
+        <li>Customer service desk token routing</li>
+        <li>Stationery and accessories vending at checkout areas</li>
+      </ul>
+      <div class="ind-divider"></div>
+      <div class="ind-product">Recommended: Floor Mount Kiosk + Vending Machine</div>
+    </div>
+
+    <div class="industry-card fade-up">
+      <div class="ind-top">
+        <div class="ind-icon">🏛️</div>
+        <div>
+          <div class="ind-name">Government &amp; Civic</div>
+          <span class="ind-badge">Queue · Token · Print</span>
+        </div>
+      </div>
+      <p class="ind-desc">RTO offices, passport seva kendras, municipal corporations, and government hospitals eliminating long manual queues and token disputes.</p>
+      <ul class="ind-uses">
+        <li>Service-wise token issuance (driving licence, RC, tax)</li>
+        <li>Transparent display boards reduce disputes</li>
+        <li>Document printing vending machines on premises</li>
+      </ul>
+      <div class="ind-divider"></div>
+      <div class="ind-product">Recommended: Floor Mount Kiosk + Print Vend Machine</div>
+    </div>
+
+    <div class="industry-card fade-up">
+      <div class="ind-top">
+        <div class="ind-icon">🏢</div>
+        <div>
+          <div class="ind-name">Corporate &amp; IT Parks</div>
+          <span class="ind-badge">Queue · Print · Vend</span>
+        </div>
+      </div>
+      <p class="ind-desc">Corporate campuses, IT parks, and SEZs with large employee footprints that need automated stationery dispensing, printing stations, and visitor management.</p>
+      <ul class="ind-uses">
+        <li>Cashless stationery vending for employees</li>
+        <li>Self-service print stations on every floor</li>
+        <li>Visitor token issuance at reception</li>
+      </ul>
+      <div class="ind-divider"></div>
+      <div class="ind-product">Recommended: Stationery + Print Vend Machine</div>
+    </div>
+
+    <div class="industry-card fade-up">
+      <div class="ind-top">
+        <div class="ind-icon">🎓</div>
+        <div>
+          <div class="ind-name">Education</div>
+          <span class="ind-badge">Queue · Print · Vend</span>
+        </div>
+      </div>
+      <p class="ind-desc">Universities, engineering colleges, exam centres, and schools managing admissions queues, result collection, and on-campus stationery dispensing.</p>
+      <ul class="ind-uses">
+        <li>Admission and fee collection queue management</li>
+        <li>Hall ticket and result printout vending</li>
+        <li>24/7 stationery dispensing on campus</li>
+      </ul>
+      <div class="ind-divider"></div>
+      <div class="ind-product">Recommended: Smart Kiosk + Stationery Vend Machine</div>
+    </div>
+
+    <div class="industry-card fade-up">
+      <div class="ind-top">
+        <div class="ind-icon">🛕</div>
+        <div>
+          <div class="ind-name">Temples &amp; Religious Venues</div>
+          <span class="ind-badge">Queue · Token</span>
+        </div>
+      </div>
+      <p class="ind-desc">Major temples, mosques, churches, and religious venues managing darshan queues, prasad distribution, and special puja bookings during peak hours and festivals.</p>
+      <ul class="ind-uses">
+        <li>Token-based darshan slots to prevent crowd surges</li>
+        <li>VIP, general, and special darshan category separation</li>
+        <li>Festival-day scale: handles thousands of devotees/hour</li>
+      </ul>
+      <div class="ind-divider"></div>
+      <div class="ind-product">Recommended: Floor Mount Kiosk (Multi-Counter)</div>
+    </div>
+
+    <div class="industry-card fade-up">
+      <div class="ind-top">
+        <div class="ind-icon">🍽️</div>
+        <div>
+          <div class="ind-name">Canteens &amp; Kitchens</div>
+          <span class="ind-badge">Token · Vend</span>
+        </div>
+      </div>
+      <p class="ind-desc">Corporate canteens, hostel mess halls, factory cafeterias, and school kitchens issuing meal tokens and managing food distribution queues at peak hours.</p>
+      <ul class="ind-uses">
+        <li>Pre-paid meal token issuance via kiosk</li>
+        <li>Separate counters for breakfast, lunch, dinner</li>
+        <li>Snack and beverage vending alongside meal service</li>
+      </ul>
+      <div class="ind-divider"></div>
+      <div class="ind-product">Recommended: Wall Mount Kiosk + Products Vend Machine</div>
+    </div>
+
+    <div class="industry-card fade-up">
+      <div class="ind-top">
+        <div class="ind-icon">🪪</div>
+        <div>
+          <div class="ind-name">Visitor Pass Management</div>
+          <span class="ind-badge">Token · Print</span>
+        </div>
+      </div>
+      <p class="ind-desc">Corporate offices, factories, hospitals, and gated communities replacing manual visitor registers with an automated token-and-pass issuance system.</p>
+      <ul class="ind-uses">
+        <li>Auto-issue printed visitor passes with name, photo, time</li>
+        <li>Digital audit trail — no manual registers needed</li>
+        <li>QR-code-based pass verification at checkpoints</li>
+      </ul>
+      <div class="ind-divider"></div>
+      <div class="ind-product">Recommended: Wall Mount Kiosk + Print Vend Machine</div>
+    </div>
+
+  </div>
+</section>
+
+<section class="cta-strip fade-up">
+  <h2 class="cta-title">Don't see your industry?</h2>
+  <p class="cta-sub">GoStationery is configurable for any space with a waiting area or stationery need. Tell us your setup and we'll design a solution.</p>
+  <div class="cta-btns">
+    <a href="contact.html" class="btn-primary">Talk to Our Team</a>
+    <a href="products.html" class="btn-ghost">View Products</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Go<span>Stationery</span></div>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="solutions.html">Solutions</a>
+    <a href="industries.html">Industries</a>
+    <a href="products.html">Products</a>
+    <a href="contact.html">Contact</a>
+  </div>
+  <p class="footer-copy">© 2025 GoStationery. All rights reserved. &nbsp;·&nbsp; Made in India <span class="pulse-dot"></span></p>
+</footer>
+
+<script>
+const hamburger=document.getElementById('hamburger'),mobileMenu=document.getElementById('mobileMenu'),mobileClose=document.getElementById('mobileClose');
+function openMobile(){mobileMenu.classList.add('open');hamburger.setAttribute('aria-expanded','true');document.body.style.overflow='hidden'}
+function closeMobile(){mobileMenu.classList.remove('open');hamburger.setAttribute('aria-expanded','false');document.body.style.overflow=''}
+hamburger.addEventListener('click',openMobile);mobileClose.addEventListener('click',closeMobile);
+document.querySelectorAll('.menu-link').forEach(l=>l.addEventListener('click',closeMobile));
+const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target)}})},{threshold:.08});
+document.querySelectorAll('.fade-up').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
